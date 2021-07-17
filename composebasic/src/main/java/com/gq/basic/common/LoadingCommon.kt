@@ -1,88 +1,60 @@
-/*
 package com.gq.basic.common
 
-import android.content.Context
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.Window
-import android.widget.ProgressBar
-import android.widget.TextView
-import com.gq.basic.R
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 
-*/
-/**
- * 加载提示
- * @Author: GQ
- * @Date: 2021/3/28 16:19
- *//*
 
-object LoadingCommon {
-
-    private val handler by lazy { Handler(Looper.getMainLooper()) }
-
-    fun showLoadingDialog(
-        context: Context?,
-        msg: String = "加载中...",
-        timeOut: Long = 6000,
-        textSize: Int = 12
-    ): LoadingDialog? {
-        context?.let { ctx ->
-            val dialog = LoadingDialog(ctx).apply {
-                show()
-                setText(msg, textSize)
-            }
-            handler.postDelayed({
-                dialog.dismiss()
-            }, timeOut)
-            return dialog
-        } ?: return null
-    }
-
-    fun showToastDialog(
-        context: Context?,
-        msg: String?,
-        timeOut: Long = 1600,
-        textSize: Int = 13
-    ) {
-        msg?.takeIf { it != "" }?.let { str ->
-            context?.let { ctx ->
-                val dialog = LoadingDialog(ctx).apply {
-                    show()
-                    setCancelable(true)
-                    setCanceledOnTouchOutside(true)
-                    setText(str, textSize)
-                    hideProgressBar()
+@Composable
+fun LoadingDialogCompose(
+    loadingDialogState: LoadingDialogState
+) {
+    if (loadingDialogState.isShowDialog) {
+        Dialog(onDismissRequest = { loadingDialogState.isShowDialog = false }) {
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .background(
+                        color = Color(0x77FFFFFF),
+                        shape = RoundedCornerShape(6.dp)
+                    )
+                    .padding(vertical = 9.dp, horizontal = 16.dp)
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(33.dp)
+                )
+                if (!loadingDialogState.isHideText) {
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                        text = loadingDialogState.text,
+                        fontSize = loadingDialogState.fonSize.sp
+                    )
                 }
-                handler.postDelayed({
-                    dialog.dismiss()
-                }, timeOut)
             }
         }
     }
 }
 
-
-class LoadingDialog(context: Context) :
-    android.app.AlertDialog(context, R.style.TransparentDialog) {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        super.onCreate(savedInstanceState)
-        this.setContentView(R.layout.dialog_loading)
-        setCancelable(false)
-        setCanceledOnTouchOutside(false)
-
+@Composable
+fun rememberLoadingDialogState(isShow: Boolean): LoadingDialogState = remember {
+    LoadingDialogState().apply {
+        isShowDialog = isShow
     }
+}
 
-    fun setText(str: String, ts: Int = 12) {
-        findViewById<TextView>(R.id.tv_message).apply {
-            text = str
-            textSize = ts.toFloat()
-        }
-    }
-
-    fun hideProgressBar() {
-        findViewById<ProgressBar>(R.id.progressBar).gradientHideView(0)
-    }
-}*/
+@Stable
+class LoadingDialogState {
+    var isShowDialog: Boolean by mutableStateOf(false)
+    var isHideText: Boolean by mutableStateOf(false)
+    var text: String by mutableStateOf("加载中...")
+    var fonSize: Int by mutableStateOf(12)
+}

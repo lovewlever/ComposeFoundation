@@ -1,18 +1,18 @@
 package com.gq.basic.common
 
 import android.app.Activity
-import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.view.View
+import android.view.Window
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
-import javax.inject.Singleton
+
 
 interface SystemUiController {
 
@@ -26,17 +26,22 @@ interface SystemUiController {
 
     fun fullScreen()
 
+    fun reductionFullScreen()
+
     fun setDecorFitsSystemWindows(
         decorFitsSystemWindows: Boolean = false
     ): SystemUiController
 
     fun setStatusBarColor(
-        color: Int = Color.TRANSPARENT,
-        isLight: Boolean = false
+        color: Int = Color.TRANSPARENT
     ): SystemUiController
 
     fun setNavigationBarColor(
         color: Int = Color.TRANSPARENT
+    ): SystemUiController
+
+    fun setBarsIconLightColor(
+        isLight: Boolean = isDarkMode()
     ): SystemUiController
 
 }
@@ -109,6 +114,12 @@ class SystemUiControllerImpl @Inject constructor(
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
 
+    override fun reductionFullScreen() {
+        activity.window?.decorView?.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+    }
+
     override fun setDecorFitsSystemWindows(
         decorFitsSystemWindows: Boolean
     ): SystemUiController {
@@ -119,37 +130,44 @@ class SystemUiControllerImpl @Inject constructor(
                 .windowInsetsController?.systemBarsBehavior =
                 WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE
         } else {
-            activity.window.clearFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-            activity.window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            activity.window.statusBarColor = Color.TRANSPARENT
-
-            activity.window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            val window: Window = activity.window
+            window.clearFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                        or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+            )
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            // 状态栏（以上几行代码必须，参考setStatusBarColor|setNavigationBarColor方法源码）
+            window.statusBarColor = Color.TRANSPARENT
+            // 虚拟导航键
+            window.navigationBarColor = Color.TRANSPARENT
         }
 
         return this
     }
 
     override fun setStatusBarColor(
-        color: Int,
-        isLight: Boolean
+        color: Int
     ): SystemUiController {
         activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         activity.window.statusBarColor = color
         //activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        if (isLight) {
-            setStatusBarIconLightColor()
-        } else {
-            setStatusBarIconDarkColor()
-        }
         return this
     }
 
     override fun setNavigationBarColor(color: Int): SystemUiController {
         activity.window.navigationBarColor = color
+        return this
+    }
+
+    override fun setBarsIconLightColor(isLight: Boolean): SystemUiController {
+        if (isLight) {
+            setStatusBarIconLightColor()
+        } else {
+            setStatusBarIconDarkColor()
+        }
         return this
     }
 
@@ -166,17 +184,12 @@ class SystemUiControllerImpl @Inject constructor(
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                 )
         } else {
-
-            activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            activity.window.statusBarColor = Color.TRANSPARENT
-            activity.window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            activity.window.decorView.systemUiVisibility =
-                activity.window.decorView.systemUiVisibility or
-                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-
+            var vis = activity.window.decorView.systemUiVisibility
+            vis = vis or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vis = vis or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            }
+            activity.window.decorView.systemUiVisibility = vis
         }
     }
 
@@ -193,20 +206,12 @@ class SystemUiControllerImpl @Inject constructor(
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                 )
         } else {
-
-            activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-            activity.window.statusBarColor = Color.TRANSPARENT
-            activity.window.navigationBarColor = Color.TRANSPARENT
-            activity.window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            var vis = activity.window.decorView.systemUiVisibility
+            vis = vis and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                activity.window.decorView.systemUiVisibility =
-                    activity.window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                vis = vis and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
             }
-
+            activity.window.decorView.systemUiVisibility = vis
         }
     }
 
