@@ -21,7 +21,6 @@ open class BasicActivity: ComponentActivity() {
         systemUiController
             .setDecorFitsSystemWindows()
             .setBarsIconLightColor()
-
     }
 
 }

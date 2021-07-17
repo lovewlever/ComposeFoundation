@@ -16,10 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.lifecycleScope
 import com.gq.basic.basis.BasicActivity
 import com.gq.basic.common.*
 import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint

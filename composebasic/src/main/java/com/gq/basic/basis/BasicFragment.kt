@@ -16,6 +16,5 @@ open class BasicFragment: Fragment() {
         systemUiController
             .setDecorFitsSystemWindows()
             .setBarsIconLightColor()
-
     }
 }
