@@ -1,4 +1,4 @@
-package com.gq.composefoundation
+package com.gq.composefoundation.ui
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

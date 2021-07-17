@@ -1,12 +1,11 @@
 package com.gq.composefoundation.hilt
 
 import com.gq.basic.retrofit.BasicRetrofit
-import com.gq.composefoundation.AppApi
+import com.gq.composefoundation.api.AppApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module

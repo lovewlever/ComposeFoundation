@@ -1,4 +1,4 @@
-package com.gq.composefoundation
+package com.gq.composefoundation.api
 
 import com.gq.basic.data.ResultEntity
 import com.gq.basic.data.RetrofitCall
