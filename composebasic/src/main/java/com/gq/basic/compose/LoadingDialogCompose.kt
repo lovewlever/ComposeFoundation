@@ -1,4 +1,4 @@
-package com.gq.basic.common
+package com.gq.basic.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,7 +13,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
-
+/**
+ * 加载Dialog
+ */
 @Composable
 fun LoadingDialogCompose(
     loadingDialogState: LoadingDialogState
