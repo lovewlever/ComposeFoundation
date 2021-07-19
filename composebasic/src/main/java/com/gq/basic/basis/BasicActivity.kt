@@ -20,6 +20,8 @@ open class BasicActivity: ComponentActivity() {
         super.onResume()
         systemUiController
             .setDecorFitsSystemWindows()
+            .setStatusBarColor()
+            .setNavigationBarColor()
             .setBarsIconLightColor()
     }
 

@@ -14,6 +14,7 @@ import com.gq.basic.compose.LoadingDialogCompose
 import com.gq.basic.compose.rememberLoadingDialogState
 import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BasicActivity() {
@@ -41,15 +42,25 @@ fun Greeting(name: String) {
     val rememberLoadingDialog = rememberLoadingDialogState(false)
 
     LoadingDialogCompose(loadingDialogState = rememberLoadingDialog)
+    val scaffoldState = rememberScaffoldState()
+    val coroutineScope = rememberCoroutineScope()
 
-    Column {
-        Spacer(modifier = Modifier.height(50.dp))
-        Button(onClick = {
-            rememberLoadingDialog.isShowDialog = true
-        }) {
-            Text(text = "Click here")
+    Scaffold(
+        scaffoldState = scaffoldState
+    ) {
+        Column {
+            Spacer(modifier = Modifier.height(50.dp))
+            Button(onClick = {
+                coroutineScope.launch {
+                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                    scaffoldState.snackbarHostState.showSnackbar("退出成功", duration = SnackbarDuration.Long)
+                }
+            }) {
+                Text(text = "Click here")
+            }
         }
     }
+
 }
 
 @Preview(showBackground = true)
