@@ -12,6 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.SecureFlagPolicy
 
 /**
  * 加载Dialog
@@ -21,12 +23,18 @@ fun LoadingDialogCompose(
     loadingDialogState: LoadingDialogState
 ) {
     if (loadingDialogState.isShowDialog) {
-        Dialog(onDismissRequest = { loadingDialogState.isShowDialog = false }) {
-            Column (
+        Dialog(
+            onDismissRequest = { loadingDialogState.isShowDialog = false },
+            properties = DialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false
+            )
+        ) {
+            Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .background(
-                        color = Color(0x77FFFFFF),
+                        color = Color.White,
                         shape = RoundedCornerShape(6.dp)
                     )
                     .padding(vertical = 9.dp, horizontal = 16.dp)
@@ -38,7 +46,8 @@ fun LoadingDialogCompose(
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
                         text = loadingDialogState.text,
-                        fontSize = loadingDialogState.fonSize.sp
+                        fontSize = loadingDialogState.fonSize.sp,
+                        color = Color.Black
                     )
                 }
             }
