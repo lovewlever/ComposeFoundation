@@ -15,6 +15,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.gq.basic.basis.BasicActivity
 import com.gq.basic.common.*
 import com.gq.basic.compose.LoadingDialogCompose
+import com.gq.basic.compose.PrivacyPolicyConfirmationCompose
 import com.gq.basic.compose.rememberLoadingDialogState
 import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +49,7 @@ fun Greeting(name: String) {
     val rememberLoadingDialog = rememberLoadingDialogState(false)
 
     LoadingDialogCompose(loadingDialogState = rememberLoadingDialog)
+    PrivacyPolicyConfirmationCompose()
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
