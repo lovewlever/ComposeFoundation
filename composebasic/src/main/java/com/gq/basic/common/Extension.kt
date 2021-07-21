@@ -29,33 +29,34 @@ fun Uri.loadVideoThumbnail(): Bitmap? {
 }
 
 /**
- * 秒转hh:mm:ss格式
- * @param secString 秒字符串
- * @return hh小时mm分ss秒
+ * Int转双位时间
+ * 00
+ */
+fun Int.toDoublePositionTime(): String {
+    val len = this.toString().length
+    return if (len <= 1) "0${this}" else this.toString()
+}
+
+/**
+ * 毫秒转hh:mm:ss格式
  * String
  */
-fun Int.millisecondToFormat(): String {
-    val seconds = this / 1000
-    var hour = 0
-    var min = 0
-    var second = 0
-    var result = ""
-    if (seconds > 60) {   //是否大于零
-        min = seconds / 60 //分钟
-        second = seconds % 60 //秒
-        if (min > 60) {   //存在时
-            hour = min / 60
-            min %= 60
-        }
+fun Int.millisecondToHms(): String {
+    var seconds = this / 1000
+    val minute: Int
+    // 小于60秒
+    if (seconds < 60) {
+        return "00:${seconds.toDoublePositionTime()}"
     }
-    if (hour > 0) {
-        result = "$hour:"
+    // 小于60分钟
+    if (seconds / 60 < 60) {
+        minute = seconds / 60
+        return "${minute.toDoublePositionTime()}:${(seconds % 60).toDoublePositionTime()}"
     }
-    if (min > 0) {
-        result = "$result$min:"
-    } else if (min == 0 && hour > 0) {  //当分为0时,但是时有值,所以要显示,避免出现2时0秒现象
-        result = "$result$min:"
-    }
-    result += second //秒必须出现无论是否大于零
-    return result
+
+    val hour: Int = seconds / 60 / 60
+    minute = seconds / 60 % 60
+    seconds = (seconds - (hour * 60 * 60)) % 60
+
+    return "${hour.toDoublePositionTime()}:${minute.toDoublePositionTime()}:${seconds.toDoublePositionTime()}"
 }

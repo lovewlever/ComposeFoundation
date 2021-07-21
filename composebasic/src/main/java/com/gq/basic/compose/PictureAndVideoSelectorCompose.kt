@@ -196,7 +196,7 @@ fun PictureAndVideoSelectorCompose(
                             modifier = modifier
                                 .align(Alignment.BottomEnd)
                                 .padding(end = 4.dp, bottom = 2.dp),
-                            text = item.duration.millisecondToFormat(),
+                            text = item.duration.millisecondToHms(),
                             fontSize = 10.sp,
                             color = Color.White
                         )
