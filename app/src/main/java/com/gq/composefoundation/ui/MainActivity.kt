@@ -15,10 +15,7 @@ import com.google.accompanist.insets.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.gq.basic.basis.BasicActivity
 import com.gq.basic.common.*
-import com.gq.basic.compose.LoadingDialogCompose
-import com.gq.basic.compose.PictureAndVideoSelectorCompose
-import com.gq.basic.compose.PrivacyPolicyConfirmationCompose
-import com.gq.basic.compose.rememberLoadingDialogState
+import com.gq.basic.compose.*
 import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -68,7 +65,7 @@ fun Greeting(name: String) {
             }
         }
     ) {
-        PictureAndVideoSelectorCompose()
+        WebViewCompose()
     }
 
 }

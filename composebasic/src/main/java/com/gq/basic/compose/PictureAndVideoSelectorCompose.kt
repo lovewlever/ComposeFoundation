@@ -85,7 +85,7 @@ class PictureVideoSelectorState {
 }
 
 /**
- * 图片选择
+ * 图片/视频选择
  */
 @ExperimentalFoundationApi
 @Composable

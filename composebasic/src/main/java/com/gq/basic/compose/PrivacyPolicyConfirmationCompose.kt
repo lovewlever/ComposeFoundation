@@ -26,7 +26,7 @@ import timber.log.Timber
  * App启动时隐私政策提醒
  */
 @Composable
-fun PrivacyPolicyConfirmationCompose(
+fun PrivacyPolicyConfirmationDialogCompose(
     doneClick: () -> Unit = {},
     refuseClick: () -> Unit = {},
     examinePrivacyPolicyClick: () -> Unit = {}
