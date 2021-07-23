@@ -3,6 +3,8 @@ package com.gq.basic.compose
 import android.Manifest
 import android.net.Uri
 import android.util.Size
+import android.widget.MediaController
+import android.widget.VideoView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.*
@@ -19,6 +21,8 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -32,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toIcon
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.ImageLoader
@@ -116,7 +121,9 @@ fun PictureAndVideoSelectorCompose(
     selectorState: PictureVideoSelectorState = rememberPictureVideoSelectorState(
         quantityLimit = 5,
         type = PVUris.TYPE_PICTURE
-    )
+    ),
+    completeClick: () -> Unit = {},
+    closeClick: () -> Unit = {}
 ) {
 
     val pvsViewModel: PictureVideoSelectorViewModel = viewModel()
@@ -133,32 +140,20 @@ fun PictureAndVideoSelectorCompose(
         readStoragePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
-    var previewUri = remember {
-        mutableStateOf<Uri?>(null)
+    val previewUri = remember {
+        mutableStateOf<PVUris?>(null)
     }
 
     Box(modifier = modifier.fillMaxSize()) {
         Column(modifier = modifier.fillMaxSize()) {
-            Surface(
-                color = MaterialTheme.colors.primary
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(45.dp)
-                ) {
-                    Text(
-                        text = "${selectorState.chooseUris.size}/${selectorState.quantityLimit}",
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                    Button(
-                        onClick = { },
-                        modifier = Modifier.align(Alignment.CenterEnd)
-                    ) {
-                        Text(text = "确定")
-                    }
-                }
-            }
+
+            // 头部
+            PVSTitleBar(
+                selectorState = selectorState,
+                completeClick = completeClick,
+                closeClick = closeClick
+            )
+
             val wh = (DensityCommon.getScreenWidthDp() / 3) - DensityCommon.dip2px(2f)
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),
@@ -166,62 +161,17 @@ fun PictureAndVideoSelectorCompose(
                 contentPadding = PaddingValues(2.dp)
             ) {
                 items(pvsViewModel.urisState) { item ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(2.dp)
-                            .clickable {
-                                previewUri.value = item.uri
-                                //selectorState.onSelectedClick(item)
-                            }
-                            .border(
-                                width = 2.dp,
-                                color = if (item.selected) MaterialTheme.colors.secondary else Color.Transparent,
-                                shape = RoundedCornerShape(4.dp)
-                            )
-                    ) {
-                        Image(
-                            modifier = Modifier
-                                .size(wh.dp)
-                                .clip(
-                                    shape = RoundedCornerShape(4.dp)
-                                ),
-                            painter = rememberImagePainter(
-                                data = if (item.type == PVUris.TYPE_PICTURE) item.uri else item.uri.loadVideoThumbnail(),
-                                builder = {
-                                    this.crossfade(true)
-                                }
-                            ),
-                            contentScale = ContentScale.Crop,
-                            contentDescription = "uri"
-                        )
-                        Checkbox(
-                            modifier = Modifier.align(Alignment.TopEnd).size(30.dp),
-                            checked = item.selected,
-                            onCheckedChange = { selectorState.onSelectedClick(item) }
-                        )
-                        if (item.type == PVUris.TYPE_VIDEO) {
-                            Icon(
-                                modifier = Modifier.align(Alignment.Center),
-                                painter = painterResource(id = R.drawable.ic_cf_video),
-                                contentDescription = "ic_cf_video",
-                                tint = Color.White
-                            )
-
-                            Text(
-                                modifier = modifier
-                                    .align(Alignment.BottomEnd)
-                                    .padding(end = 4.dp, bottom = 2.dp),
-                                text = item.duration.millisecondToHms(),
-                                fontSize = 10.sp,
-                                color = Color.White
-                            )
-                        }
-                    }
+                    PVSListItem(
+                        item = item,
+                        wh = wh,
+                        selectorState = selectorState,
+                        previewUri = previewUri
+                    )
                 }
             }
         }
 
+        // 预览
         PVSCheckView(
             modifier.align(Alignment.BottomEnd),
             uri = previewUri
@@ -231,13 +181,129 @@ fun PictureAndVideoSelectorCompose(
 }
 
 /**
+ * 头
+ */
+@Composable
+private fun PVSTitleBar(
+    modifier: Modifier = Modifier,
+    selectorState: PictureVideoSelectorState,
+    completeClick: () -> Unit = {},
+    closeClick: () -> Unit = {}
+) {
+    Surface() {
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(45.dp)
+        ) {
+
+            Icon(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .width(30.dp)
+                    .height(30.dp)
+                    .align(Alignment.CenterStart)
+                    .clickable {
+                        closeClick()
+                    },
+                imageVector = Icons.Default.Close,
+                contentDescription = ""
+            )
+            Text(
+                text = "${selectorState.chooseUris.size}/${selectorState.quantityLimit}",
+                modifier = Modifier.align(Alignment.Center)
+            )
+            Row(
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
+                Button(
+                    onClick = { completeClick() },
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier
+                        .height(30.dp)
+                ) {
+                    Text(text = "确定")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+        }
+    }
+}
+
+/**
+ * 列表的Item
+ */
+@Composable
+private fun PVSListItem(
+    item: PVUris,
+    wh: Int,
+    selectorState: PictureVideoSelectorState,
+    previewUri: MutableState<PVUris?>? = null
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(2.dp)
+            .clickable {
+                previewUri?.value = item
+                //selectorState.onSelectedClick(item)
+            }
+            .border(
+                width = 2.dp,
+                color = if (item.selected) MaterialTheme.colors.secondary else Color.Transparent,
+                shape = RoundedCornerShape(4.dp)
+            )
+    ) {
+        Image(
+            modifier = Modifier
+                .size(wh.dp)
+                .clip(
+                    shape = RoundedCornerShape(4.dp)
+                ),
+            painter = rememberImagePainter(
+                data = if (item.type == PVUris.TYPE_PICTURE) item.uri else item.uri.loadVideoThumbnail(),
+                builder = {
+                    this.crossfade(true)
+                }
+            ),
+            contentScale = ContentScale.Crop,
+            contentDescription = "uri"
+        )
+        Checkbox(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .size(30.dp),
+            checked = item.selected,
+            onCheckedChange = { selectorState.onSelectedClick(item) }
+        )
+        if (item.type == PVUris.TYPE_VIDEO) {
+            Icon(
+                modifier = Modifier.align(Alignment.Center),
+                painter = painterResource(id = R.drawable.ic_cf_video),
+                contentDescription = "ic_cf_video",
+                tint = Color.White
+            )
+
+            Text(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 4.dp, bottom = 2.dp),
+                text = item.duration.millisecondToHms(),
+                fontSize = 10.sp,
+                color = Color.White
+            )
+        }
+    }
+}
+
+/**
  * 预览
  */
 @ExperimentalMaterialApi
 @Composable
 private fun PVSCheckView(
     modifier: Modifier = Modifier,
-    uri: State<Uri?>? = null
+    uri: MutableState<PVUris?>? = null
 ) {
 
     var enable by remember {
@@ -271,27 +337,64 @@ private fun PVSCheckView(
     Surface(
         modifier = modifier
             .height(animScreenHeight.value)
-            .width(DensityCommon.getScreenWidthDp().dp)
-            .clickable {
-                enable = !enable
-            },
+            .width(DensityCommon.getScreenWidthDp().dp),
     ) {
+
+        var videoViewState by remember {
+            mutableStateOf<VideoView?>(null)
+        }
+
+        DisposableEffect(key1 = Unit, effect = {
+            onDispose {
+                videoViewState?.stopPlayback()
+            }
+        })
+
         Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .height(animScreenHeight.value)
-                    .width(imageWidth.value),
-                painter = rememberImagePainter(
-                    data = uri?.value,
-                    builder = {
-                        this.crossfade(true)
+            if (uri?.value?.type == PVUris.TYPE_PICTURE) {
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .height(animScreenHeight.value)
+                        .width(imageWidth.value),
+                    painter = rememberImagePainter(
+                        data = uri.value?.uri,
+                        builder = {
+                            this.crossfade(true)
+                        }
+                    ),
+                    contentDescription = ""
+                )
+            } else if (uri?.value?.type == PVUris.TYPE_VIDEO) {
+                AndroidView(
+                    modifier = Modifier
+                        .height(animScreenHeight.value)
+                        .width(imageWidth.value),
+                    factory = { ctx ->
+                        VideoView(ctx).also {
+                            it.setMediaController(MediaController(ctx))
+                        }
+                    },
+                    update = { videoView ->
+                        videoViewState = videoView
+                        videoView.setVideoURI(uri.value?.uri)
+                        videoView.start()
                     }
-                ),
+                )
+            }
+
+            Icon(
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 8.dp)
+                    .width(30.dp)
+                    .height(30.dp)
+                    .clickable {
+                        enable = !enable
+                    },
+                imageVector = Icons.Default.Close,
                 contentDescription = ""
             )
         }
-
     }
 
 }
