@@ -89,36 +89,17 @@ fun PrivacyPolicyConfirmationDialogCompose(
                                     color = Color.LightGray
                                 )
                         )
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(45.dp)
-                        ) {
-                            TextButton(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .weight(1f),
-                                onClick = {
-                                    refuseClick()
+
+                        DialogBottomDoubleButton(
+                            refuseClick = refuseClick,
+                            doneClick = {
+                                coroutineScope.launch {
+                                    DataStoreCommon.putBasicType(DataStoreCommon.DSK_PRIVACY_POLICY, 1)
                                 }
-                            ) {
-                                Text(text = "暂不使用")
+                                isShowPP.value = 1
+                                doneClick()
                             }
-                            TextButton(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .weight(1f),
-                                onClick = {
-                                    coroutineScope.launch {
-                                        DataStoreCommon.putBasicType(DataStoreCommon.DSK_PRIVACY_POLICY, 1)
-                                    }
-                                    isShowPP.value = 1
-                                    doneClick()
-                                }
-                            ) {
-                                Text(text = "同意")
-                            }
-                        }
+                        )
                     }
                 }
             }

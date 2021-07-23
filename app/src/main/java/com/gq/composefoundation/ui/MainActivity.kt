@@ -60,7 +60,12 @@ fun Greeting(name: String) {
             }
         }
     ) {
-        PictureAndVideoSelectorCompose()
+        //PictureAndVideoSelectorCompose()
+        CheckUpdateAppCompose(
+            versionName = "1.2.3",
+            downloadUrl = "",
+            isShowDialogState = remember { mutableStateOf(true) }
+        )
     }
 
 }

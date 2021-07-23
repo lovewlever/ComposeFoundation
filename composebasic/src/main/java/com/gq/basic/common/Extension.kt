@@ -38,6 +38,16 @@ fun Int.toDoublePositionTime(): String {
 }
 
 /**
+ * 判断List是否不为null或不为空
+ */
+inline fun <E,R> Collection<E>?.ifNotNullAndEmpty(block: (MutableList<E>) -> R): R? {
+    if (!this.isNullOrEmpty()) {
+        return block(this.toMutableList())
+    }
+    return null
+}
+
+/**
  * 毫秒转hh:mm:ss格式
  * String
  */
