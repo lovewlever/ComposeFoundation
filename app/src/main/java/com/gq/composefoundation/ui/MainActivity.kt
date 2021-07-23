@@ -63,7 +63,7 @@ fun Greeting(name: String) {
         //PictureAndVideoSelectorCompose()
         CheckUpdateAppCompose(
             versionName = "1.2.3",
-            downloadUrl = "",
+            downloadUrl = "https://xiuxianhaidiao-apk.oss-cn-beijing.aliyuncs.com/qhd.apk",
             isShowDialogState = remember { mutableStateOf(true) }
         )
     }

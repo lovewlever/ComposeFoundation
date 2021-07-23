@@ -54,13 +54,13 @@ private fun UpdateRemindDialogCompose(
     downloadUrl: String,
     isShowDialogState: MutableState<Boolean> = remember { mutableStateOf(false) }
 ) {
+
+    // 是否开始更新Apk
+    val updateApkDialogState = remember {
+        mutableStateOf(false)
+    }
+
     if (isShowDialogState.value) {
-
-        // 是否开始更新Apk
-        val updateApkDialogState = remember {
-            mutableStateOf(false)
-        }
-
         Dialog(onDismissRequest = { }) {
             Surface(
                 modifier = modifier,
@@ -107,6 +107,7 @@ private fun UpdateRemindDialogCompose(
                         doneText = "更新",
                         doneClick = {
                             updateApkDialogState.value = true
+                            isShowDialogState.value = false
                         },
                         refuseClick = {
                             isShowDialogState.value = false
@@ -115,14 +116,14 @@ private fun UpdateRemindDialogCompose(
                 }
             }
         }
-
-        //更新App
-        DownloadApkInstallCompose(
-            modifier = Modifier.width(300.dp),
-            isShowDialogState = updateApkDialogState,
-            downloadUrl = downloadUrl
-        )
     }
+
+    //更新App
+    DownloadApkInstallCompose(
+        modifier = Modifier.width(300.dp),
+        isShowDialogState = updateApkDialogState,
+        downloadUrl = downloadUrl
+    )
 }
 
 /**
@@ -176,8 +177,7 @@ private fun DownloadApkInstallCompose(
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = "下载中",
-                        fontSize = 17.sp,
-                        color = Color.Black
+                        fontSize = 17.sp
                     )
                     Spacer(modifier = Modifier.height(16.dp))
 

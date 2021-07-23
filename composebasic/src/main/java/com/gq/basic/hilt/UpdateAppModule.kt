@@ -1,5 +1,6 @@
 package com.gq.basic.hilt
 
+import com.gq.basic.AppContext
 import com.gq.basic.api.UpdateApi
 import com.gq.basic.retrofit.ProgressInterceptor
 import com.gq.basic.retrofit.ProgressListener
@@ -28,7 +29,7 @@ object UpdateAppModule {
     fun provideUpdateApi(): UpdateApi {
         return Retrofit
             .Builder()
-            .baseUrl("")
+            .baseUrl("https://developer.android.google.cn/")
             .client(
                 OkHttpClient
                     .Builder()
