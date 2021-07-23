@@ -8,7 +8,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.gq.basic.R
 import com.gq.basic.common.DataStoreCommon
 
 /**
@@ -16,8 +18,8 @@ import com.gq.basic.common.DataStoreCommon
  */
 @Composable
 fun DialogBottomDoubleButton(
-    refuseText: String = "暂不使用",
-    doneText: String = "同意",
+    refuseText: String = stringResource(id = R.string.cb_do_not_use),
+    doneText: String = stringResource(id = R.string.cb_agree),
     doneClick: () -> Unit = {},
     refuseClick: () -> Unit = {},
 ) {

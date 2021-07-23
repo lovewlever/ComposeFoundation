@@ -9,10 +9,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.gq.basic.AppContext
+import com.gq.basic.R
 
 /**
  * 加载Dialog
@@ -65,6 +68,6 @@ fun rememberLoadingDialogState(isShow: Boolean): LoadingDialogState = remember {
 class LoadingDialogState {
     var isShowDialog: Boolean by mutableStateOf(false)
     var isHideText: Boolean by mutableStateOf(false)
-    var text: String by mutableStateOf("加载中...")
+    var text: String by mutableStateOf(AppContext.application.getString(R.string.cb_loading))
     var fonSize: Int by mutableStateOf(12)
 }

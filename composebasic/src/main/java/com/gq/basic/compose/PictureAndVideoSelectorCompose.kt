@@ -33,6 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -222,7 +223,7 @@ private fun PVSTitleBar(
                     modifier = Modifier
                         .height(30.dp)
                 ) {
-                    Text(text = "确定")
+                    Text(text = stringResource(R.string.cb_define))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
             }

@@ -13,11 +13,13 @@ import androidx.compose.runtime.saveable.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.gq.basic.R
 import com.gq.basic.common.DataStoreCommon
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -59,20 +61,20 @@ fun PrivacyPolicyConfirmationDialogCompose(
                             .padding(top = 8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = "隐私政策")
+                        Text(text = stringResource(R.string.cb_privacy_policy_title))
                         Spacer(modifier = Modifier.height(8.dp))
                         ClickableText(
                             modifier = Modifier.padding(start = 8.dp, end = 8.dp),
                             text = buildAnnotatedString {
-                                append("请仔细阅读")
+                                append(stringResource(R.string.cb_read_carefully_pp))
                                 withStyle(
                                     style = SpanStyle(
                                         color = MaterialTheme.colors.secondary
                                     )
                                 ) {
-                                    append("《隐私政策》")
+                                    append(stringResource(R.string.cb_privacy_policy_num))
                                 }
-                                append("了解详细信息。如你同意，请点击`同意`开始接受我们的同意")
+                                append(stringResource(R.string.cb_pp_other))
                             },
                             onClick = {
                                 Timber.i("$it")

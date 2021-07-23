@@ -1,5 +1,7 @@
 package com.gq.basic.viewmodel.repository
 
+import com.gq.basic.AppContext
+import com.gq.basic.R
 import com.gq.basic.api.UpdateApi
 import com.gq.basic.common.DirCommon
 import com.gq.basic.data.ResultEntity
@@ -38,7 +40,7 @@ class UpdateRepository @Inject constructor(
                 } ?: let {
                 return@withContext ResultEntity(
                     code = 400,
-                    msg = "下载失败"
+                    msg = AppContext.application.getString(R.string.cb_download_fail)
                 )
             }
         }

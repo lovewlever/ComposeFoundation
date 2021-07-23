@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.gq.basic.R
 import com.gq.basic.common.DensityCommon
 import com.gq.basic.hilt.UpdateAppModule
 import com.gq.basic.viewmodel.UpdateViewModel
@@ -74,7 +76,7 @@ private fun UpdateRemindDialogCompose(
                 ) {
                     Text(
                         fontSize = 14.5.sp,
-                        text = "更新提醒"
+                        text = stringResource(R.string.cb_update_remind)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
@@ -82,7 +84,7 @@ private fun UpdateRemindDialogCompose(
                         fontSize = 13.sp,
                         textAlign = TextAlign.Center,
                         text = buildAnnotatedString {
-                            append("发现新版本：\n")
+                            append(stringResource(id = R.string.cb_discovery_new_version))
                             withStyle(
                                 style = SpanStyle(
                                     color = MaterialTheme.colors.secondary
@@ -90,7 +92,7 @@ private fun UpdateRemindDialogCompose(
                             ) {
                                 append("v$versionName\n")
                             }
-                            append("是否更新？")
+                            append(stringResource(id = R.string.cb_whether_to_update))
                         }
                     )
                     Spacer(
@@ -103,8 +105,8 @@ private fun UpdateRemindDialogCompose(
                     )
 
                     DialogBottomDoubleButton(
-                        refuseText = "暂不更新",
-                        doneText = "更新",
+                        refuseText = stringResource(id = R.string.cb_do_not_update),
+                        doneText = stringResource(R.string.cb_update_now),
                         doneClick = {
                             updateApkDialogState.value = true
                             isShowDialogState.value = false
@@ -176,7 +178,7 @@ private fun DownloadApkInstallCompose(
                 ) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "下载中",
+                        text = stringResource(R.string.cb_download_ing),
                         fontSize = 17.sp
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -199,7 +201,7 @@ private fun DownloadApkInstallCompose(
                         }
                     ) {
                         Text(
-                            text = "取消",
+                            text = stringResource(R.string.cb_cancel),
                             color = Color.White
                         )
                     }

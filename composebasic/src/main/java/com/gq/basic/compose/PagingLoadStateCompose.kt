@@ -9,9 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import com.gq.basic.R
 
 /**
  * Paging3 顶部状态
@@ -32,7 +34,7 @@ fun PagingLoadStateTopCompose(
             ) {
                 PLSError(
                     modifier = modifier,
-                    hint = "刷新失败，轻触重试",
+                    hint = stringResource(id = R.string.cb_re_refresh),
                     onRetryClick = onRetryClick
                 )
             }
@@ -82,7 +84,7 @@ fun PagingLoadStateCompose(
 @Composable
 private fun PLSError(
     modifier: Modifier = Modifier,
-    hint: String = "加载失败，轻触重试！",
+    hint: String = stringResource(id = R.string.cb_re_load),
     onRetryClick: () -> Unit = {},
 ) {
     Row(
@@ -110,7 +112,7 @@ private fun PLSLoading(
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        Text(text = "正在加载...")
+        Text(text = stringResource(id = R.string.cb_loading_now))
     }
 }
 
@@ -119,6 +121,6 @@ private fun PLSNotLoading(
     modifier: Modifier = Modifier,
 ) {
     Row {
-        Text(text = "暂无更多数据")
+        Text(text = stringResource(id = R.string.cb_no_more_data))
     }
 }

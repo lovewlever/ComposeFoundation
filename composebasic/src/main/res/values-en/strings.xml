@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cb_update_remind">Update reminder</string>
+    <string name="cb_discovery_new_version">New version found：\n</string>
+    <string name="cb_whether_to_update">Confirm update?</string>
+    <string name="cb_do_not_update">Do not update</string>
+    <string name="cb_update_now">Update</string>
+    <string name="cb_download_ing">Downloading</string>
+    <string name="cb_cancel">Cancel</string>
+    <string name="cb_loading">Loading…</string>
+    <string name="cb_loading_now">Loading…</string>
+    <string name="cb_re_refresh">Refresh failed, please try again</string>
+    <string name="cb_re_load">Failed to load, please try again</string>
+    <string name="cb_no_more_data">No more data for now</string>
+    <string name="cb_define">Define</string>
+    <string name="cb_privacy_policy_title">隐私政策</string>
+    <string name="cb_read_carefully_pp">请仔细阅读</string>
+    <string name="cb_privacy_policy_num">《隐私政策》</string>
+    <string name="cb_pp_other">了解详细信息。如你同意，请点击`同意`开始接受我们的同意</string>
+    <string name="cb_do_not_use">暂不使用</string>
+    <string name="cb_agree">同意</string>
+    <string name="cb_download_fail">下载失败</string>
+</resources>
