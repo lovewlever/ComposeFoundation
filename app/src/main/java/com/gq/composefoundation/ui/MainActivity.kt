@@ -19,8 +19,10 @@ import androidx.navigation.createGraph
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
+import androidx.navigation.ui.setupWithNavController
 import com.google.accompanist.insets.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gq.basic.basis.BasicActivity
 import com.gq.basic.common.*
 import com.gq.basic.compose.*
@@ -42,8 +44,6 @@ class MainActivity : BasicActivity() {
         DirCommon.getCacheDirFile("image")
         setContentView(R.layout.main_activity)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-
-
         navHostFragment.navController.apply {
             graph = createGraph(NavGraph.Route.Home) {
                 this.fragment<Fragment1>(route = NavGraph.Route.Home)

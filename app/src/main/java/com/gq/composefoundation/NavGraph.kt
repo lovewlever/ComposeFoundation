@@ -1,5 +1,7 @@
 package com.gq.composefoundation
 
+import androidx.navigation.NavOptions
+
 object NavGraph {
 
     object Route {
@@ -10,4 +12,8 @@ object NavGraph {
     object Args {
         const val plantId = "plantId"
     }
+
+    fun navOptions(): NavOptions =
+        NavOptions.Builder().build()
+
 }

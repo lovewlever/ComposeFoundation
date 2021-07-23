@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsHeight
@@ -34,7 +35,11 @@ class Fragment1: BasicFragment() {
             ComposeFoundationTheme {
                 ProvideWindowInsets {
                     Greeting("") {
-                        findNavController().navigate(route = NavGraph.Route.PlantDetail)
+                        findNavController()
+                            .navigate(
+                                route = NavGraph.Route.PlantDetail,
+                                navOptions = NavGraph.navOptions()
+                            )
                     }
                 }
             }
