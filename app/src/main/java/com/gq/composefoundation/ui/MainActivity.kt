@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : BasicActivity() {
 
+    @ExperimentalMaterialApi
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class MainActivity : BasicActivity() {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 fun Greeting(name: String) {
@@ -56,20 +58,14 @@ fun Greeting(name: String) {
             ) {
 
             }
-        },
-        bottomBar = {
-            BottomNavigation(
-                modifier = Modifier.navigationBarsHeight(45.dp)
-            ) {
-
-            }
         }
     ) {
-        WebViewCompose()
+        PictureAndVideoSelectorCompose()
     }
 
 }
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Preview(showBackground = true)
 @Composable
