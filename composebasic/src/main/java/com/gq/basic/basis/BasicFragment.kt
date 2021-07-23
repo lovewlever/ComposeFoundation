@@ -15,6 +15,8 @@ open class BasicFragment: Fragment() {
         super.onResume()
         systemUiController
             .setDecorFitsSystemWindows()
+            .setStatusBarColor()
+            .setNavigationBarColor()
             .setBarsIconLightColor()
     }
 }
