@@ -55,7 +55,7 @@ class UpdateViewModel @Inject constructor(
     fun installApk(context: Context, file: File) {
         context.startActivity(Intent(Intent.ACTION_VIEW).also { intent ->
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            val apkUri = FileProvider.getUriForFile(context, "com.lk.navigation.fileProvider", file)
+            val apkUri = FileProvider.getUriForFile(context, "com.gq.composefoundation.fileProvider", file)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             intent.setDataAndType(apkUri, "application/vnd.android.package-archive")
