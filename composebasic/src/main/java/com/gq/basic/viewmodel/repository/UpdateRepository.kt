@@ -45,10 +45,6 @@ class UpdateRepository @Inject constructor(
 
 
     private fun getPath(): String {
-        val path = DirCommon.getCacheDirFile("apks").absolutePath
-        return File(path).also {
-            if (!it.exists())
-                it.mkdirs()
-        }.absolutePath
+        return DirCommon.getCacheDirFile("apks").absolutePath
     }
 }
