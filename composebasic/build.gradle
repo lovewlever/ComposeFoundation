@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 30
-    buildToolsVersion "30.0.3"
+    compileSdk compileSdk
+    buildToolsVersion buildToolsVersion
 
     defaultConfig {
-        minSdk 24
-        targetSdk 30
+        minSdk minSdk
+        targetSdk targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

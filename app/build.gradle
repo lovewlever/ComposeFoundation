@@ -8,15 +8,15 @@ plugins {
 }
 
 android {
-    compileSdk 30
-    buildToolsVersion "30.0.3"
+    compileSdk compileSdk
+    buildToolsVersion buildToolsVersion
 
     defaultConfig {
         applicationId "com.gq.composefoundation"
-        minSdk 24
-        targetSdk 30
-        versionCode 1
-        versionName "1.0"
+        minSdk minSdk
+        targetSdk targetSdk
+        versionCode versionCode
+        versionName versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
