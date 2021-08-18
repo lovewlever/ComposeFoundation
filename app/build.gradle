@@ -9,14 +9,14 @@ plugins {
 
 android {
     compileSdkVersion CompileSdkVersion
-    buildToolsVersion buildToolsVersion
+    buildToolsVersion BuildToolsVersion
 
     defaultConfig {
         applicationId "com.gq.composefoundation"
-        minSdk minSdk
-        targetSdk targetSdk
-        versionCode versionCode
-        versionName versionName
+        minSdk MinSdk
+        targetSdk TargetSdk
+        versionCode VersionCode
+        versionName VersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

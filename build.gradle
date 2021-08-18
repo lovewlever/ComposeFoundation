@@ -2,11 +2,11 @@
 buildscript {
     ext {
         CompileSdkVersion = 30
-        buildToolsVersion = "30.0.3"
-        minSdk = 24
-        targetSdk = 30
-        versionCode = 1
-        versionName = "1.0"
+        BuildToolsVersion = "30.0.3"
+        MinSdk = 24
+        TargetSdk = 30
+        VersionCode = 1
+        VersionName = "1.0"
 
 
         compose_version = '1.0.1'
