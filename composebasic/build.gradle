@@ -8,8 +8,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion CompileSdkVersion
-    buildToolsVersion BuildToolsVersion
+    compileSdk CompileSdkVersion
 
     defaultConfig {
         minSdk MinSdk
