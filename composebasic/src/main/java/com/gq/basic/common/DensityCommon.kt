@@ -83,6 +83,32 @@ object DensityCommon {
     }
 
     /**
+     * 获取状态栏的高度 72px
+     */
+    fun getStatusBarHeightDp(): Int {
+        return px2dip(getStatusBarHeight().toFloat())
+    }
+
+    /**
+     * 获取导航栏高度
+     */
+    fun getNavigationBarHeight(): Int {
+        val resourceId: Int = AppContext.application.resources.getIdentifier(
+            "navigation_bar_height",
+            "dimen",
+            "android"
+        )
+        return AppContext.application.resources.getDimensionPixelSize(resourceId)
+    }
+
+    /**
+     * 获取导航栏高度
+     */
+    fun getNavigationBarHeightDp(): Int {
+        return px2dip(getNavigationBarHeight().toFloat())
+    }
+
+    /**
      * 指定机型（displayMetrics.xdpi）下dp转px
      */
     fun dpToPxByDevice(dp: Int): Int {
