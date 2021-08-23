@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +20,7 @@ import com.google.accompanist.insets.statusBarsHeight
 import com.gq.basic.basis.BasicFragment
 import com.gq.basic.compose.CheckUpdateAppCompose
 import com.gq.basic.compose.PictureAndVideoSelectorCompose
+import com.gq.basic.compose.WebViewCompose
 import com.gq.composefoundation.NavGraph
 import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 

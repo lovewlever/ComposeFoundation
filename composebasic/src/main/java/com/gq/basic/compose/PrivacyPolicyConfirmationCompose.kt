@@ -44,6 +44,7 @@ fun PrivacyPolicyConfirmationDialogCompose(
     LaunchedEffect(key1 = Unit) {
         DataStoreCommon.getBasicType(DataStoreCommon.DSK_PRIVACY_POLICY) {
             isShowPP.value = it ?: 0
+            if (isShowPP.value == 1) doneClick()
         }
     }
     if (isShowPP.value != 1) {

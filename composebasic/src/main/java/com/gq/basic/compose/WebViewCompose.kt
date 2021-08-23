@@ -24,6 +24,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 fun WebViewCompose(
     modifier: Modifier = Modifier,
     url: String = "",
+    data: String = "",
+    mimeType: String? = null,
+    encoding: String? = null,
     onProgressDoneCallback: (WebView) -> Unit = {}
 ) {
 
@@ -47,7 +50,12 @@ fun WebViewCompose(
             progressState = webViewProgressState,
             onProgressDoneCallback = onProgressDoneCallback
         ) { webView ->
-            webView.loadUrl(url)
+            if (url != "") {
+                webView.loadUrl(url)
+            } else if (data != "") {
+                webView.loadData(data, mimeType, encoding)
+            }
+
         }
     }
 }
