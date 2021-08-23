@@ -1,6 +1,8 @@
 package com.gq.basic.common
 
+import android.app.Activity
 import android.content.Context
+import androidx.core.content.edit
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -20,8 +22,37 @@ object DataStoreCommon {
     val DSK_USER_TOKEN = stringPreferencesKey("token")
     // 隐私政策弹窗 1：已同意，0：未同意
     val DSK_PRIVACY_POLICY = intPreferencesKey("privacyPolicy")
+    val sp by lazy {
+        AppContext.application.getSharedPreferences(AppContext.application.packageName, Activity.MODE_PRIVATE)
+    }
 
     val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "navigationDataStore")
+
+    fun <T> getEntityBySP(key: Preferences.Key<T>): T? {
+        return GsonCommon.gson.fromJson(sp.getString(key.name,""), object : TypeToken<MutableList<T>>() {}.type)
+    }
+
+    fun <T> putEntityBySP(key: Preferences.Key<T>, t: T) {
+        sp.edit {
+            putString(key.name, GsonCommon.gson.toJson(t))
+        }
+    }
+
+    /*fun <T> getBasicTypeBySP(key: Preferences.Key<T>): T {
+
+    }*/
+
+    fun <T> putBasicTypeBySP(key: Preferences.Key<T>, t: T) {
+        sp.edit {
+            when(t) {
+                is Int -> putInt(key.name, t)
+                is Float -> putFloat(key.name, t)
+                is Boolean -> putBoolean(key.name, t)
+                is String -> putString(key.name, t)
+                is Long -> putLong(key.name, t)
+            }
+        }
+    }
 
     suspend fun clearData() {
         AppContext.application.dataStore.edit {
