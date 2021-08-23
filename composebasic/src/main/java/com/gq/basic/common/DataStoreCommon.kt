@@ -18,40 +18,72 @@ import kotlinx.coroutines.flow.map
 
 object DataStoreCommon {
 
-    val DSK_USER_ID = stringPreferencesKey("userId")
-    val DSK_USER_TOKEN = stringPreferencesKey("token")
     // 隐私政策弹窗 1：已同意，0：未同意
     val DSK_PRIVACY_POLICY = intPreferencesKey("privacyPolicy")
     val sp by lazy {
-        AppContext.application.getSharedPreferences(AppContext.application.packageName, Activity.MODE_PRIVATE)
+        AppContext.application.getSharedPreferences(
+            AppContext.application.packageName,
+            Activity.MODE_PRIVATE
+        )
     }
 
     val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "navigationDataStore")
 
-    fun <T> getEntityBySP(key: Preferences.Key<T>): T? {
-        return GsonCommon.gson.fromJson(sp.getString(key.name,""), object : TypeToken<MutableList<T>>() {}.type)
+    fun <T> getEntityBySP(key: String): T? {
+        return GsonCommon.gson.fromJson(
+            sp.getString(key, ""),
+            object : TypeToken<MutableList<T>>() {}.type
+        )
     }
 
-    fun <T> putEntityBySP(key: Preferences.Key<T>, t: T) {
+    fun <T> putEntityBySP(key: String, t: T) {
         sp.edit {
-            putString(key.name, GsonCommon.gson.toJson(t))
+            putString(key, GsonCommon.gson.toJson(t))
         }
     }
 
-    /*fun <T> getBasicTypeBySP(key: Preferences.Key<T>): T {
-
-    }*/
-
-    fun <T> putBasicTypeBySP(key: Preferences.Key<T>, t: T) {
-        sp.edit {
-            when(t) {
-                is Int -> putInt(key.name, t)
-                is Float -> putFloat(key.name, t)
-                is Boolean -> putBoolean(key.name, t)
-                is String -> putString(key.name, t)
-                is Long -> putLong(key.name, t)
+    inline fun <reified T> getBasicTypeBySP(key: String, default: T): T {
+        return when (T::class) {
+            Int::class -> {
+                sp.getInt(key, default as Int) as T
+            }
+            Float::class -> {
+                sp.getFloat(key, default as Float) as T
+            }
+            Boolean::class -> {
+                sp.getBoolean(key, default as Boolean) as T
+            }
+            String::class -> {
+                sp.getString(key, default as String) as T
+            }
+            Long::class -> {
+                sp.getLong(key, default as Long) as T
+            } else -> {
+                throw TypeCastException("不支持的类型")
             }
         }
+
+    }
+
+    fun <T> putBasicTypeBySP(key: String, t: T) {
+        sp.edit {
+            when (t) {
+                is Int -> putInt(key, t)
+                is Float -> putFloat(key, t)
+                is Boolean -> putBoolean(key, t)
+                is String -> putString(key, t)
+                is Long -> putLong(key, t)
+            }
+        }
+    }
+
+    suspend fun clearDataAndSP() {
+        clearData()
+        clearDataBySP()
+    }
+
+    suspend fun clearDataBySP() {
+        sp.edit { clear() }
     }
 
     suspend fun clearData() {
@@ -92,7 +124,8 @@ object DataStoreCommon {
         AppContext.application.dataStore.data.map { preferences: Preferences ->
             preferences[key]
         }.collect {
-            val fromJson: T = GsonCommon.gson.fromJson(it, T::class.java) ?: T::class.java.newInstance()
+            val fromJson: T =
+                GsonCommon.gson.fromJson(it, T::class.java) ?: T::class.java.newInstance()
             withContext(Dispatchers.Main) {
                 callback(fromJson)
             }
