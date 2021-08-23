@@ -1,8 +1,11 @@
 package com.gq.composefoundation.ui
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
@@ -33,6 +36,7 @@ import com.gq.composefoundation.ui.fragment.Fragment2
 import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : BasicActivity() {
@@ -50,6 +54,9 @@ class MainActivity : BasicActivity() {
                 this.fragment<Fragment2>(route = NavGraph.Route.PlantDetail)
             }
         }
+
+
+            Timber.i(DeviceCommon.getAndroidId())
 
     }
 
