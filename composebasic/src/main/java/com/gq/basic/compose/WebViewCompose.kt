@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import java.net.URLEncoder
 
 /**
  * WebView
@@ -53,7 +54,7 @@ fun WebViewCompose(
             if (url != "") {
                 webView.loadUrl(url)
             } else if (data != "") {
-                webView.loadData(data, mimeType, encoding)
+                webView.loadData(URLEncoder.encode(data, "UTF-8"), mimeType, encoding)
             }
 
         }
