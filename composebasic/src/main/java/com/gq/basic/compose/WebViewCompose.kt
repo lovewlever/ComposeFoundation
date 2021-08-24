@@ -28,6 +28,7 @@ fun WebViewCompose(
     data: String = "",
     mimeType: String? = null,
     encoding: String? = null,
+    javascriptInterface: Any? = null,
     onProgressDoneCallback: (WebView) -> Unit = {}
 ) {
 
@@ -49,7 +50,8 @@ fun WebViewCompose(
         }
         FWebView(
             progressState = webViewProgressState,
-            onProgressDoneCallback = onProgressDoneCallback
+            onProgressDoneCallback = onProgressDoneCallback,
+            javascriptInterface = javascriptInterface,
         ) { webView ->
             if (url != "") {
                 webView.loadUrl(url)
@@ -67,6 +69,7 @@ private fun FWebView(
     modifier: Modifier = Modifier,
     progressState: MutableState<Float>,
     onProgressDoneCallback: (WebView) -> Unit = {},
+    javascriptInterface: Any? = null,
     block: (webView: WebView) -> Unit = {}
 ) {
     AndroidView(
@@ -91,6 +94,9 @@ private fun FWebView(
                     ): Boolean {
                         return false
                     }
+                }
+                javascriptInterface?.let {
+                    webView.addJavascriptInterface(it, "android")
                 }
             }
         }) { webView ->

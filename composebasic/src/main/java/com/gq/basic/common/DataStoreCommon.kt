@@ -29,10 +29,18 @@ object DataStoreCommon {
 
     val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "navigationDataStore")
 
-    fun <T> getEntityBySP(key: String): T? {
+
+    fun <T> getEntityListBySP(key: String): List<T>? {
         return GsonCommon.gson.fromJson(
             sp.getString(key, ""),
             object : TypeToken<MutableList<T>>() {}.type
+        )
+    }
+
+    inline fun <reified T> getEntityBySP(key: String): T? {
+        return GsonCommon.gson.fromJson(
+            sp.getString(key, ""),
+            T::class.java
         )
     }
 
