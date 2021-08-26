@@ -7,6 +7,7 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Size
 import com.gq.basic.AppContext
+import java.util.regex.Pattern
 
 /**
  * 获取视频第一帧
@@ -46,6 +47,19 @@ inline fun <E,R> Collection<E>?.ifNotNullAndEmpty(block: (MutableList<E>) -> R):
     }
     return null
 }
+
+/**
+ * 匹配手机号
+ */
+inline fun String.matchPhoneNumber(): Boolean =
+    Pattern.compile("^(?:(?:\\+|00)86)?1[3-9]\\d{9}\$").matcher(this).matches()
+
+/**
+ * 匹配url
+ */
+inline fun String.matchUrl(): Boolean =
+    Pattern.compile("^(((ht|f)tps?):\\/\\/)?[\\w-]+(\\.[\\w-]+)+([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?\$").matcher(this).matches()
+
 
 /**
  * 毫秒转hh:mm:ss格式

@@ -23,6 +23,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gq.basic.R
 import com.gq.basic.common.DensityCommon
+import com.gq.basic.common.ToastCommon
+import com.gq.basic.common.matchUrl
 import com.gq.basic.hilt.UpdateAppModule
 import com.gq.basic.viewmodel.UpdateViewModel
 import timber.log.Timber
@@ -149,12 +151,16 @@ private fun DownloadApkInstallCompose(
         }
 
         LaunchedEffect(key1 = Unit, block = {
-            viewModel.downloadApk(downloadUrl)
-            UpdateAppModule.downloadApkProgress =
-                { url: String?, bytesRead: Long, contentLength: Long, done: Boolean ->
-                    val progress = bytesRead.toFloat() / contentLength
-                    downloadApkProgressState = progress
-                }
+            if (downloadUrl.matchUrl()) {
+                viewModel.downloadApk(downloadUrl)
+                UpdateAppModule.downloadApkProgress =
+                    { url: String?, bytesRead: Long, contentLength: Long, done: Boolean ->
+                        val progress = bytesRead.toFloat() / contentLength
+                        downloadApkProgressState = progress
+                    }
+            } else {
+                ToastCommon.showCenterToast(context.getString(R.string.cb_url_fail))
+            }
         })
 
         LaunchedEffect(key1 = apkDoneState.value, block = {
