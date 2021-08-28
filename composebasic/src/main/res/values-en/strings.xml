@@ -16,7 +16,7 @@
     <string name="cb_privacy_policy_title">隐私政策</string>
     <string name="cb_read_carefully_pp">请仔细阅读</string>
     <string name="cb_privacy_policy_num">《隐私政策》</string>
-    <string name="cb_pp_other">了解详细信息。如你同意，请点击`同意`开始接受我们的同意</string>
+    <string name="cb_pp_other">了解详细信息。如你同意，请点击`同意`开始接受我们的服务</string>
     <string name="cb_do_not_use">暂不使用</string>
     <string name="cb_agree">同意</string>
     <string name="cb_download_fail">下载失败</string>
