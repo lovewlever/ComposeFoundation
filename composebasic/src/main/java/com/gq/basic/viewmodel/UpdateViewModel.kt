@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gq.basic.AppContext
+import com.gq.basic.common.VersionCommon
 import com.gq.basic.common.ifNotNullAndEmpty
 import com.gq.basic.data.ResultEntity
 import com.gq.basic.viewmodel.repository.UpdateRepository
@@ -55,7 +57,7 @@ class UpdateViewModel @Inject constructor(
     fun installApk(context: Context, file: File) {
         context.startActivity(Intent(Intent.ACTION_VIEW).also { intent ->
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            val apkUri = FileProvider.getUriForFile(context, "com.gq.composefoundation.fileProvider", file)
+            val apkUri = FileProvider.getUriForFile(context, "${VersionCommon.getApplicationId()}.fileProvider", file)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             intent.setDataAndType(apkUri, "application/vnd.android.package-archive")

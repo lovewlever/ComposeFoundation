@@ -18,6 +18,10 @@ object VersionCommon {
         getPackageInfo().versionName
 
 
+    fun getApplicationId(): String =
+        AppContext.application.applicationInfo.processName
+
+
     private fun getPackageInfo(): PackageInfo =
         AppContext.application.applicationContext
             .packageManager
