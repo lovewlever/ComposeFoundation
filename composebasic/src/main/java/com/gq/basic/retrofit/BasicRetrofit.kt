@@ -55,8 +55,6 @@ class BasicRetrofit @Inject constructor() {
                     }
                 }
                 .retryOnConnectionFailure(true)//允许重试
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
                 .build()
 
         retrofitInstance = Retrofit.Builder()
