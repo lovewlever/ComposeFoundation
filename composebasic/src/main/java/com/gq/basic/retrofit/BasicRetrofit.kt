@@ -45,7 +45,6 @@ class BasicRetrofit @Inject constructor() {
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor(printResponse())
                 .apply {
                     interceptor?.forEach {
                         addInterceptor(it)
@@ -74,27 +73,6 @@ class BasicRetrofit @Inject constructor() {
             }
             .build()
     }
-
-
-    /**
-     * 打印响应信息
-     * @return
-     */
-    private fun printResponse(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-                try {
-                    //val text = URLDecoder.decode(message, "utf-8")
-                    Timber.i(message)
-                } catch (e: UnsupportedEncodingException) {
-                    Timber.e(e)
-                }
-            }
-
-        }).apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-
     /**
      * 保存Cookie
      * @return
