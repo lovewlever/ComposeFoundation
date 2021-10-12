@@ -7,10 +7,9 @@ buildscript {
         VersionCode = 1
         VersionName = "1.0"
 
-
-        compose_version = '1.0.1'
+        compose_version = '1.0.3'
         hilt_plugin_version = '2.36'
-        nav_version = "2.4.0-alpha06"
+        nav_version = "2.4.0-alpha10"
         kotlin_compiler_version = "1.5.10"
     }
     repositories {
