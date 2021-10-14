@@ -29,10 +29,9 @@ object DirCommon {
      */
     fun deleteDir(dir: File): Boolean {
         if (dir.isDirectory) {
-            val children = dir.list()
             //递归删除目录中的子目录下
-            children.forEachIndexed { index, s ->
-                val success = deleteDir(File(dir, children[index]))
+            dir.list()?.forEach { file ->
+                val success = deleteDir(File(dir, file))
                 if (!success) {
                     return false
                 }
