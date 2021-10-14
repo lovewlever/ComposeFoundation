@@ -41,10 +41,10 @@ class BasicRetrofit @Inject constructor() {
             OkHttpClient.Builder()
                 .proxy(Proxy.NO_PROXY)
                 .cookieJar(saveCookie())
-                .callTimeout(30, TimeUnit.SECONDS)
+                /*.callTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)*/
                 .apply {
                     interceptor?.forEach {
                         addInterceptor(it)
