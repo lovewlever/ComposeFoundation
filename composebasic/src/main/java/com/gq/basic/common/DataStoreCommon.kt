@@ -108,8 +108,22 @@ object DataStoreCommon {
 
     suspend inline fun <reified T> getBasicType(
         key: Preferences.Key<T>,
-        default: T? = null,
         crossinline callback: (T?) -> Unit = {}
+    ) {
+        AppContext.application.dataStore.data.map { preferences: Preferences ->
+            preferences[key]
+        }.collect { t: T? ->
+            withContext(Dispatchers.Main) {
+                callback(t)
+            }
+        }
+    }
+
+
+    suspend inline fun <reified T> getBasicType(
+        key: Preferences.Key<T>,
+        default: T,
+        crossinline callback: (T) -> Unit = {}
     ) {
         AppContext.application.dataStore.data.map { preferences: Preferences ->
             preferences[key]
