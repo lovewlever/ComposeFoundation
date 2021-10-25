@@ -3,13 +3,11 @@ package com.gq.basic.compose
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -22,12 +20,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gq.basic.R
-import com.gq.basic.common.DensityCommon
 import com.gq.basic.common.ToastCommon
 import com.gq.basic.common.matchUrl
 import com.gq.basic.hilt.UpdateAppModule
 import com.gq.basic.viewmodel.UpdateViewModel
-import timber.log.Timber
 import java.io.File
 
 /**

@@ -1,6 +1,5 @@
 package com.gq.basic.hilt
 
-import com.gq.basic.AppContext
 import com.gq.basic.api.UpdateApi
 import com.gq.basic.retrofit.ProgressInterceptor
 import com.gq.basic.retrofit.ProgressListener

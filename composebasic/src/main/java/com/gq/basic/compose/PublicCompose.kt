@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gq.basic.R
-import com.gq.basic.common.DataStoreCommon
 
 /**
  * 弹窗下面的双按钮

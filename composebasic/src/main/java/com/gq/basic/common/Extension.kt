@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.util.Size
 import com.gq.basic.AppContext
 import java.util.regex.Pattern

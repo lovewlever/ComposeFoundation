@@ -8,7 +8,6 @@ import android.view.View
 import android.view.Window
 import android.view.WindowInsetsController
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject

@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gq.basic.AppContext
 import com.gq.basic.common.VersionCommon
 import com.gq.basic.common.ifNotNullAndEmpty
 import com.gq.basic.data.ResultEntity

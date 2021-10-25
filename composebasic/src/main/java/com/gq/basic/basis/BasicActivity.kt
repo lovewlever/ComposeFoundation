@@ -1,7 +1,6 @@
 package com.gq.basic.basis
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import com.gq.basic.common.SystemUiController
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,9 +1,7 @@
 package com.gq.basic.common
 
 import android.view.Gravity
-import android.view.View
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import com.gq.basic.AppContext
 
 object ToastCommon {

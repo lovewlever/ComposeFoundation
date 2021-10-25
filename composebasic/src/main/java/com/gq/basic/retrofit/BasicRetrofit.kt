@@ -2,14 +2,10 @@ package com.gq.basic.retrofit
 
 import com.gq.basic.AppContext
 import okhttp3.*
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
-import timber.log.Timber
-import java.io.UnsupportedEncodingException
 import java.net.Proxy
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.reflect.KClass

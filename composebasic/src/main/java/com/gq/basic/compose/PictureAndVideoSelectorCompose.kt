@@ -2,21 +2,20 @@ package com.gq.basic.compose
 
 import android.Manifest
 import android.net.Uri
-import android.util.Size
 import android.widget.MediaController
 import android.widget.VideoView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.core.*
-import androidx.compose.animation.fadeIn
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,33 +23,23 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.graphics.drawable.toIcon
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.ImageLoader
-import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
-import coil.decode.VideoFrameDecoder
-import coil.fetch.VideoFrameFileFetcher
-import coil.fetch.VideoFrameUriFetcher
 import com.gq.basic.R
-import com.gq.basic.common.*
+import com.gq.basic.common.DensityCommon
+import com.gq.basic.common.loadVideoThumbnail
+import com.gq.basic.common.millisecondToHms
 import com.gq.basic.viewmodel.PictureVideoSelectorViewModel
-import timber.log.Timber
-import kotlin.math.roundToInt
 
 data class PVUris(
     var uri: Uri,
