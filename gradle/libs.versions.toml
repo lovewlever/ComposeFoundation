@@ -10,7 +10,7 @@ compose_version = '1.0.4'
 hilt_plugin_version = '2.36'
 nav_version = "2.4.0-alpha10"
 kotlin_compiler_version = "1.5.31"
-accompanist = "0.19.0"
+accompanist = "0.21.2-beta"
 coil_version = "1.3.2"
 
 [libraries]
@@ -66,6 +66,10 @@ accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiper
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 accompanist-pagerIndicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
+accompanist-navigationAnimation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+accompanist-placeholderMaterial = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
+accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
 #Coil
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_version" }
 coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil_version" }
@@ -143,7 +147,11 @@ accompanist = [
     "accompanist-swiperefresh",
     "accompanist-pager",
     "accompanist-pagerIndicators",
-    "accompanist-flowlayout"
+    "accompanist-flowlayout",
+    "accompanist-navigationAnimation",
+    "accompanist-permissions",
+    "accompanist-placeholderMaterial",
+    "accompanist-placeholder"
 ]
 coil = [
     "coil-compose",
