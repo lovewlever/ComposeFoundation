@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdk CompileSdkVersion
+    compileSdk libs.versions.compileSdkVersion.get().toInteger()
 
     defaultConfig {
-        minSdk MinSdk
-        targetSdk TargetSdk
+        minSdk libs.versions.minSdk.get().toInteger()
+        targetSdk libs.versions.targetSdk.get().toInteger()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -22,8 +22,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -32,7 +32,6 @@ android {
 
 dependencies {
 
-    implementation project(":RemoteLibrary")
     implementation project(path: ':composebasic')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -40,6 +39,11 @@ dependencies {
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     api 'com.tencent.bugly:crashreport:latest.release'
     api 'com.google.android.gms:play-services-auth:19.2.0'
-    implementation "com.google.dagger:hilt-android:$hilt_plugin_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
+    implementation(libs.bundles.androidx)
+    implementation(libs.bundles.timber)
+    implementation(libs.bundles.retrofit2)
+    implementation(libs.bundles.okhttp3)
+    implementation(libs.gson)
+    implementation(libs.bundles.hilt)
+    kapt libs.bundles.kapt
 }

@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    compileSdk CompileSdkVersion
+    compileSdk libs.versions.compileSdkVersion.get().toInteger()
 
     defaultConfig {
-        minSdk MinSdk
-        targetSdk TargetSdk
+        minSdk libs.versions.minSdk.get().toInteger()
+        targetSdk libs.versions.targetSdk.get().toInteger()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -29,8 +29,8 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion kotlin_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.version.get()
+        kotlinCompilerVersion libs.versions.kotlin.compiler.version.get()
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -46,10 +46,20 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation project(":RemoteLibrary")
-
-    //Hilt
-    implementation "com.google.dagger:hilt-android:$hilt_plugin_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
+    implementation(libs.bundles.compose)
+    implementation(libs.bundles.androidx)
+    implementation(libs.bundles.navigation)
+    implementation(libs.bundles.room)
+    implementation(libs.bundles.datastore)
+    implementation(libs.bundles.timber)
+    implementation(libs.bundles.retrofit2)
+    implementation(libs.bundles.okhttp3)
+    implementation(libs.bundles.paging3)
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.bundles.accompanist)
+    implementation(libs.bundles.coil)
+    implementation(libs.bundles.bugly)
+    implementation(libs.bundles.hilt)
+    kapt libs.bundles.kapt
 
 }

@@ -6,8 +6,9 @@ dependencyResolutionManagement {
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
+enableFeaturePreview( 'VERSION_CATALOGS')
 rootProject.name = "ComposeFoundation"
 include ':app'
 include ':composebasic'
-include ':RemoteLibrary'
+//include ':RemoteLibrary'
 include ':loginsharing'
