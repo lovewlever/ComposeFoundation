@@ -49,6 +49,7 @@ android {
 dependencies {
 
     implementation project(":composebasic")
+    implementation project(":loginsharing")
     implementation project(":RemoteLibrary")
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

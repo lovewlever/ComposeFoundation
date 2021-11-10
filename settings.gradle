@@ -10,3 +10,4 @@ rootProject.name = "ComposeFoundation"
 include ':app'
 include ':composebasic'
 include ':RemoteLibrary'
+include ':loginsharing'
