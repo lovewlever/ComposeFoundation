@@ -1,13 +1,14 @@
 package com.gq.composefoundation.retrofit.calladapter
 
 import com.google.gson.JsonParseException
-import com.gq.basic.data.RetrofitCall
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import timber.log.Timber
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
+
+class RetrofitCall<R> (val obtain: R)
 
 class CustomCallAdapterFactory: CallAdapter.Factory() {
 

@@ -1,4 +1,4 @@
-package com.gq.basic.data
+package com.gq.composefoundation.data
 
 import java.io.Serializable
 

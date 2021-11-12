@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gq.basic.common.VersionCommon
 import com.gq.basic.common.ifNotNullAndEmpty
-import com.gq.basic.data.ResultEntity
+import com.gq.basic.data.DownloadApkResult
 import com.gq.basic.viewmodel.repository.UpdateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -31,7 +31,7 @@ class UpdateViewModel @Inject constructor(
      */
     fun downloadApk(url: String) {
         downloadApkJob = viewModelScope.launch {
-            updateApkRepository.startUpdateApk(url).let { result: ResultEntity<String> ->
+            updateApkRepository.startUpdateApk(url).let { result: DownloadApkResult<String> ->
                 if (result.code == 200) {
                     result.data.ifNotNullAndEmpty { it[0] }?.let { it: String ->
                         _downloadApkDoneResult.value = it

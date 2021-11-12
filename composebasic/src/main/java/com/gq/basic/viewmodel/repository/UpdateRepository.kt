@@ -4,7 +4,7 @@ import com.gq.basic.AppContext
 import com.gq.basic.R
 import com.gq.basic.api.UpdateApi
 import com.gq.basic.common.DirCommon
-import com.gq.basic.data.ResultEntity
+import com.gq.basic.data.DownloadApkResult
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,7 +19,7 @@ class UpdateRepository @Inject constructor(
     /**
      * 下载APK
      */
-    suspend fun startUpdateApk(url: String): ResultEntity<String> =
+    suspend fun startUpdateApk(url: String): DownloadApkResult<String> =
         withContext(Dispatchers.IO) {
             updateApi.downloadUpdateApk(url).execute().body()?.byteStream()
                 ?.use { stream: InputStream ->
@@ -32,13 +32,13 @@ class UpdateRepository @Inject constructor(
                     }
                     bos.flush()
 
-                    return@withContext ResultEntity(
+                    return@withContext DownloadApkResult(
                         code = 200,
                         msg = "",
                         data = mutableListOf(path.absolutePath)
                     )
                 } ?: let {
-                return@withContext ResultEntity(
+                return@withContext DownloadApkResult(
                     code = 400,
                     msg = AppContext.application.getString(R.string.cb_download_fail)
                 )
