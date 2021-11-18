@@ -24,7 +24,7 @@ object ToastCommon {
 
     private fun getCenterToast(str: CharSequence?, duration: Int) =
         Toast.makeText(AppContext.application, str, duration).also { t: Toast ->
-            t.setGravity(Gravity.CENTER,0,0)
+            t.setGravity(Gravity.CENTER, 0, 0)
         }
 
     private fun getDefaultToast(str: CharSequence?, duration: Int) =
