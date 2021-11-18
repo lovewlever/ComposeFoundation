@@ -6,7 +6,7 @@ import com.gq.basic.AppContext
 
 object ToastCommon {
 
-    fun showCenterToast(str: CharSequence, duration: Int = Toast.LENGTH_LONG) {
+    fun showCenterToast(str: CharSequence?, duration: Int = Toast.LENGTH_LONG) {
         getCenterToast(str, duration).show()
     }
 
@@ -14,7 +14,7 @@ object ToastCommon {
         getCenterToast(AppContext.application.resources.getText(resId), duration).show()
     }
 
-    fun showDefaultToast(str: CharSequence, duration: Int = Toast.LENGTH_LONG) {
+    fun showDefaultToast(str: CharSequence?, duration: Int = Toast.LENGTH_LONG) {
         getDefaultToast(str, duration).show()
     }
 
@@ -22,12 +22,12 @@ object ToastCommon {
         getDefaultToast(AppContext.application.resources.getText(resId), duration).show()
     }
 
-    private fun getCenterToast(str: CharSequence, duration: Int) =
+    private fun getCenterToast(str: CharSequence?, duration: Int) =
         Toast.makeText(AppContext.application, str, duration).also { t: Toast ->
             t.setGravity(Gravity.CENTER,0,0)
         }
 
-    private fun getDefaultToast(str: CharSequence, duration: Int) =
+    private fun getDefaultToast(str: CharSequence?, duration: Int) =
         Toast.makeText(AppContext.application, str, duration)
 
 }
