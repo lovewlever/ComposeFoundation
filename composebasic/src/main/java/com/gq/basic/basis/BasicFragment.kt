@@ -14,9 +14,9 @@ open class BasicFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         systemUiController
+            .setDecorFitsSystemWindows()
             .setBarsIconLightColor()
             .setStatusBarColor()
             .setNavigationBarColor()
-            .setDecorFitsSystemWindows()
     }
 }
