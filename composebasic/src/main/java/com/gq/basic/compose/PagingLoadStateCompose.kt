@@ -60,7 +60,7 @@ fun PagingLoadStateCompose(
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
-        when (combinedLoadStates.prepend) {
+        when (combinedLoadStates.append) {
             is LoadState.Error -> {
                 PLSError(
                     modifier = modifier,
