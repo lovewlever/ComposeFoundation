@@ -19,10 +19,10 @@ open class BasicActivity: AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         systemUiController
-            .setDecorFitsSystemWindows()
+            .setBarsIconLightColor()
             .setStatusBarColor()
             .setNavigationBarColor()
-            .setBarsIconLightColor()
+            .setDecorFitsSystemWindows()
     }
 
 }
