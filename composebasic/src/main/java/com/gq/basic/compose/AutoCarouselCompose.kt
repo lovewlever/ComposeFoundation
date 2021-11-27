@@ -34,11 +34,11 @@ fun AutoHorizontalCarouselCompose(
             val job = coroutineScope.launch {
                 while (true) {
                     delay(delay)
-                    if (count - 1 == pagerState.currentPage) {
-                        pagerState.animateScrollToPage(0)
-                    } else {
-                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                    var page = pagerState.currentPage + 1
+                    if (page > count - 1) {
+                        page = 0
                     }
+                    pagerState.animateScrollToPage(page)
                 }
             }
             onDispose {
