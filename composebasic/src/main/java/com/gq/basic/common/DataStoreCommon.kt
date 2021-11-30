@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken
 import com.gq.basic.AppContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -29,6 +30,7 @@ object DataStoreCommon {
     val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "navigationDataStore")
 
 
+    @Deprecated("")
     fun <T> getEntityListBySP(key: String): List<T>? {
         return GsonCommon.gson.fromJson(
             sp.getString(key, ""),
@@ -36,6 +38,9 @@ object DataStoreCommon {
         )
     }
 
+    @Deprecated("", ReplaceWith(
+        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+        "com.gq.basic.common.DataStoreCommon.sp"))
     inline fun <reified T> getEntityBySP(key: String): T? {
         return GsonCommon.gson.fromJson(
             sp.getString(key, ""),
@@ -43,12 +48,18 @@ object DataStoreCommon {
         )
     }
 
+    @Deprecated("", ReplaceWith(
+        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+        "com.gq.basic.common.DataStoreCommon.sp"))
     fun <T> putEntityBySP(key: String, t: T) {
         sp.edit {
             putString(key, GsonCommon.gson.toJson(t))
         }
     }
 
+    @Deprecated("", ReplaceWith(
+        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+        "com.gq.basic.common.DataStoreCommon.sp"))
     inline fun <reified T> getBasicTypeBySP(key: String, default: T): T {
         return when (T::class) {
             Int::class -> {
@@ -72,6 +83,9 @@ object DataStoreCommon {
 
     }
 
+    @Deprecated("", ReplaceWith(
+        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+        "com.gq.basic.common.DataStoreCommon.sp"))
     fun <T> putBasicTypeBySP(key: String, t: T) {
         sp.edit {
             when (t) {
@@ -84,11 +98,17 @@ object DataStoreCommon {
         }
     }
 
+    @Deprecated("", ReplaceWith(
+        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+        "com.gq.basic.common.DataStoreCommon.sp"))
     suspend fun clearDataAndSP() {
         clearData()
         clearDataBySP()
     }
 
+    @Deprecated("", ReplaceWith(
+        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+        "com.gq.basic.common.DataStoreCommon.sp"))
     suspend fun clearDataBySP() {
         sp.edit { clear() }
     }
@@ -133,6 +153,15 @@ object DataStoreCommon {
         }
     }
 
+    suspend inline fun <reified T> getBasicType(
+        key: Preferences.Key<T>,
+        default: T
+    ): T {
+        return AppContext.application.dataStore.data.map { preferences: Preferences ->
+            preferences[key]
+        }.first() ?: default
+    }
+
     suspend fun <T> putEntity(key: Preferences.Key<String>, t: T) {
         AppContext.application.dataStore.edit { dataStore ->
             dataStore[key] = GsonCommon.gson.toJson(t)
@@ -154,9 +183,21 @@ object DataStoreCommon {
         }
     }
 
+    suspend inline fun <reified T> getEntity(
+        key: Preferences.Key<String>
+    ): T? {
+        AppContext.application.dataStore.data.map { preferences: Preferences ->
+            preferences[key]
+        }.first().let {
+            val fromJson: T? =
+                GsonCommon.gson.fromJson(it, T::class.java)
+            return fromJson
+        }
+    }
+
     suspend inline fun <T> getEntityList(
         key: Preferences.Key<String>,
-        crossinline callback: (MutableList<T>?) -> Unit
+        crossinline callback: (MutableList<T>) -> Unit
     ) {
         AppContext.application.dataStore.data.map { preferences: Preferences ->
             preferences[key]
@@ -164,8 +205,20 @@ object DataStoreCommon {
             val fromJson: MutableList<T>? =
                 GsonCommon.gson.fromJson(it, object : TypeToken<MutableList<T>>() {}.type)
             withContext(Dispatchers.Main) {
-                callback(fromJson)
+                callback(fromJson ?: mutableListOf())
             }
+        }
+    }
+
+    suspend inline fun <T> getEntityList(
+        key: Preferences.Key<String>
+    ): MutableList<T> {
+        AppContext.application.dataStore.data.map { preferences: Preferences ->
+            preferences[key]
+        }.first().let {
+            val fromJson: MutableList<T>? =
+                GsonCommon.gson.fromJson(it, object : TypeToken<MutableList<T>>() {}.type)
+            return fromJson ?: mutableListOf()
         }
     }
 }
