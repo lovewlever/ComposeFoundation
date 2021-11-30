@@ -44,8 +44,8 @@ fun PrivacyPolicyConfirmationDialogCompose(
     }
     // 查询是否已同意使用app
     LaunchedEffect(key1 = Unit) {
-        DataStoreCommon.getBasicType(DataStoreCommon.DSK_PRIVACY_POLICY) {
-            isShowPP.value = it ?: 0
+        DataStoreCommon.getBasicType(DataStoreCommon.DSK_PRIVACY_POLICY, 0) {
+            isShowPP.value = it
             if (isShowPP.value == 1) doneClick()
         }
     }
