@@ -2,8 +2,8 @@
 compileSdkVersion = "31"
 minSdk = "26"
 targetSdk = "31"
-versionCode = "1"
-versionName = "1.0"
+versionCode = "2"
+versionName = "1.1.0"
 
 room_version = "2.3.0"
 compose_version = '1.0.4'
@@ -12,6 +12,7 @@ nav_version = "2.4.0-alpha10"
 kotlin_compiler_version = "1.5.31"
 accompanist = "0.21.2-beta"
 coil_version = "1.3.2"
+lifecycle_version = "2.4.0"
 
 [libraries]
 #Androidx
@@ -23,6 +24,7 @@ androidx-activityCompose = 'androidx.activity:activity-compose:1.4.0'
 androidx-activityKtx = 'androidx.activity:activity-ktx:1.4.0'
 androidx-fragmentKtx = "androidx.fragment:fragment-ktx:1.3.6"
 androidx-material = 'com.google.android.material:material:1.4.0'
+androidx-documentfile =  'androidx.documentfile:documentfile:1.0.1'
 #Compose
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose_version" }
 compose-uiUtil = { module = "androidx.compose.ui:ui-util", version.ref = "compose_version" }
@@ -55,6 +57,7 @@ paging3-compose = "androidx.paging:paging-compose:1.0.0-alpha14"
 #lifecycle
 lifecycle-viewmodelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-rc01"
 lifecycle-hiltVidemodel = 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "lifecycle_version" }
 #Gson
 gson = "com.google.code.gson:gson:2.8.9"
 #Kotlin
@@ -81,6 +84,8 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt_
 #Kapt
 hilt-kapt = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt_plugin_version" }
 room-kapt = { module = "androidx.room:room-compiler", version.ref = "room_version" }
+#Luban
+luban = "top.zibin:Luban:1.1.8"
 #ClassPath
 build-gradle = 'com.android.tools.build:gradle:7.0.3'
 kotlin-gradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
@@ -109,7 +114,8 @@ androidx = [
     "androidx-activityCompose",
     "androidx-activityKtx",
     "androidx-fragmentKtx",
-    "androidx-material"
+    "androidx-material",
+    "androidx-documentfile",
 ]
 navigation = [
     "navigation-fragment",
@@ -139,7 +145,8 @@ paging3 = [
 ]
 lifecycle = [
     "lifecycle-viewmodelCompose",
-    "lifecycle-hiltVidemodel"
+    "lifecycle-hiltVidemodel",
+    "lifecycle-service"
 ]
 accompanist = [
     "accompanist-systemuicontroller",
