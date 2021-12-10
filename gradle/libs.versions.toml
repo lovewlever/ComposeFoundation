@@ -55,7 +55,7 @@ okhttp3-loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.2"
 paging3-runtimeKtx = "androidx.paging:paging-runtime-ktx:3.0.1"
 paging3-compose = "androidx.paging:paging-compose:1.0.0-alpha14"
 #lifecycle
-lifecycle-viewmodelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-rc01"
+lifecycle-viewmodelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
 lifecycle-hiltVidemodel = 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
 lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "lifecycle_version" }
 #Gson
@@ -81,9 +81,11 @@ bugly-crashreport = 'com.tencent.bugly:crashreport:latest.release'
 bugly-nativecrashreport = 'com.tencent.bugly:nativecrashreport:latest.release'
 #Hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt_plugin_version" }
+hilt-navigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
 #Kapt
 hilt-kapt = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt_plugin_version" }
 room-kapt = { module = "androidx.room:room-compiler", version.ref = "room_version" }
+lifecycle-kapt = { module = "androidx.lifecycle:lifecycle-compiler", version.ref = "lifecycle_version"}
 #Luban
 luban = "top.zibin:Luban:1.1.8"
 #ClassPath
@@ -94,7 +96,8 @@ navigatiom-gradle = { module = "androidx.navigation:navigation-safe-args-gradle-
 [bundles]
 kapt = [
     "hilt-kapt",
-    "room-kapt"
+    "room-kapt",
+    "lifecycle-kapt"
 ]
 compose = [
     "compose-ui",
@@ -169,5 +172,6 @@ bugly = [
     "bugly-nativecrashreport",
 ]
 hilt = [
-    "hilt-android"
+    "hilt-android",
+    "hilt-navigationCompose"
 ]
