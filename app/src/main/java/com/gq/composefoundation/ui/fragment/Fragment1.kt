@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,8 +17,11 @@ import androidx.navigation.findNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsHeight
 import com.gq.basic.basis.BasicFragment
+import com.gq.basic.common.ToastCommon
 import com.gq.basic.compose.CheckUpdateAppCompose
 import com.gq.basic.compose.PictureAndVideoSelectorCompose
+import com.gq.basic.compose.ProgressButton
+import com.gq.basic.compose.rememberProgressButtonState
 import com.gq.composefoundation.NavGraph
 import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 
@@ -67,16 +68,24 @@ fun Greeting(
             }
         }
     ) {
-        PictureAndVideoSelectorCompose(
-            completeClick = {
-                jumpClick()
+        Column {
+            ProgressButton(width = 200.dp, height = 40.dp, state = rememberProgressButtonState(), onClick = {
+                ToastCommon.showCenterToast("YES")
+            }) {
+                Text(text = "ProgressButton")
             }
-        )
-        CheckUpdateAppCompose(
-            versionName = "1.2.3",
-            downloadUrl = "https://xiuxianhaidiao-apk.oss-cn-beijing.aliyuncs.com/qhd.apk",
-            isShowDialogState = remember { mutableStateOf(true) }
-        )
+            PictureAndVideoSelectorCompose(
+                completeClick = {
+                    jumpClick()
+                }
+            )
+            CheckUpdateAppCompose(
+                versionName = "1.2.3",
+                downloadUrl = "https://xiuxianhaidiao-apk.oss-cn-beijing.aliyuncs.com/qhd.apk",
+                isShowDialogState = remember { mutableStateOf(true) }
+            )
+        }
+
     }
 
 }

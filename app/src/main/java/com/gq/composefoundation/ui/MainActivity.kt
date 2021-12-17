@@ -34,7 +34,7 @@ class MainActivity : BasicActivity() {
         }
 
 
-            Timber.i(DeviceCommon.getAndroidId())
+        Timber.i(DeviceCommon.getAndroidId())
 
     }
 
