@@ -2,7 +2,7 @@ package com.gq.composefoundation.retrofit
 
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import com.lk.criticalhit.data.ResultEntity
+import com.gq.composefoundation.data.ResultEntity
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit

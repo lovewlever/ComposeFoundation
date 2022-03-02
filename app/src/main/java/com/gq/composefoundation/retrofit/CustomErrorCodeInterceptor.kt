@@ -1,7 +1,7 @@
 package com.gq.composefoundation.retrofit
 
 import com.gq.basic.common.GsonCommon
-import com.lk.criticalhit.data.ResultEntity
+import com.gq.composefoundation.data.ResultEntity
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
