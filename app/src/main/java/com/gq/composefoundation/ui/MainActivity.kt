@@ -24,15 +24,15 @@ class MainActivity : BasicActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DirCommon.getCacheDirFile("image")
-        setContentView(R.layout.main_activity)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        //setContentView(R.layout.main_activity)
+        /*val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navHostFragment.navController.apply {
             graph = createGraph(NavGraph.Route.Home) {
                 this.fragment<Fragment1>(route = NavGraph.Route.Home)
                 this.fragment<Fragment2>(route = NavGraph.Route.PlantDetail)
             }
         }
-
+*/
 
         Timber.i(DeviceCommon.getAndroidId())
 

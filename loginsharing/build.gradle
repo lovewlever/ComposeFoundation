@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdk libs.versions.compileSdkVersion.get().toInteger()
+    compileSdk CompileSdkVersion
 
     defaultConfig {
-        minSdk libs.versions.minSdk.get().toInteger()
-        targetSdk libs.versions.targetSdk.get().toInteger()
+        minSdk MinSdk
+        targetSdk TargetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,6 +28,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerVersion kotlin_compiler_version
+    }
 }
 
 dependencies {
@@ -39,11 +43,10 @@ dependencies {
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     api 'com.tencent.bugly:crashreport:latest.release'
     api 'com.google.android.gms:play-services-auth:19.2.0'
-    implementation(libs.bundles.androidx)
-    implementation(libs.bundles.timber)
-    implementation(libs.bundles.retrofit2)
-    implementation(libs.bundles.okhttp3)
-    implementation(libs.gson)
-    implementation(libs.bundles.hilt)
-    kapt libs.bundles.kapt
+
+    api "com.google.dagger:hilt-android:$hilt_plugin_version"
+    // Kapt
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }

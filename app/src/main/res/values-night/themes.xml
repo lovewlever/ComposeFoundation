@@ -1,17 +1,17 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.ComposeFoundation" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+    <style name="Theme.ComposeFoundation" parent="android:Theme.Material.Light.NoActionBar">
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:navigationBarColor">@color/white</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.ComposeFoundation.NoActionBar">
+
+    </style>
+
+    <style name="Theme.ComposeFoundation.AppBarOverlay" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.ComposeFoundation.PopupOverlay" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
