@@ -54,8 +54,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.jakewharton.timber/timber
 
     // AndroidX
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    api 'androidx.core:core-ktx:1.7.0'
+    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 
     // Compose
     api 'androidx.activity:activity-compose:1.4.0'
