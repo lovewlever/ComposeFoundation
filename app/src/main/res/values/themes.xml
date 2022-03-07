@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.ComposeFoundation" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Theme.ComposeFoundation" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:navigationBarColor">@color/white</item>

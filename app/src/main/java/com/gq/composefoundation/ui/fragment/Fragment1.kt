@@ -22,7 +22,6 @@ import com.gq.basic.compose.CheckUpdateAppCompose
 import com.gq.basic.compose.PictureAndVideoSelectorCompose
 import com.gq.basic.compose.ProgressButton
 import com.gq.basic.compose.rememberProgressButtonState
-import com.gq.composefoundation.NavGraph
 import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 
 class Fragment1: BasicFragment() {
@@ -38,11 +37,7 @@ class Fragment1: BasicFragment() {
             ComposeFoundationTheme {
                 ProvideWindowInsets {
                     Greeting("") {
-                        findNavController()
-                            .navigate(
-                                route = NavGraph.Route.PlantDetail,
-                                navOptions = NavGraph.navOptions()
-                            )
+
                     }
                 }
             }

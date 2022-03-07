@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import com.google.accompanist.insets.ProvideWindowInsets
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -37,11 +38,13 @@ fun ComposeFoundationTheme(
     } else {
         LightColorPalette
     }
+    ProvideWindowInsets {
+        MaterialTheme(
+            colors = colors,
+            typography = Typography,
+            shapes = Shapes,
+            content = content
+        )
+    }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
 }
