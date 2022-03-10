@@ -1,5 +1,7 @@
 package com.gq.composefoundation.retrofit
 
+import okhttp3.Interceptor
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
@@ -7,9 +9,9 @@ import java.io.UnsupportedEncodingException
 /**
  * Okhttp日志打印
  */
-object CustomHttpLoggingInterceptor {
+class CustomHttpLoggingInterceptor : Interceptor {
 
-    fun printResponse() =
+    override fun intercept(chain: Interceptor.Chain): Response =
         HttpLoggingInterceptor { message ->
             try {
                 //val text = URLDecoder.decode(message, "utf-8")
@@ -19,7 +21,8 @@ object CustomHttpLoggingInterceptor {
             }
         }.apply {
             level = HttpLoggingInterceptor.Level.BODY
-        }
+        }.intercept(chain)
+
 }
 
 
