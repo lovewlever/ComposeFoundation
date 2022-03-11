@@ -129,10 +129,13 @@ dependencies {
     api "com.google.dagger:hilt-android:$hilt_plugin_version"
     api "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
 
+    api "androidx.documentfile:documentfile:1.0.1"
+
     // Kapt
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
     kapt "androidx.room:room-compiler:$room_version"
+
 
     // Luban
 //    api "top.zibin:Luban:1.1.8"
