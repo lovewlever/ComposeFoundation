@@ -15,6 +15,14 @@ fun Uri.getFileExtensionName(): String {
     return fileName?.substringAfterLast(".") ?: ""
 }
 
+/**
+ * 获取Uri文件名
+ */
+fun Uri.getFileName(): String {
+    val fileName = DocumentFile.fromSingleUri(AppContext.application, this)?.name
+    return fileName?.substring(0, fileName.lastIndexOf(".")) ?: ""
+}
+
 fun List<Uri>.saveUriFileToAppLocalStorage(
     callback: (MutableList<File>) -> Unit,
     error: (Exception) -> Unit = {}
@@ -41,8 +49,7 @@ private fun saveFileToLocalStorage(
     var fos: BufferedOutputStream? = null
     var fis: BufferedInputStream? = null
     try {
-        val storePath =
-            AppContext.application.getExternalFilesDir("IMAGE_CACHE")?.absolutePath ?: ""
+        val storePath = DirCommon.getCacheDirFile("save_local_file").absolutePath ?: ""
         val appDir = File(storePath)
         if (!appDir.exists()) {
             appDir.mkdir()
