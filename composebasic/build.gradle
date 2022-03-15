@@ -55,7 +55,7 @@ dependencies {
 
     // AndroidX
     api 'androidx.core:core-ktx:1.7.0'
-    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
     // Compose
     api 'androidx.activity:activity-compose:1.4.0'
@@ -94,11 +94,11 @@ dependencies {
     api "com.squareup.okhttp3:logging-interceptor:4.9.2"
 
     // Paging3
-    api "androidx.paging:paging-runtime-ktx:3.0.1"
+    api "androidx.paging:paging-runtime-ktx:3.1.1"
     api "androidx.paging:paging-compose:1.0.0-alpha14"
 
     // lifecycle
-    api "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
+    api "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1"
     api 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
     api "androidx.lifecycle:lifecycle-service:$lifecycle_version"
 
@@ -127,7 +127,7 @@ dependencies {
     api 'com.tencent.bugly:nativecrashreport:latest.release'
     // Hilt
     api "com.google.dagger:hilt-android:$hilt_plugin_version"
-    api "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+    api "androidx.hilt:hilt-navigation-compose:1.0.0"
 
     api "androidx.documentfile:documentfile:1.0.1"
 
