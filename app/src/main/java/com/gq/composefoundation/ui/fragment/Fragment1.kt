@@ -26,8 +26,6 @@ import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 
 class Fragment1: BasicFragment() {
 
-    @ExperimentalFoundationApi
-    @ExperimentalMaterialApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,8 +43,7 @@ class Fragment1: BasicFragment() {
     }
 }
 
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
+@OptIn(ExperimentalMaterialApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun Greeting(
     name: String,

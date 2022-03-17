@@ -21,8 +21,6 @@ import com.gq.composefoundation.ui.theme.ComposeFoundationTheme
 
 class Fragment2: BasicFragment() {
 
-    @ExperimentalFoundationApi
-    @ExperimentalMaterialApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,8 +36,6 @@ class Fragment2: BasicFragment() {
     }
 }
 
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
 @Composable
 fun Greeting2(name: String) {
     val scaffoldState = rememberScaffoldState()
