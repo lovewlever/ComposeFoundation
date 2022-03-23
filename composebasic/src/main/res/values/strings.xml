@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cb_update_remind">更新提醒</string>
-    <string name="cb_discovery_new_version">发现新版本：\n</string>
+    <string name="cb_discovery_new_version">发现新版本:\n</string>
     <string name="cb_whether_to_update">是否更新？</string>
     <string name="cb_do_not_update">暂不更新</string>
     <string name="cb_update_now">更新</string>

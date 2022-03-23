@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.google.accompanist.insets.statusBarsPadding
+import com.gq.basic.compose.CheckUpdateAppCompose
+import com.gq.basic.compose.rememberCheckUpdateState
 import com.gq.composefoundation.ui.graph.ScreenRoute
 
 /**
@@ -28,6 +30,11 @@ fun FirstPageCompose(navController: NavController) {
                     Text(text = "手势测试")
                 }
             }
+        })
+
+        CheckUpdateAppCompose(checkUpdateState = rememberCheckUpdateState().also {
+            it.isShowDialog = true
+            it.showVersionName = "vDERFG"
         })
     }
 }

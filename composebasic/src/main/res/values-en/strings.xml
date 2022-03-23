@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cb_update_remind">Update reminder</string>
-    <string name="cb_discovery_new_version">New version found：\n</string>
+    <string name="cb_discovery_new_version">New version found:\n</string>
     <string name="cb_whether_to_update">Confirm update?</string>
     <string name="cb_do_not_update">Do not update</string>
     <string name="cb_update_now">Update</string>

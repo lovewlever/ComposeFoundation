@@ -15,6 +15,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -26,9 +27,36 @@ import com.gq.basic.hilt.UpdateAppModule
 import com.gq.basic.viewmodel.UpdateViewModel
 import java.io.File
 
+class CheckUpdateState {
+    var isShowDialog by mutableStateOf(false)
+    var showVersionName by mutableStateOf("")
+    var downloadUrl by mutableStateOf("")
+    var isItMandatory by mutableStateOf(false)
+}
+
+@Composable
+fun rememberCheckUpdateState(): CheckUpdateState = remember {
+    CheckUpdateState()
+}
+
 /**
  * app更新提醒
  */
+@Composable
+fun CheckUpdateAppCompose(
+    modifier: Modifier = Modifier,
+    checkUpdateState: CheckUpdateState
+) {
+    UpdateRemindDialogCompose(
+        modifier = modifier.width(300.dp),
+        checkUpdateState = checkUpdateState
+    )
+}
+
+/**
+ * app更新提醒
+ */
+@Deprecated("")
 @Composable
 fun CheckUpdateAppCompose(
     modifier: Modifier = Modifier,
@@ -38,9 +66,11 @@ fun CheckUpdateAppCompose(
 ) {
     UpdateRemindDialogCompose(
         modifier = modifier.width(300.dp),
-        versionName = versionName,
-        downloadUrl = downloadUrl,
-        isShowDialogState = isShowDialogState
+        checkUpdateState = rememberCheckUpdateState().apply {
+            this.showVersionName = versionName
+            this.downloadUrl = downloadUrl
+            this.isShowDialog = isShowDialogState.value
+        },
     )
 }
 
@@ -50,9 +80,7 @@ fun CheckUpdateAppCompose(
 @Composable
 private fun UpdateRemindDialogCompose(
     modifier: Modifier = Modifier,
-    versionName: String,
-    downloadUrl: String,
-    isShowDialogState: MutableState<Boolean> = remember { mutableStateOf(false) }
+    checkUpdateState: CheckUpdateState
 ) {
 
     // 是否开始更新Apk
@@ -60,7 +88,7 @@ private fun UpdateRemindDialogCompose(
         mutableStateOf(false)
     }
 
-    if (isShowDialogState.value) {
+    if (checkUpdateState.isShowDialog) {
         Dialog(onDismissRequest = { }) {
             Surface(
                 modifier = modifier,
@@ -69,17 +97,18 @@ private fun UpdateRemindDialogCompose(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp),
+                        .padding(top = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        fontSize = 14.5.sp,
+                        fontSize = 15.sp,
                         text = stringResource(R.string.cb_update_remind)
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-                        fontSize = 13.sp,
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
                         textAlign = TextAlign.Center,
                         text = buildAnnotatedString {
                             append(stringResource(id = R.string.cb_discovery_new_version))
@@ -88,9 +117,9 @@ private fun UpdateRemindDialogCompose(
                                     color = MaterialTheme.colors.secondary
                                 )
                             ) {
-                                append("v$versionName\n")
+                                append("${checkUpdateState.showVersionName}\n")
                             }
-                            append(stringResource(id = R.string.cb_whether_to_update))
+                            // append(stringResource(id = R.string.cb_whether_to_update))
                         }
                     )
                     Spacer(
@@ -102,17 +131,36 @@ private fun UpdateRemindDialogCompose(
                             )
                     )
 
-                    DialogBottomDoubleButton(
-                        refuseText = stringResource(id = R.string.cb_do_not_update),
-                        doneText = stringResource(R.string.cb_update_now),
-                        doneClick = {
-                            updateApkDialogState.value = true
-                            isShowDialogState.value = false
-                        },
-                        refuseClick = {
-                            isShowDialogState.value = false
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(45.dp)
+                    ) {
+                        // 强制更新
+                        if (!checkUpdateState.isItMandatory) {
+                            TextButton(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .weight(1f),
+                                onClick = {
+                                    checkUpdateState.isShowDialog = false
+                                }
+                            ) {
+                                Text(text = stringResource(id = R.string.cb_do_not_update))
+                            }
                         }
-                    )
+                        TextButton(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .weight(1f),
+                            onClick = {
+                                updateApkDialogState.value = true
+                                checkUpdateState.isShowDialog = false
+                            }
+                        ) {
+                            Text(text = stringResource(R.string.cb_update_now))
+                        }
+                    }
                 }
             }
         }
@@ -122,7 +170,7 @@ private fun UpdateRemindDialogCompose(
     DownloadApkInstallCompose(
         modifier = Modifier.width(300.dp),
         isShowDialogState = updateApkDialogState,
-        downloadUrl = downloadUrl
+        downloadUrl = checkUpdateState.downloadUrl
     )
 }
 
