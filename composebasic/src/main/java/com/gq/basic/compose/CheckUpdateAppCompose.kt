@@ -170,7 +170,8 @@ private fun UpdateRemindDialogCompose(
     DownloadApkInstallCompose(
         modifier = Modifier.width(300.dp),
         isShowDialogState = updateApkDialogState,
-        downloadUrl = checkUpdateState.downloadUrl
+        downloadUrl = checkUpdateState.downloadUrl,
+        isItMandatory = checkUpdateState.isItMandatory
     )
 }
 
@@ -181,6 +182,7 @@ private fun UpdateRemindDialogCompose(
 private fun DownloadApkInstallCompose(
     modifier: Modifier = Modifier,
     downloadUrl: String,
+    isItMandatory: Boolean,
     isShowDialogState: MutableState<Boolean> = remember { mutableStateOf(false) }
 ) {
 
@@ -246,8 +248,10 @@ private fun DownloadApkInstallCompose(
                         ),
                         modifier = Modifier.width(90.dp),
                         onClick = {
-                            viewModel.cancelDownloadApk()
-                            isShowDialogState.value = false
+                            if (!isItMandatory) {
+                                viewModel.cancelDownloadApk()
+                                isShowDialogState.value = false
+                            }
                         }
                     ) {
                         Text(
