@@ -40,7 +40,6 @@ dependencies {
 
     // AndroidX
     api 'androidx.core:core-ktx:1.7.0'
-    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 
     // Compose
     api 'androidx.activity:activity-compose:1.4.0'
@@ -79,13 +78,30 @@ dependencies {
     api "com.squareup.okhttp3:logging-interceptor:4.9.2"
 
     // Paging3
-    api "androidx.paging:paging-runtime-ktx:3.0.1"
+    api "androidx.paging:paging-runtime-ktx:3.1.1"
     api "androidx.paging:paging-compose:1.0.0-alpha14"
 
     // lifecycle
-    api "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
-    api 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
     api "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+    api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    // ViewModel
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // ViewModel utilities for Compose
+    api "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+    // LiveData
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    // Lifecycles only (without ViewModel or LiveData)
+    api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    // Saved state module for ViewModel
+    api "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    api "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    // optional - helpers for implementing LifecycleOwner in a Service
+    api "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+    // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+    api "androidx.lifecycle:lifecycle-process:$lifecycle_version"
+    // optional - ReactiveStreams support for LiveData
+    api "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
 
     //Gson
     api "com.google.code.gson:gson:2.8.9"
@@ -112,7 +128,7 @@ dependencies {
     api 'com.tencent.bugly:nativecrashreport:latest.release'
     // Hilt
     api "com.google.dagger:hilt-android:$hilt_plugin_version"
-    api "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+    api "androidx.hilt:hilt-navigation-compose:1.0.0"
 
     api "androidx.documentfile:documentfile:1.0.1"
 
