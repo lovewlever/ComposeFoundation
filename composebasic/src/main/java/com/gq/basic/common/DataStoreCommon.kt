@@ -38,9 +38,12 @@ object DataStoreCommon {
         )
     }
 
-    @Deprecated("", ReplaceWith(
-        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
-        "com.gq.basic.common.DataStoreCommon.sp"))
+    @Deprecated(
+        "", ReplaceWith(
+            "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+            "com.gq.basic.common.DataStoreCommon.sp"
+        )
+    )
     inline fun <reified T> getEntityBySP(key: String): T? {
         return GsonCommon.gson.fromJson(
             sp.getString(key, ""),
@@ -48,18 +51,24 @@ object DataStoreCommon {
         )
     }
 
-    @Deprecated("", ReplaceWith(
-        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
-        "com.gq.basic.common.DataStoreCommon.sp"))
+    @Deprecated(
+        "", ReplaceWith(
+            "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+            "com.gq.basic.common.DataStoreCommon.sp"
+        )
+    )
     fun <T> putEntityBySP(key: String, t: T) {
         sp.edit {
             putString(key, GsonCommon.gson.toJson(t))
         }
     }
 
-    @Deprecated("", ReplaceWith(
-        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
-        "com.gq.basic.common.DataStoreCommon.sp"))
+    @Deprecated(
+        "", ReplaceWith(
+            "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+            "com.gq.basic.common.DataStoreCommon.sp"
+        )
+    )
     inline fun <reified T> getBasicTypeBySP(key: String, default: T): T {
         return when (T::class) {
             Int::class -> {
@@ -76,16 +85,20 @@ object DataStoreCommon {
             }
             Long::class -> {
                 sp.getLong(key, default as Long) as T
-            } else -> {
+            }
+            else -> {
                 throw TypeCastException("不支持的类型")
             }
         }
 
     }
 
-    @Deprecated("", ReplaceWith(
-        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
-        "com.gq.basic.common.DataStoreCommon.sp"))
+    @Deprecated(
+        "", ReplaceWith(
+            "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+            "com.gq.basic.common.DataStoreCommon.sp"
+        )
+    )
     fun <T> putBasicTypeBySP(key: String, t: T) {
         sp.edit {
             when (t) {
@@ -98,17 +111,23 @@ object DataStoreCommon {
         }
     }
 
-    @Deprecated("", ReplaceWith(
-        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
-        "com.gq.basic.common.DataStoreCommon.sp"))
+    @Deprecated(
+        "", ReplaceWith(
+            "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+            "com.gq.basic.common.DataStoreCommon.sp"
+        )
+    )
     suspend fun clearDataAndSP() {
         clearData()
         clearDataBySP()
     }
 
-    @Deprecated("", ReplaceWith(
-        "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
-        "com.gq.basic.common.DataStoreCommon.sp"))
+    @Deprecated(
+        "", ReplaceWith(
+            "GsonCommon.gson.fromJson(sp.getString(key, \"\"), T::class.java)",
+            "com.gq.basic.common.DataStoreCommon.sp"
+        )
+    )
     suspend fun clearDataBySP() {
         sp.edit { clear() }
     }
@@ -127,7 +146,7 @@ object DataStoreCommon {
 
     suspend inline fun <reified T> getBasicType(
         key: Preferences.Key<T>,
-        crossinline callback: (T?) -> Unit = {}
+        crossinline callback: (T?) -> Unit
     ) {
         AppContext.application.dataStore.data.map { preferences: Preferences ->
             preferences[key]
@@ -142,7 +161,7 @@ object DataStoreCommon {
     suspend inline fun <reified T> getBasicType(
         key: Preferences.Key<T>,
         default: T,
-        crossinline callback: (T) -> Unit = {}
+        crossinline callback: (T) -> Unit
     ) {
         AppContext.application.dataStore.data.map { preferences: Preferences ->
             preferences[key]

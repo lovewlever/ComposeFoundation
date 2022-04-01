@@ -15,7 +15,8 @@ object DeviceCommon {
 
     @Deprecated("不可用")
     fun getDeviceId(): String {
-        val telephonyManager = AppContext.application.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        val telephonyManager =
+            AppContext.application.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             telephonyManager.imei
         } else {
@@ -31,7 +32,8 @@ object DeviceCommon {
      * 获取设备蓝牙Mac地址
      */
     fun getBluetoothMacAddress(): String? {
-        val bluetoothManager = AppContext.application.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        val bluetoothManager =
+            AppContext.application.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         val bluetoothAdapter = bluetoothManager.adapter
         return bluetoothAdapter.address
     }
@@ -56,6 +58,6 @@ object DeviceCommon {
         } catch (e: Exception) {
             Timber.e(e)
         }
-        return UUID(dev.hashCode().toLong(), serial.hashCode().toLong()).toString()
+        return UUID(dev.hashCode().toLong(), serial.hashCode().toLong()).toString().replace("-", "")
     }
 }
