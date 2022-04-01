@@ -19,8 +19,7 @@ object VersionCommon {
 
 
     fun getApplicationId(): String =
-        AppContext.application.applicationInfo.processName
-
+        AppContext.application.packageName
 
     private fun getPackageInfo(): PackageInfo =
         AppContext.application.applicationContext
