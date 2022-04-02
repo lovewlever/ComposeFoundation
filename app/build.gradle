@@ -52,13 +52,13 @@ android {
 
 dependencies {
 
-    implementation project(":remoteLibrary")
     implementation project(":composebasic")
     implementation project(":loginsharing")
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    api "com.google.dagger:hilt-android:$hilt_plugin_version"
+    implementation "com.google.dagger:hilt-android:$hilt_plugin_version"
+
     // Kapt
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
