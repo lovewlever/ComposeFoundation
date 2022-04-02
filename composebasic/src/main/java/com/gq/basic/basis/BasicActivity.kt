@@ -1,13 +1,13 @@
 package com.gq.basic.basis
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import com.gq.basic.common.SystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-open class BasicActivity: AppCompatActivity() {
+open class BasicActivity: ComponentActivity() {
 
     @Inject
     lateinit var systemUiController: SystemUiController
@@ -20,7 +20,6 @@ open class BasicActivity: AppCompatActivity() {
         super.onResume()
         systemUiController
             .setDecorFitsSystemWindows()
-            .setBarsIconLightColor()
             .setStatusBarColor()
             .setNavigationBarColor()
     }

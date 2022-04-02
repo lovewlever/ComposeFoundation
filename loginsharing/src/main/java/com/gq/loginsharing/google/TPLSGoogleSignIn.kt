@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -40,7 +40,7 @@ class TPLSGoogleSignIn @Inject constructor(
 
     fun registerLauncherForActivityResult(callback: (ActivityResult) -> Unit) {
         registerForActivityResult =
-            (activity as AppCompatActivity).registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { ar: ActivityResult? ->
+            (activity as ComponentActivity).registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { ar: ActivityResult? ->
                 if (ar?.resultCode == Activity.RESULT_OK) {
                     val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(ar.data)
                     try {

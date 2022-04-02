@@ -56,8 +56,8 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
     // Navigation
-    api "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    api "androidx.navigation:navigation-ui-ktx:$nav_version"
+    //api "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    //api "androidx.navigation:navigation-ui-ktx:$nav_version"
     api "androidx.navigation:navigation-compose:$nav_version"
 
     // Room

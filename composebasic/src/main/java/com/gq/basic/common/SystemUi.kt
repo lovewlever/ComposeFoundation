@@ -1,23 +1,21 @@
 package com.gq.basic.common
 
 import android.app.Activity
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.view.View
 import android.view.Window
 import android.view.WindowInsetsController
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 
 interface SystemUiController {
 
-    fun isDarkMode(): Boolean
+    //fun isDarkMode(): Boolean
 
-    fun setDefaultUiMode(uiMode: Int)
+    //fun setDefaultUiMode(uiMode: Int)
 
     fun findStatusBarHeight(): Int
 
@@ -39,9 +37,9 @@ interface SystemUiController {
         color: Int = Color.TRANSPARENT
     ): SystemUiController
 
-    fun setBarsIconLightColor(
-        isLight: Boolean = isDarkMode()
-    ): SystemUiController
+    /*fun setBarsIconLightColor(
+        isLight: Boolean
+    ): SystemUiController*/
 
 }
 
@@ -50,7 +48,7 @@ class SystemUiControllerImpl @Inject constructor(
     val activity: Activity
 ) : SystemUiController {
 
-    override fun isDarkMode(): Boolean {
+/*    override fun isDarkMode(): Boolean {
         return when (AppCompatDelegate.getDefaultNightMode()) {
             AppCompatDelegate.MODE_NIGHT_YES -> true
             AppCompatDelegate.MODE_NIGHT_NO -> false
@@ -81,7 +79,7 @@ class SystemUiControllerImpl @Inject constructor(
                 }
             }
         }
-    }
+    }*/
 
     override fun findStatusBarHeight(): Int {
         val resourceId =
@@ -124,10 +122,17 @@ class SystemUiControllerImpl @Inject constructor(
     ): SystemUiController {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             activity.window.setDecorFitsSystemWindows(decorFitsSystemWindows)
-            activity.window
-                .decorView
-                .windowInsetsController?.systemBarsBehavior =
-                WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                activity.window
+                    .decorView
+                    .windowInsetsController?.systemBarsBehavior =
+                    WindowInsetsController.BEHAVIOR_DEFAULT
+            } else {
+                activity.window
+                    .decorView
+                    .windowInsetsController?.systemBarsBehavior =
+                WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
         } else {
             val window: Window = activity.window
             window.clearFlags(
@@ -161,14 +166,14 @@ class SystemUiControllerImpl @Inject constructor(
         return this
     }
 
-    override fun setBarsIconLightColor(isLight: Boolean): SystemUiController {
+    /*override fun setBarsIconLightColor(isLight: Boolean): SystemUiController {
         if (isLight) {
             setStatusBarIconLightColor()
         } else {
             setStatusBarIconDarkColor()
         }
         return this
-    }
+    }*/
 
     /**
      * 状态栏深色Icon
