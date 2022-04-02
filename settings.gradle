@@ -19,6 +19,4 @@ dependencyResolutionManagement {
 rootProject.name = "ComposeFoundation"
 include ':app'
 include ':composebasic'
-//include ':RemoteLibrary'
 include ':loginsharing'
-include ':remoteLibrary'
