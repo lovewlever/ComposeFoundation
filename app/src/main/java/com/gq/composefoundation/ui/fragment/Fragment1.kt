@@ -66,11 +66,11 @@ fun Greeting(
             }) {
                 Text(text = "ProgressButton")
             }
-            PictureAndVideoSelectorCompose(
+            /*PictureAndVideoSelectorCompose(
                 completeClick = {
                     jumpClick()
                 }
-            )
+            )*/
             CheckUpdateAppCompose(
                 versionName = "1.2.3",
                 downloadUrl = "https://xiuxianhaidiao-apk.oss-cn-beijing.aliyuncs.com/qhd.apk",

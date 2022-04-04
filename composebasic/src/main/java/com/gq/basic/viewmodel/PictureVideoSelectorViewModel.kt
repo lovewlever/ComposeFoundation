@@ -5,20 +5,21 @@ import android.content.ContentUris
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.compose.runtime.mutableStateListOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.gq.basic.basis.BasicViewModel
+import com.gq.basic.common.saveUriFileToAppLocalStorage
 import com.gq.basic.compose.PVUris
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class PictureVideoSelectorViewModel @Inject constructor(application: Application) :
     BasicViewModel(application) {
-
-    val urisState = mutableStateListOf<PVUris>()
 
     private val imageProjection = arrayOf(
         MediaStore.Images.Media._ID,
@@ -35,8 +36,8 @@ class PictureVideoSelectorViewModel @Inject constructor(application: Application
     )
     private val videoSortOrder = "${MediaStore.Video.Media._ID} DESC"
 
-    fun queryPicUriList() {
-        urisState.clear()
+    fun queryPicUriList(): LiveData<List<PVUris>> {
+        val liveData = getMutableLiveData<List<PVUris>>()
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 getApplication<Application>().contentResolver
@@ -52,7 +53,7 @@ class PictureVideoSelectorViewModel @Inject constructor(application: Application
                         val nameColumn =
                             cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
                         val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
-
+                        val uris = mutableListOf<PVUris>()
                         while (cursor.moveToNext()) {
                             val id = cursor.getLong(idColumn)
                             val name = cursor.getString(nameColumn)
@@ -61,21 +62,24 @@ class PictureVideoSelectorViewModel @Inject constructor(application: Application
                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                                 id
                             )
-                            urisState.add(PVUris(
+                            uris.add(PVUris(
                                 uri = contentUri,
                                 name = name,
                                 size = size,
                                 type = PVUris.TYPE_PICTURE
                             ))
                         }
+                        liveData.postValue(uris)
                     }
             }
         }
+
+        return liveData
     }
 
 
-    fun queryVideoUriList() {
-        urisState.clear()
+    fun queryVideoUriList(): LiveData<List<PVUris>> {
+        val liveData = getMutableLiveData<List<PVUris>>()
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 getApplication<Application>().contentResolver
@@ -93,7 +97,7 @@ class PictureVideoSelectorViewModel @Inject constructor(application: Application
                         val durationColumn =
                             cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)
                         val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE)
-
+                        val uris = mutableListOf<PVUris>()
                         while (cursor.moveToNext()) {
                             val id = cursor.getLong(idColumn)
                             val name = cursor.getString(nameColumn)
@@ -103,7 +107,7 @@ class PictureVideoSelectorViewModel @Inject constructor(application: Application
                                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                                 id
                             )
-                            urisState.add(PVUris(
+                            uris.add(PVUris(
                                 uri = contentUri,
                                 name = name,
                                 size = size,
@@ -111,8 +115,58 @@ class PictureVideoSelectorViewModel @Inject constructor(application: Application
                                 type = PVUris.TYPE_VIDEO
                             ))
                         }
+
+                        liveData.postValue(uris)
                     }
             }
         }
+
+        return liveData
+    }
+
+
+    fun queryVideoAndPicUriList(): LiveData<List<PVUris>> {
+        val liveData = getMutableLiveData<List<PVUris>>()
+        val mediaStoreFilesUri = MediaStore.Files.getContentUri("external")
+        getApplication<Application>().contentResolver
+            .query(
+                mediaStoreFilesUri,
+                arrayOf(MediaStore.Files.FileColumns._ID,
+                    MediaStore.Files.FileColumns.TITLE,
+                    MediaStore.Files.FileColumns.SIZE,
+                    MediaStore.Files.FileColumns.MEDIA_TYPE),
+                "${MediaStore.Files.FileColumns.MEDIA_TYPE} = ? or ${MediaStore.Files.FileColumns.MEDIA_TYPE} = ?", //
+                arrayOf(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO.toString(),
+                    MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE.toString()),
+                null
+            )
+            ?.use { cursor ->
+                val mediaType = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
+                val nameColumn =
+                    cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.TITLE)
+                //val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)
+                val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE)
+                val uris = mutableListOf<PVUris>()
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(idColumn)
+                    val name = cursor.getString(nameColumn)
+                    val size = cursor.getInt(sizeColumn)
+                    val mt = cursor.getInt(mediaType)
+                    //val duration = cursor.getInt(durationColumn)
+                    val contentUri: Uri = ContentUris.withAppendedId(mediaStoreFilesUri, id)
+                    Timber.i(contentUri.path)
+                    uris.add(PVUris(
+                            uri = contentUri,
+                            name = name,
+                            size = size,
+                            duration = 0,
+                            type = if (mt == MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO) PVUris.TYPE_VIDEO else PVUris.TYPE_PICTURE
+                        ))
+                }
+
+                liveData.postValue(uris)
+            }
+        return liveData
     }
 }
