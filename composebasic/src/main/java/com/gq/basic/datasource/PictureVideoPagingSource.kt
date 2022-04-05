@@ -18,8 +18,8 @@ class PictureVideoPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PVUris> {
         return try {
             // Start refresh at page 1 if undefined.
-            val nextPageNumber = params.key ?: 1
-            val response = pictureVideoRepository.queryVideoAndPicUriList(nextPageNumber, params.loadSize)
+            val nextPageNumber = params.key ?: 0
+            val response = pictureVideoRepository.queryVideoAndPicUriList(nextPageNumber, 30)
             LoadResult.Page(
                 data = response,
                 prevKey = null, // Only paging forward.

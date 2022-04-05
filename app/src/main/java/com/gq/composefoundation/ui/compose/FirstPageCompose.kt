@@ -1,9 +1,9 @@
 package com.gq.composefoundation.ui.compose
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -13,15 +13,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.insets.statusBarsPadding
 import com.gq.basic.common.DensityCommon
-import com.gq.basic.compose.*
-import com.gq.composefoundation.ui.graph.ScreenRoute
+import com.gq.basic.compose.PVUris
+import com.gq.basic.compose.PictureAndVideoSelectorCompose
+import com.gq.basic.compose.rememberPictureVideoSelectorState
 import com.gq.composefoundation.ui.theme.Shapes
 import kotlinx.coroutines.launch
 
 /**
  * 首页
  */
-@OptIn(ExperimentalFoundationApi::class, androidx.compose.material.ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun FirstPageCompose(navController: NavController) {
 
@@ -30,7 +31,7 @@ fun FirstPageCompose(navController: NavController) {
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val pictureVideoSelectorState = rememberPictureVideoSelectorState(
         quantityLimit = 4,
-        type = PVUris.TYPE_PV_ALL, chooseModel = PVUris.CM_ALL_MULTIPLE)
+        type = PVUris.TYPE_PV_ALL, chooseModel = PVUris.CM_VIDEO_MULTIPLE)
 
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,

@@ -54,6 +54,7 @@ import com.gq.basic.common.millisecondToHms
 import com.gq.basic.theme.BasicShapes
 import com.gq.basic.viewmodel.PictureVideoSelectorViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 
 data class PVUris(
     var uri: Uri,
@@ -105,14 +106,16 @@ class PictureVideoSelectorState {
     var quantityLimit by mutableStateOf(1)
     var chooseModel by mutableStateOf(PVUris.CM_ALL_MULTIPLE)
 
+    fun removeChoosePVUri(pvUris: PVUris) {
+        pvUris.selected = false
+        chooseUris.remove(pvUris)
+    }
 }
 
 /**
  * 图片/视频选择
  */
-@OptIn(ExperimentalAnimationApi::class)
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PictureAndVideoSelectorCompose(
     modifier: Modifier = Modifier,
@@ -123,7 +126,6 @@ fun PictureAndVideoSelectorCompose(
 
     val owner = LocalLifecycleOwner.current
     val pvsViewModel: PictureVideoSelectorViewModel = viewModel()
-    val urisState = remember { mutableStateListOf<PVUris>() }
     var videoAndPicUriListPager by remember {
         mutableStateOf<Flow<PagingData<PVUris>>?>(null)
     }
@@ -134,7 +136,6 @@ fun PictureAndVideoSelectorCompose(
             //isLoadingDataState = true
             val observer = Observer { list: List<PVUris> ->
                 //isLoadingDataState = false
-                urisState.addAll(list)
             }
             if (it && selectorState.type == PVUris.TYPE_PICTURE)
                 pvsViewModel.queryPicUriList().observe(owner, observer)
@@ -145,10 +146,7 @@ fun PictureAndVideoSelectorCompose(
             }
         }
 
-
-
     LaunchedEffect(key1 = selectorState.type, block = {
-        urisState.clear()
         readStoragePermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     })
 
@@ -171,7 +169,9 @@ fun PictureAndVideoSelectorCompose(
                 )
             }
             items(rows) { index -> // 1
-                Row(modifier = Modifier.height(wh.dp).padding(2.dp)) {
+                Row(modifier = Modifier
+                    .height(wh.dp)
+                    .padding(2.dp)) {
                     for (columnIndex in 0 until columns) {
                         //itemIndex List数据位置 0 == 0 1 2 // 1 == 3 4 5
                         val itemIndex = index * 3 + columnIndex
@@ -179,7 +179,9 @@ fun PictureAndVideoSelectorCompose(
                             val item = videoAndPicUriPager[itemIndex]
                             item?.let {
                                 PVSListItem(
-                                    modifier = modifier.weight(1f).height(wh.dp),
+                                    modifier = modifier
+                                        .weight(1f)
+                                        .height(wh.dp),
                                     item = item,
                                     wh = wh,
                                     selectorState = selectorState,
@@ -199,14 +201,88 @@ fun PictureAndVideoSelectorCompose(
                                             }
                                         } else if (selectorState.chooseModel == PVUris.CM_ALL_SINGLE) {
                                             // 都是单选的情况
-                                            urisState.filter { ss -> ss.selected }
-                                                .forEach { pv -> pv.selected = false }
+                                            for (i in 0 until videoAndPicUriPager.itemCount) {
+                                                videoAndPicUriPager[i]?.selected = false
+                                            }
                                             item.selected = true
                                             selectorState.chooseUris.clear()
                                             selectorState.chooseUris.add(item)
                                         } else if (selectorState.chooseModel == PVUris.CM_PICTURE_MULTIPLE) {
                                             // 图片多选的情况
+                                            // 如果当前选中的是图片
+                                            if (item.type == PVUris.TYPE_PICTURE) {
+                                                // 判断里面有没有选择的视频
+                                                if (selectorState.chooseUris.any { ur -> ur.type == PVUris.TYPE_VIDEO }) {
+                                                    ToastCommon.showCenterToast("视频和图片不能同时选择")
+                                                } else {
+                                                    // 选择的照片少于指定 num
+                                                    if (selectorState.chooseUris.size < selectorState.quantityLimit) {
+                                                        item.selected = !item.selected
+                                                        if (item.selected) selectorState.chooseUris.add(item) else selectorState.chooseUris.remove(
+                                                            item)
+                                                    } else {
+                                                        if (item.selected) {
+                                                            item.selected = false
+                                                            selectorState.chooseUris.remove(item)
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                // 如果当前选中的是视频
+                                                // 判断里面有没有选择的图片
+                                                if (selectorState.chooseUris.any { ur -> ur.type == PVUris.TYPE_PICTURE }) {
+                                                    ToastCommon.showCenterToast("视频和图片不能同时选择")
+                                                } else {
 
+                                                    item.selected = !item.selected
+                                                    selectorState.chooseUris.clear()
+                                                    if (item.selected) selectorState.chooseUris.add(item) else selectorState.chooseUris.remove(item)
+                                                    for (i in 0 until videoAndPicUriPager.itemCount) {
+                                                        val vap = videoAndPicUriPager[i]
+                                                        if (vap != item) {
+                                                            vap?.selected = false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else if (selectorState.chooseModel == PVUris.CM_VIDEO_MULTIPLE) {
+                                            // 视频多选的情况
+                                            // 如果当前选中的是视频
+                                            if (item.type == PVUris.TYPE_VIDEO) {
+                                                // 判断里面有没有选择的视频
+                                                if (selectorState.chooseUris.any { ur -> ur.type == PVUris.TYPE_PICTURE }) {
+                                                    ToastCommon.showCenterToast("视频和图片不能同时选择")
+                                                } else {
+                                                    // 选择的照片少于指定 num
+                                                    if (selectorState.chooseUris.size < selectorState.quantityLimit) {
+                                                        item.selected = !item.selected
+                                                        if (item.selected) selectorState.chooseUris.add(item) else selectorState.chooseUris.remove(
+                                                            item)
+                                                    } else {
+                                                        if (item.selected) {
+                                                            item.selected = false
+                                                            selectorState.chooseUris.remove(item)
+                                                        }
+                                                    }
+                                                }
+                                            } else {
+                                                // 如果当前选中的是视频
+                                                // 判断里面有没有选择的图片
+                                                if (selectorState.chooseUris.any { ur -> ur.type == PVUris.TYPE_VIDEO }) {
+                                                    ToastCommon.showCenterToast("视频和图片不能同时选择")
+                                                } else {
+
+                                                    item.selected = !item.selected
+                                                    selectorState.chooseUris.clear()
+                                                    if (item.selected) selectorState.chooseUris.add(item) else selectorState.chooseUris.remove(item)
+                                                    for (i in 0 until videoAndPicUriPager.itemCount) {
+                                                        val vap = videoAndPicUriPager[i]
+                                                        if (vap != item) {
+                                                            vap?.selected = false
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     })
                             }
@@ -312,13 +388,23 @@ private fun PVSListItem(
                 }
             })
         if (selectorState.quantityLimit > 1) {
-            Checkbox(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .size(30.dp),
-                checked = item.selected,
-                onCheckedChange = { onItemClick() }
-            )
+            if (item.type == PVUris.TYPE_PICTURE && selectorState.chooseModel == PVUris.CM_PICTURE_MULTIPLE) {
+                Checkbox(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .size(30.dp),
+                    checked = item.selected,
+                    onCheckedChange = { onItemClick() }
+                )
+            } else if (item.type == PVUris.TYPE_VIDEO && selectorState.chooseModel == PVUris.CM_VIDEO_MULTIPLE) {
+                Checkbox(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .size(30.dp),
+                    checked = item.selected,
+                    onCheckedChange = { onItemClick() }
+                )
+            }
         }
 
         if (item.type == PVUris.TYPE_VIDEO) {
