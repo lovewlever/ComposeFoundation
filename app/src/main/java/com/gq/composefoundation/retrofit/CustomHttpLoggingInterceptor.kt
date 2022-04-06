@@ -15,7 +15,7 @@ class CustomHttpLoggingInterceptor : Interceptor {
         HttpLoggingInterceptor { message ->
             try {
                 //val text = URLDecoder.decode(message, "utf-8")
-                Timber.i(message)
+                Timber.e(message)
             } catch (e: UnsupportedEncodingException) {
                 Timber.e(e)
             }
