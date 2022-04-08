@@ -5,10 +5,13 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
+@Deprecated("Commons.AudioRecord")
 object AudioRecordCommon {
 
+    @Deprecated("Commons.AudioRecord.WavCommon")
     object WavCommon {
 
+        @Deprecated("Commons.AudioRecord.WavCommon.pcmToWav")
         fun pcmToWav(
             pcmFilePath: String,
             sampleRate: Int,

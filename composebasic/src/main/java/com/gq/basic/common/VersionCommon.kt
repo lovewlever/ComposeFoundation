@@ -3,8 +3,9 @@ package com.gq.basic.common
 import android.content.pm.PackageInfo
 import com.gq.basic.AppContext
 
+@Deprecated("Commons.Version")
 object VersionCommon {
-
+    @Deprecated("Commons.Version.getVersionCode")
     fun getVersionCode(): Long {
         return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
             getPackageInfo().longVersionCode
@@ -13,11 +14,11 @@ object VersionCommon {
         }
     }
 
-
+    @Deprecated("Commons.Version.getVersionName")
     fun getVersionName(): String =
         getPackageInfo().versionName
 
-
+    @Deprecated("Commons.Version.getApplicationId")
     fun getApplicationId(): String =
         AppContext.application.applicationInfo.processName
 
