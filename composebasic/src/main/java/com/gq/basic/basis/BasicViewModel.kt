@@ -8,9 +8,9 @@ import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-open class BasicViewModel @Inject constructor(application: Application) :
+open class BasicViewModel(application: Application):
     AndroidViewModel(application), LifecycleObserver, DefaultLifecycleObserver {
 
         protected fun <T> getMutableLiveData() = MutableLiveData<T>()
+
 }
