@@ -1,0 +1,14 @@
+// 发布maven配置
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact "build/outputs/aar/composebasic-debug.aar"
+            groupId "com.gq.local"
+            artifactId "local-library"
+            version "1.0.0"
+        }
+    }
+}
+// gradlew  publishToMavenLocal

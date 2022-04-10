@@ -2,6 +2,7 @@ package com.gq.basic.common
 
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import android.provider.Settings.Secure
@@ -10,7 +11,7 @@ import com.gq.basic.AppContext
 import timber.log.Timber
 import java.util.*
 
-
+@Deprecated("Commons.Device")
 object DeviceCommon {
 
     @Deprecated("不可用")
@@ -24,13 +25,14 @@ object DeviceCommon {
         }
     }
 
-
+    @Deprecated("Commons.Device.getAndroidId")
     fun getAndroidId(): String =
         Settings.System.getString(AppContext.application.contentResolver, Secure.ANDROID_ID)
 
     /**
      * 获取设备蓝牙Mac地址
      */
+    @Deprecated("Commons.Device.getBluetoothMacAddress")
     fun getBluetoothMacAddress(): String? {
         val bluetoothManager =
             AppContext.application.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -42,6 +44,7 @@ object DeviceCommon {
     /**
      * Pseudo-Unique ID
      */
+    @Deprecated("Commons.Device.getUniquePseudoId")
     fun getUniquePseudoId(): String {
         val dev = "35" +
                 Build.BOARD.length % 10 + Build.BRAND.length % 10 +
