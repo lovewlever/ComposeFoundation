@@ -19,4 +19,7 @@ object AppContext {
             Timber.plant(TimberCloseTree())
         }
     }
+
+    fun isApkInDebug() =
+        application.applicationInfo.isApkInDebug()
 }
