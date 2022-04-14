@@ -11,6 +11,7 @@ import java.util.regex.Pattern
 /**
  * 获取视频第一帧
  */
+@Deprecated("com.gq.basic.extension")
 fun Uri.getVideoFirstFrame(): Bitmap? {
     val mediaMetadataRetriever = MediaMetadataRetriever()
     mediaMetadataRetriever.setDataSource(AppContext.application, this)
@@ -20,6 +21,7 @@ fun Uri.getVideoFirstFrame(): Bitmap? {
 /**
  * 获取文件缩略图
  */
+@Deprecated("com.gq.basic.extension")
 fun Uri.loadVideoThumbnail(): Bitmap? {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         return AppContext.application.contentResolver.loadThumbnail(this, Size(640, 480), null)

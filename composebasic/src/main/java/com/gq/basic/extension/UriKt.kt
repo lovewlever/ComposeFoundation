@@ -1,16 +1,40 @@
-package com.gq.basic.common
+package com.gq.basic.extension
 
+import android.graphics.Bitmap
+import android.media.MediaMetadataRetriever
 import android.net.Uri
+import android.os.Build
 import android.os.ParcelFileDescriptor
+import android.util.Size
 import androidx.documentfile.provider.DocumentFile
 import com.gq.basic.AppContext
+import com.gq.basic.common.DirCommon
 import java.io.*
 
 
 /**
+ * 获取视频第一帧
+ */
+fun Uri.getVideoFirstFrame(): Bitmap? {
+    val mediaMetadataRetriever = MediaMetadataRetriever()
+    mediaMetadataRetriever.setDataSource(AppContext.application, this)
+    return mediaMetadataRetriever.frameAtTime
+}
+
+/**
+ * 获取文件缩略图
+ */
+fun Uri.loadVideoThumbnail(): Bitmap? {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        return AppContext.application.contentResolver.loadThumbnail(this, Size(640, 480), null)
+    } else {
+        return getVideoFirstFrame()
+    }
+}
+
+/**
  * 获取Uri文件扩展名
  */
-@Deprecated("com.gq.basic.extension")
 fun Uri.getFileExtensionName(): String {
     val fileName = DocumentFile.fromSingleUri(AppContext.application, this)?.name
     return fileName?.substringAfterLast(".") ?: ""
@@ -19,13 +43,11 @@ fun Uri.getFileExtensionName(): String {
 /**
  * 获取Uri文件名
  */
-@Deprecated("com.gq.basic.extension")
 fun Uri.getFileName(): String {
     val fileName = DocumentFile.fromSingleUri(AppContext.application, this)?.name
     return fileName?.substring(0, fileName.lastIndexOf(".")) ?: ""
 }
 
-@Deprecated("com.gq.basic.extension")
 fun List<Uri>.saveUriFileToAppLocalStorage(
     callback: (MutableList<File>) -> Unit,
     error: (Exception) -> Unit = {}
@@ -43,7 +65,6 @@ fun List<Uri>.saveUriFileToAppLocalStorage(
     }
 }
 
-@Deprecated("com.gq.basic.extension")
 private fun saveFileToLocalStorage(
     extensionName: String,
     fileDescriptor: ParcelFileDescriptor,
