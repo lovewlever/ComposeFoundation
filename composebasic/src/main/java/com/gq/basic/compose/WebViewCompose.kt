@@ -1,9 +1,6 @@
 package com.gq.basic.compose
 
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -78,6 +75,16 @@ private fun FWebView(
             WebView(ctx).also { webView: WebView ->
                 webView.settings.javaScriptEnabled = true
                 webView.settings.domStorageEnabled = true
+                //支持通过JS弹窗
+                webView.settings.javaScriptCanOpenWindowsAutomatically = true
+                //自动根据手机分辨率缩放，推荐
+                webView.settings.useWideViewPort = true
+                webView.settings.loadWithOverviewMode = true
+                //设置在WebView内部是否允许访问文件
+                webView.settings.allowFileAccess = true
+                webView.settings.loadsImagesAutomatically = true
+                //多窗口
+                webView.settings.supportMultipleWindows()
                 webView.webChromeClient = object : WebChromeClient() {
                     override fun onProgressChanged(view: WebView?, newProgress: Int) {
                         super.onProgressChanged(view, newProgress)
