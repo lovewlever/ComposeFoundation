@@ -1,5 +1,8 @@
 package com.gq.basic.enums
 
+/**
+ * 国际区号 正则
+ */
 enum class InternationalAreaCodeRegularExp(val nation: String, val areaCodeReg: String) {
     CN("中国","^(\\+?0?86\\-?)?1[345789]\\d{9}$"),
     TW("台湾","^(\\+?886\\-?|0)?9\\d{8}$"),
