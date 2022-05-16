@@ -1,5 +1,7 @@
 package com.gq.basic.extension
 
+import androidx.compose.ui.text.toLowerCase
+import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -10,6 +12,16 @@ inline fun String.matchIsImage(): Boolean {
     if (index == -1) return false
     val ext = this.substring(index).replace(".", "")
     return Pattern.compile("(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif|jfif)").matcher(ext).matches()
+}
+
+/**
+ * 匹配是否是音频文件
+ */
+inline fun String.matchIsAudio(): Boolean {
+    val index = this.lastIndexOf(".")
+    if (index == -1) return false
+    val ext = this.substring(index).replace(".", "").lowercase()
+    return Pattern.compile("(mp3|m4a|wav|amr|awb|wma|ogg|flac|pcm)").matcher(ext).matches()
 }
 
 /**
