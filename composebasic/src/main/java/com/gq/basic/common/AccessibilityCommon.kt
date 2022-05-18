@@ -13,6 +13,7 @@ import timber.log.Timber
 object AccessibilityCommon {
     /**
      * 跳转到系统设置：开启辅助服务
+     * 鸿蒙系统不能用这个  无障碍功能不会自动启动
      */
     fun openToSystemSetting(cxt: Context) {
         try {
