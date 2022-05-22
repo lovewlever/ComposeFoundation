@@ -3,7 +3,10 @@ package com.gq.basic.common
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -11,6 +14,7 @@ import android.telephony.TelephonyManager
 import androidx.annotation.StringDef
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsService
+import androidx.core.content.res.ResourcesCompat
 import com.gq.basic.AppContext
 import okio.IOException
 import timber.log.Timber
@@ -151,6 +155,69 @@ object Commons {
                 Timber.e(e)
             }
             return UUID(dev.hashCode().toLong(), serial.hashCode().toLong()).toString().replace("-", "")
+        }
+    }
+
+    class AppInfoData(
+        var icon: Drawable?,
+        var appName: String,
+        var appPackage: String,
+        var isSysApp: Boolean,
+        var versionName: String,
+        var versionCode: Int,
+        var firstInstallTime: Long,
+        var startActivityClassName: String
+    )
+
+
+    object PackageCommon {
+
+        private val packageManager by lazy {
+            AppContext.application.packageManager
+        }
+
+        /**
+         * 获取已安装的app列表
+         * <uses-permission
+         * android:name="android.permission.QUERY_ALL_PACKAGES"
+         * tools:ignore="QueryAllPackagesPermission" />
+         */
+        fun queryAllPackages(): List<AppInfoData> {
+            val appBeanList = mutableListOf<AppInfoData>()
+            //val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+            val packages = packageManager.getInstalledPackages(0)
+            packages.forEach { packageInfo ->
+                if ((packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) == 0) { //非系统应用
+
+                }
+                packageInfo.versionName
+                val bean = AppInfoData(
+                    firstInstallTime = packageInfo.firstInstallTime,
+                    versionName = packageInfo.versionName,
+                    versionCode = packageInfo.versionCode,
+                    isSysApp = ((packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) == 0),
+                    icon = packageInfo.applicationInfo.loadIcon(packageManager),
+                    appName = packageInfo.applicationInfo.loadLabel(packageManager).toString(),
+                    appPackage = packageInfo.applicationInfo.packageName,
+                    startActivityClassName = packageInfo.applicationInfo.name
+                )
+                appBeanList.add(bean)
+            }
+
+            return appBeanList
+        }
+
+        /**
+         * 根据应用包名，查应用的icon图
+         */
+        private fun loadAppIconByPackageName(packageName: String, listener: (icon: Drawable?) -> Unit) {
+            try {
+                val packageInfo =
+                    packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+                packageInfo?.applicationInfo?.loadIcon(packageManager)?.let { listener(it) }
+            } catch (e: Exception) {
+                listener(ResourcesCompat.getDrawable(AppContext.application.resources, R.mipmap.ic_launcher, null))
+            }
         }
     }
 
