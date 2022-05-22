@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.pm.ApplicationInfo
 import com.gq.basic.common.TimberCloseTree
 import com.gq.basic.extension.isApkInDebug
+import com.gq.basic.widget.TimberFileTree
 import timber.log.Timber
 
 object AppContext {
@@ -14,7 +15,7 @@ object AppContext {
         this.application = application
         // 日志
         if (application.applicationInfo.isApkInDebug()) {
-            Timber.plant(Timber.DebugTree())
+            Timber.plant(TimberFileTree())
         } else {
             Timber.plant(TimberCloseTree())
         }

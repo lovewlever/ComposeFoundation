@@ -1,6 +1,7 @@
 package com.gq.composefoundation.ui
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.Scaffold
@@ -25,8 +26,6 @@ class MainActivity : BasicActivity() {
                 MainCompose()
             }
         }
-        Timber.i(DeviceCommon.getAndroidId())
-
     }
 
     override fun onResume() {

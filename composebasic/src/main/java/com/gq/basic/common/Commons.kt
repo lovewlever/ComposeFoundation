@@ -16,6 +16,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsService
 import androidx.core.content.res.ResourcesCompat
 import com.gq.basic.AppContext
+import com.gq.basic.R
 import okio.IOException
 import timber.log.Timber
 import java.io.File
@@ -216,7 +217,7 @@ object Commons {
                     packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
                 packageInfo?.applicationInfo?.loadIcon(packageManager)?.let { listener(it) }
             } catch (e: Exception) {
-                listener(ResourcesCompat.getDrawable(AppContext.application.resources, R.mipmap.ic_launcher, null))
+                listener(ResourcesCompat.getDrawable(AppContext.application.resources, R.drawable.ic_cf_video, null))
             }
         }
     }
