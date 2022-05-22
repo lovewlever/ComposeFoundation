@@ -17,5 +17,8 @@ fun NavigationHostCompose(navHostController: NavHostController) {
         composable(ScreenRoute.GestureTest.route) {
             GestureTestCompose(navController = navHostController)
         }
+        composable(ScreenRoute.LogListTest.route) {
+            LogListTestCompose(navController = navHostController)
+        }
     }
 }

@@ -15,6 +15,7 @@ object AppContext {
         this.application = application
         // 日志
         if (application.applicationInfo.isApkInDebug()) {
+            Timber.plant(Timber.DebugTree())
             Timber.plant(TimberFileTree())
         } else {
             Timber.plant(TimberCloseTree())

@@ -17,10 +17,12 @@ import java.util.*
  */
 class TimberFileTree : Timber.DebugTree() {
 
+    companion object {
+        val logFilePath by lazy { DirCommon.getFilesDirFile("timber_log") }
+    }
     private val logSuf = ".log"
     private val fileNameTimeFormat by lazy { SimpleDateFormat("yyyy-MM-dd_HH", Locale.ROOT) }
     private val logTimeFormat by lazy { SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.ROOT) }
-    private val logFilePath by lazy { DirCommon.getFilesDirFile("timber_log") }
     private var printWriter: PrintWriter? = null
 
     init {
@@ -32,7 +34,7 @@ class TimberFileTree : Timber.DebugTree() {
         list?.filter { f ->
             val b = f.name == currentDateTime + logSuf
             if (!b) {
-                f.delete()
+                //f.delete()
             }
             b
         }?.ifNotNullAndEmpty { it[0] }?.let { f ->
