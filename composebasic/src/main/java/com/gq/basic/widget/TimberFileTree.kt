@@ -18,7 +18,7 @@ import java.util.*
 class TimberFileTree : Timber.DebugTree() {
 
     companion object {
-        val logFilePath by lazy { DirCommon.getFilesDirFile("timber_log") }
+        val logFilePath by lazy { DirCommon.getCacheDirFile("timber_log") }
     }
     private val logSuf = ".log"
     private val fileNameTimeFormat by lazy { SimpleDateFormat("yyyy-MM-dd_HH", Locale.ROOT) }
