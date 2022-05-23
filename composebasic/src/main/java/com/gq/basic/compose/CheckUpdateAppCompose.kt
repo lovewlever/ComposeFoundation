@@ -129,7 +129,6 @@ private fun UpdateRemindDialogCompose(
                                 color = Color.LightGray
                             )
                     )
-
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
