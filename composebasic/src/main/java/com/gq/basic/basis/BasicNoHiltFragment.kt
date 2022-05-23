@@ -5,8 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.gq.basic.common.SystemUiController
 import com.gq.basic.common.SystemUiControllerImpl
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 open class BasicNoHiltFragment: Fragment() {

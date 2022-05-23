@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.gq.basic.common.SystemUiController
 import com.gq.basic.common.SystemUiControllerImpl
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 open class BasicNoHiltActivity: ComponentActivity() {
 

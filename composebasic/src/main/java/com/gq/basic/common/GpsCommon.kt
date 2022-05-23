@@ -3,7 +3,10 @@ package com.gq.basic.common
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.location.*
+import android.location.Criteria
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.provider.Settings
 import com.gq.basic.AppContext
 import timber.log.Timber

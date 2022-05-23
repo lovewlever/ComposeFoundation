@@ -1,19 +1,15 @@
 package com.gq.basic.viewmodel
 
 import android.app.Application
-import android.content.ContentResolver
 import android.content.ContentUris
 import android.net.Uri
-import android.os.Bundle
 import android.provider.MediaStore
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.gq.basic.basis.BasicViewModel
-import com.gq.basic.common.saveUriFileToAppLocalStorage
 import com.gq.basic.compose.PVUris
 import com.gq.basic.datasource.PictureVideoPagingSource
 import com.gq.basic.viewmodel.repository.PictureVideoRepository
@@ -21,7 +17,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

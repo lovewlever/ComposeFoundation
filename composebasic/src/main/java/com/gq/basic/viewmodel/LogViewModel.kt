@@ -9,12 +9,10 @@ import com.gq.basic.widget.TimberFileTree
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
-import java.lang.StringBuilder
 import javax.inject.Inject
 
 @HiltViewModel

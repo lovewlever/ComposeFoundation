@@ -8,7 +8,6 @@ import android.os.Build
 import android.provider.Settings
 import android.view.View
 import android.view.WindowManager
-import androidx.core.content.ContextCompat.getSystemService
 import com.gq.basic.AppContext
 
 

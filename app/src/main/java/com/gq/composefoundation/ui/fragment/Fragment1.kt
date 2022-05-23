@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -13,13 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import androidx.navigation.findNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsHeight
 import com.gq.basic.basis.BasicFragment
 import com.gq.basic.common.ToastCommon
 import com.gq.basic.compose.CheckUpdateAppCompose
-import com.gq.basic.compose.PictureAndVideoSelectorCompose
 import com.gq.basic.compose.ProgressButton
 import com.gq.basic.compose.rememberProgressButtonState
 import com.gq.composefoundation.ui.theme.ComposeFoundationTheme

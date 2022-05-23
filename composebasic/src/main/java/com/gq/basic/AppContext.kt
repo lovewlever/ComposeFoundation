@@ -1,7 +1,6 @@
 package com.gq.basic
 
 import android.app.Application
-import android.content.pm.ApplicationInfo
 import com.gq.basic.common.TimberCloseTree
 import com.gq.basic.extension.isApkInDebug
 import com.gq.basic.widget.TimberFileTree

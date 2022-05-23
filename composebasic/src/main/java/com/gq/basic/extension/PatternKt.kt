@@ -1,7 +1,5 @@
 package com.gq.basic.extension
 
-import androidx.compose.ui.text.toLowerCase
-import java.util.*
 import java.util.regex.Pattern
 
 /**

@@ -11,7 +11,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.reflect.TypeToken
 import com.gq.basic.AppContext
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext

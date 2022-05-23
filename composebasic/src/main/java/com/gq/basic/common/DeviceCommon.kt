@@ -2,7 +2,6 @@ package com.gq.basic.common
 
 import android.bluetooth.BluetoothManager
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import android.provider.Settings.Secure
