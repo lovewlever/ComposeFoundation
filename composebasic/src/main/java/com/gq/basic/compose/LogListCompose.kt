@@ -1,6 +1,7 @@
 package com.gq.basic.compose
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,12 +17,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Observer
+import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.gq.basic.common.ToastCommon
 import com.gq.basic.viewmodel.LogViewModel
 import java.io.File
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LogListCompose(
     modifier: Modifier = Modifier,

@@ -70,12 +70,13 @@ fun PrivacyPolicyConfirmationDialogCompose(
                             modifier = Modifier.padding(start = 8.dp, end = 8.dp),
                             text = buildAnnotatedString {
                                 append(stringResource(R.string.cb_read_carefully_pp))
+                                val privacyPolicy = stringResource(R.string.cb_privacy_policy_num)
                                 withStyle(
                                     style = SpanStyle(
                                         color = MaterialTheme.colors.secondary
                                     )
                                 ) {
-                                    append(stringResource(R.string.cb_privacy_policy_num))
+                                    append(privacyPolicy)
                                 }
                                 append(stringResource(R.string.cb_pp_other))
                             },

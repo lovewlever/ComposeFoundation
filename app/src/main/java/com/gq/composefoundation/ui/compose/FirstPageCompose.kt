@@ -3,9 +3,10 @@ package com.gq.composefoundation.ui.compose
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -64,8 +65,8 @@ fun FirstPageCompose(navController: NavController) {
                     navController.navigate(ScreenRoute.LogListTest.route)
                 },
             )
-            LazyVerticalGrid(cells = GridCells.Fixed(3),
-                modifier = Modifier.statusBarsPadding(),
+            LazyVerticalGrid(columns = GridCells.Fixed(3),
+                modifier = Modifier.statusBarsPadding().padding(it),
                 content = {
                     items(list) { pair ->
                         Button(onClick = {
