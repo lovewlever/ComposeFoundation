@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.gq.basic.AppContext
+import com.gq.basic.R
 
 object NotificationCommon {
 
@@ -22,12 +23,36 @@ object NotificationCommon {
         NotificationManagerCompat.from(AppContext.application)
     }
 
-    fun getNotification(build: NotificationCompat.Builder.() -> NotificationCompat.Builder): Pair<Int, Notification> {
+    fun sendNotification(build: NotificationCompat.Builder.() -> NotificationCompat.Builder): Pair<Int, Notification> {
         notifyId++
         return notifyId to NotificationCompat.Builder(AppContext.application, CHANNEL_ID)
             .also { build(it) }
             .setPriority(NotificationManager.IMPORTANCE_HIGH)
             .build()
+    }
+
+
+    fun sendGroupNotification(
+        build: NotificationCompat.Builder.(Int) -> NotificationCompat.Builder,
+        groupSummaryBuild: NotificationCompat.Builder.() -> NotificationCompat.Builder
+    ) {
+        notifyId++
+        val b = NotificationCompat.Builder(AppContext.application, CHANNEL_ID)
+            .also { build(it, notifyId) }
+            .setGroup(GROUP_KEY_WORK)
+            .setPriority(NotificationManager.IMPORTANCE_HIGH)
+            .build()
+
+        val groupSummaryNotification = NotificationCompat.Builder(AppContext.application, CHANNEL_ID)
+            .also { groupSummaryBuild(it) }
+            .setGroup(GROUP_KEY_WORK)
+            .setGroupSummary(true)
+            .setPriority(NotificationManager.IMPORTANCE_HIGH)
+
+        with(notificationManager) {
+            notify(notifyId, b)
+            notify(SummaryId, groupSummaryNotification.build())
+        }
     }
 
 

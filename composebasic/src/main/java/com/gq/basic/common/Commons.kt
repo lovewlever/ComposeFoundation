@@ -1,5 +1,6 @@
 package com.gq.basic.common
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
@@ -17,12 +18,21 @@ import androidx.browser.customtabs.CustomTabsService
 import androidx.core.content.res.ResourcesCompat
 import com.gq.basic.AppContext
 import com.gq.basic.R
+import com.gq.basic.data.AppInfoData
+import okhttp3.internal.and
+import okio.ByteString.Companion.decodeBase64
 import okio.IOException
+import org.apache.commons.codec.binary.Base64
+import org.apache.commons.codec.binary.Base64.decodeBase64
+import org.apache.commons.codec.binary.Base64.encodeBase64String
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.*
+import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 
 object Commons {
 
@@ -110,6 +120,7 @@ object Commons {
 
     object Device {
 
+        @SuppressLint("MissingPermission")
         @Deprecated("不可用")
         fun getDeviceId(): String {
             val telephonyManager =
@@ -128,6 +139,7 @@ object Commons {
         /**
          * 获取设备蓝牙Mac地址
          */
+        @SuppressLint("MissingPermission")
         fun getBluetoothMacAddress(): String? {
             val bluetoothManager =
                 AppContext.application.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -158,18 +170,6 @@ object Commons {
             return UUID(dev.hashCode().toLong(), serial.hashCode().toLong()).toString().replace("-", "")
         }
     }
-
-    class AppInfoData(
-        var icon: Drawable?,
-        var appName: String,
-        var appPackage: String,
-        var isSysApp: Boolean,
-        var versionName: String,
-        var versionCode: Int,
-        var firstInstallTime: Long,
-        var startActivityClassName: String
-    )
-
 
     object PackageCommon {
 
@@ -332,6 +332,84 @@ object Commons {
                 header[43] = (((totalAudioLen shr 24) and 0xff).toByte())
                 fos.write(header, 0, 44)
             }
+        }
+    }
+
+    object AesCommon {
+
+        private const val IV = "RTdxVng0U2dVUEZndDBvTg=="
+        private const val KEY = "OUVZQzlMWDBNMDBiZWFJTg=="
+        private const val bm = "UTF-8"
+        private val charsetUtf8 = charset("utf-8")
+
+        /**
+         * AES 加密
+         *
+         * @param content  明文
+         * @param
+         * @return
+         */
+        fun aesEncrypt(content: String, iv: String = IV, key: String = KEY): String {
+            try {
+                val iv = String(Base64.decodeBase64(iv),charsetUtf8)
+                val pwd = String(Base64.decodeBase64(key),charsetUtf8)
+                val zeroIv = IvParameterSpec(iv.toByteArray())
+                val key = SecretKeySpec(pwd.toByteArray(), "AES")
+                val cipher: Cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+                cipher.init(Cipher.ENCRYPT_MODE, key, zeroIv)
+                val encryptedData: ByteArray = cipher.doFinal(content.toByteArray(charsetUtf8))
+                // return new String(encryptedData,bm);
+                return Base64.encodeBase64String(encryptedData)
+                //          return byte2HexStr(encryptedData);
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return ""
+        }
+
+        fun aesDecrypt(content: String, password: String, iv: String = IV): String? {
+            try {
+                val byteMi: ByteArray = Base64.decodeBase64(content)
+                //          byte[] byteMi=  str2ByteArray(content);
+                val zeroIv = IvParameterSpec(iv.toByteArray())
+                val key = SecretKeySpec(password.toByteArray(), "AES")
+                val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+                cipher.init(Cipher.DECRYPT_MODE, key, zeroIv)
+                val decryptedData = cipher.doFinal(byteMi)
+                return String(decryptedData, charsetUtf8)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return null
+        }
+
+        /**
+         * 字节数组转化为大写16进制字符串
+         */
+        private fun byte2HexStr(b: ByteArray): String {
+            val sb = StringBuilder()
+            for (i in b.indices) {
+                val s = Integer.toHexString(b[i] and 0xFF)
+                if (s.length == 1) {
+                    sb.append("0")
+                }
+                sb.append(s.toUpperCase())
+            }
+            return sb.toString()
+        }
+
+        /**
+         * 16进制字符串转字节数组
+         */
+        private fun str2ByteArray(s: String): ByteArray {
+            val byteArrayLength = s.length / 2
+            val b = ByteArray(byteArrayLength)
+            for (i in 0 until byteArrayLength) {
+                val b0 = Integer.valueOf(s.substring(i * 2, i * 2 + 2), 16)
+                    .toInt().toByte()
+                b[i] = b0
+            }
+            return b
         }
     }
 }

@@ -124,6 +124,8 @@ dependencies {
     api 'com.tencent.bugly:nativecrashreport:latest.release'
 
     api "androidx.documentfile:documentfile:1.0.1"
+    api 'commons-codec:commons-codec:1.15'
+
     // Kapt
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     kapt "androidx.room:room-compiler:$room_version"
