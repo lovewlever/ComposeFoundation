@@ -13,9 +13,9 @@ import javax.inject.Inject
 
 interface SystemUiController {
 
-    //fun isDarkMode(): Boolean
-
-    //fun setDefaultUiMode(uiMode: Int)
+//    fun isDarkMode(): Boolean
+//
+//    fun setDefaultUiMode(uiMode: Int)
 
     fun findStatusBarHeight(): Int
 
@@ -37,9 +37,9 @@ interface SystemUiController {
         color: Int = Color.TRANSPARENT
     ): SystemUiController
 
-    /*fun setBarsIconLightColor(
+    fun setBarsIconLightColor(
         isLight: Boolean
-    ): SystemUiController*/
+    ): SystemUiController
 
 }
 
@@ -166,14 +166,14 @@ class SystemUiControllerImpl @Inject constructor(
         return this
     }
 
-    /*override fun setBarsIconLightColor(isLight: Boolean): SystemUiController {
+    override fun setBarsIconLightColor(isLight: Boolean): SystemUiController {
         if (isLight) {
             setStatusBarIconLightColor()
         } else {
             setStatusBarIconDarkColor()
         }
         return this
-    }*/
+    }
 
     /**
      * 状态栏深色Icon

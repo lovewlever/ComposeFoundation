@@ -41,7 +41,28 @@ android {
     buildFeatures {
         compose true
     }
+
+    /*flavorDimensions "pf"
+    productFlavors {
+        pfRelease {
+            versionNameSuffix ".${versionNameSuffixTime()}_release"
+            buildConfigField "long", "BuildTimestamp", "-1"
+        }
+
+        pfBeta {
+            versionNameSuffix ".${versionNameSuffixTime()}_beta"
+            buildConfigField "long", "BuildTimestamp", "${releaseTime()}"
+        }
+    }*/
 }
+
+/*static long releaseTime() {
+    return new Date().time
+}
+
+def static versionNameSuffixTime() {
+    return new Date().format("MMddHHmm", TimeZone.getTimeZone("UTC"))
+}*/
 
 apply from: '../local_maven.gradle'
 
