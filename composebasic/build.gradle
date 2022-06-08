@@ -42,16 +42,26 @@ android {
         compose true
     }
 
-    /*flavorDimensions "pf"
+    /*flavorDimensions "f"
     productFlavors {
-        pfRelease {
+        fRelease {
             versionNameSuffix ".${versionNameSuffixTime()}_release"
             buildConfigField "long", "BuildTimestamp", "-1"
         }
 
-        pfBeta {
-            versionNameSuffix ".${versionNameSuffixTime()}_beta"
+        fTest {
+            versionNameSuffix ".${versionNameSuffixTime()}_test"
             buildConfigField "long", "BuildTimestamp", "${releaseTime()}"
+        }
+    }*/
+
+   /* applicationVariants.all { variant ->
+        variant.outputs.all { output -> //  ${variant.productFlavors[0].name}
+            def fileName = "appname_${variant.versionCode}_${variant.versionName}.apk"
+            def outFile = output.outputFile
+            if (outFile != null && outFile.name.endsWith('.apk')) {
+                outputFileName = fileName
+            }
         }
     }*/
 }
