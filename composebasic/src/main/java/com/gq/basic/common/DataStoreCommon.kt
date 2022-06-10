@@ -7,6 +7,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.preferencesOf
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.reflect.TypeToken
 import com.gq.basic.AppContext
@@ -183,6 +184,26 @@ object DataStoreCommon {
     suspend fun <T> putEntity(key: Preferences.Key<String>, t: T) {
         AppContext.application.dataStore.edit { dataStore ->
             dataStore[key] = GsonCommon.gson.toJson(t)
+        }
+    }
+
+    suspend fun <T> putGenerics(key: Preferences.Key<T>, t: T) {
+        AppContext.application.dataStore.edit { dataStore ->
+            dataStore[key] = t
+        }
+    }
+
+    suspend fun <T> getGenerics(key: Preferences.Key<T>) {
+        AppContext.application.dataStore.data.map { preferences: Preferences ->
+            preferences[key]
+        }.first()
+    }
+
+    suspend fun <T> getGenerics(key: Preferences.Key<T>, callback: (T?) -> Unit) {
+        AppContext.application.dataStore.data.map { preferences: Preferences ->
+            preferences[key]
+        }.collect { t ->
+            callback(t)
         }
     }
 
