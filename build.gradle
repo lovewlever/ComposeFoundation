@@ -11,9 +11,9 @@ buildscript {
         accompanist = "0.24.2-alpha"
         coil_version = "2.0.0-rc02"
         hilt_plugin_version = "2.37"
-        lifecycle_version = "2.4.1"
+        lifecycle_version = "2.5.0-rc01"
         room_version = "2.4.2"
-        nav_version = "2.4.1"
+        nav_version = "2.5.0-rc01"
     }
     dependencies {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
