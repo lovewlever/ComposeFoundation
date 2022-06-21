@@ -66,7 +66,9 @@ fun FirstPageCompose(navController: NavController) {
                 },
             )
             LazyVerticalGrid(columns = GridCells.Fixed(3),
-                modifier = Modifier.statusBarsPadding().padding(it),
+                modifier = Modifier
+                    .statusBarsPadding()
+                    .padding(it),
                 content = {
                     items(list) { pair ->
                         Button(onClick = {

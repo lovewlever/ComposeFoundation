@@ -14,9 +14,9 @@ object NotificationCommon {
 
     private var notifyId = 0
     private const val SummaryId = 43
-    private val GROUP_KEY_WORK = "group.key.work.${VersionCommon.getApplicationId()}"
+    private val GROUP_KEY_WORK = "group.key.work.${Commons.Version.getApplicationId()}"
     private val CHANNEL_ID by lazy {
-        "${VersionCommon.getApplicationId()}.channel_id"
+        "${Commons.Version.getApplicationId()}.channel_id"
     }
 
     private val notificationManager by lazy {
