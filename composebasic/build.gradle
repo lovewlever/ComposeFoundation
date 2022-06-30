@@ -42,16 +42,33 @@ android {
         compose true
     }
 
-    /*flavorDimensions "f"
+    /*flavorDimensions 'v'
     productFlavors {
-        fRelease {
+        vRelease {
+            dimension 'v'
             versionNameSuffix ".${versionNameSuffixTime()}_release"
             buildConfigField "long", "BuildTimestamp", "-1"
+            buildConfigField "boolean", "IsRelease", "true" // 是否是发布版
+            buildConfigField "String", "HostName", "\"http://192.168.3.113:8081/\""
+            manifestPlaceholders = [appName: ""]
         }
 
-        fTest {
-            versionNameSuffix ".${versionNameSuffixTime()}_test"
+        vCustomerPreview {
+            dimension 'v'
+            versionNameSuffix ".${versionNameSuffixTime()}_preview"
             buildConfigField "long", "BuildTimestamp", "${releaseTime()}"
+            buildConfigField "boolean", "IsRelease", "false" // 是否是发布版
+            buildConfigField "String", "HostName", "\"http://192.168.3.113:8081/\""
+            manifestPlaceholders = [appName: ""]
+        }
+
+        vDeveloper {
+            dimension 'v'
+            versionNameSuffix ".${versionNameSuffixTime()}_developer"
+            buildConfigField "long", "BuildTimestamp", "${releaseTime()}"
+            buildConfigField "boolean", "IsRelease", "false" // 是否是发布版
+            buildConfigField "String", "HostName", "\"http://192.168.3.113:8081/\""
+            manifestPlaceholders = [appName: ""]
         }
     }*/
 
