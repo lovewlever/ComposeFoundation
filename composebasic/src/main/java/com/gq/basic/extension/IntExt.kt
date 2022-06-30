@@ -1,6 +1,4 @@
-package com.gq.basic.common
-
-import java.util.regex.Pattern
+package com.gq.basic.extension
 
 /**
  * Int转双位时间
@@ -10,28 +8,6 @@ fun Int.toDoublePositionTime(): String {
     val len = this.toString().length
     return if (len <= 1) "0${this}" else this.toString()
 }
-
-/**
- * 判断List是否不为null或不为空
- */
-inline fun <E,R> Collection<E>?.ifNotNullAndEmpty(block: (MutableList<E>) -> R): R? {
-    if (!this.isNullOrEmpty()) {
-        return block(this.toMutableList())
-    }
-    return null
-}
-
-/**
- * 匹配手机号
- */
-inline fun String.matchPhoneNumber(): Boolean =
-    Pattern.compile("^(?:(?:\\+|00)86)?1[3-9]\\d{9}\$").matcher(this).matches()
-
-/**
- * 匹配url
- */
-inline fun String.matchUrl(): Boolean =
-    Pattern.compile("^(((ht|f)tps?):\\/\\/)?[\\w-]+(\\.[\\w-]+)+([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?\$").matcher(this).matches()
 
 
 /**
