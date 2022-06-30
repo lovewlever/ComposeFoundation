@@ -45,7 +45,7 @@ inline fun String.matchIsAudio(): Boolean {
 }
 
 /**
- * 隐藏手机号后四位为
+ * 隐藏手机号中间四位为
  */
 inline fun String.phoneHideMiddleFour(separator: String = "****"): String {
     return if (this.matchPhoneNumber()) {
