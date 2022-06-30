@@ -95,6 +95,7 @@ object Commons {
 
     object Version {
 
+        @Deprecated("Use BuildConfig.VERSION_CODE")
         fun getVersionCode(): Long {
             return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
                 getPackageInfo().longVersionCode
@@ -104,10 +105,15 @@ object Commons {
         }
 
 
+        @Deprecated("Use BuildConfig.VERSION_NAME")
         fun getVersionName(): String =
             getPackageInfo().versionName
 
 
+        @Deprecated("Use BuildConfig.APPLICATION_ID", ReplaceWith(
+            "AppContext.application.applicationInfo.processName",
+            "com.gq.basic.AppContext")
+        )
         fun getApplicationId(): String =
             AppContext.application.applicationInfo.processName
 
