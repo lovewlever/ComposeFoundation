@@ -49,7 +49,7 @@ inline fun String.matchIsAudio(): Boolean {
  */
 inline fun String.phoneHideMiddleFour(separator: String = "****"): String {
     return if (this.matchPhoneNumber()) {
-        this.replace(Regex("(\\d{3})(\\d{4})(\\d{4})"), "\$1${separator}\$2")
+        this.replace(Regex("(\\d{3})(\\d{4})(\\d{4})"), "\$1${separator}\$3")
     } else {
         return this
     }
