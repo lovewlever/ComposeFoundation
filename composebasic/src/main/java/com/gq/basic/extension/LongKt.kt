@@ -8,7 +8,7 @@ import kotlin.system.exitProcess
 /**
  * 默认 3天
  */
-const val ValidityDay = 60 * 60 * 24 * 3 * 1000
+const val ValidityDay = 60 * 60 * 24 * 5 * 1000
 
 /**
  * 判断测试版的有效期
