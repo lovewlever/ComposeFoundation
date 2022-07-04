@@ -3,7 +3,7 @@ package com.gq.basic.widget
 import android.util.Log
 import com.gq.basic.common.DateTimeCommon
 import com.gq.basic.common.DirCommon
-import com.gq.basic.common.ifNotNullAndEmpty
+import com.gq.basic.extension.ifNotNullAndEmpty
 import timber.log.Timber
 import java.io.BufferedWriter
 import java.io.File

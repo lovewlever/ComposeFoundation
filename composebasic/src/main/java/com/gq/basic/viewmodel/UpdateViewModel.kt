@@ -7,10 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gq.basic.common.Commons
 import com.gq.basic.common.Commons.Version
-import com.gq.basic.common.ifNotNullAndEmpty
 import com.gq.basic.data.DownloadApkResult
+import com.gq.basic.extension.ifNotNullAndEmpty
 import com.gq.basic.viewmodel.repository.UpdateRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job

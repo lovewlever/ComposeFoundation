@@ -33,8 +33,8 @@ import coil.compose.SubcomposeAsyncImage
 import com.gq.basic.R
 import com.gq.basic.common.DensityCommon
 import com.gq.basic.common.ToastCommon
-import com.gq.basic.common.millisecondToHms
 import com.gq.basic.extension.loadVideoThumbnail
+import com.gq.basic.extension.millisecondToHms
 import com.gq.basic.theme.BasicShapes
 import com.gq.basic.viewmodel.PictureVideoSelectorViewModel
 import kotlinx.coroutines.flow.Flow

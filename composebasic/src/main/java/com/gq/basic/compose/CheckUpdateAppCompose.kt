@@ -21,7 +21,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gq.basic.R
 import com.gq.basic.common.ToastCommon
-import com.gq.basic.common.matchUrl
+import com.gq.basic.extension.matchUrl
 import com.gq.basic.hilt.UpdateAppModule
 import com.gq.basic.viewmodel.UpdateViewModel
 import java.io.File
