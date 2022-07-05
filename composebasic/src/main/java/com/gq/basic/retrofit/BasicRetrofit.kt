@@ -27,6 +27,35 @@ class BasicRetrofit @Inject constructor() {
 
     fun initialization(
         baseUrl: String,
+        cache: Boolean = true,
+        okHttpClientBuilder: OkHttpClient.Builder.() -> OkHttpClient.Builder = { this },
+        retrofitBuilder: Retrofit.Builder.() -> Retrofit.Builder = { this }
+    ) {
+        val okHttpClient: OkHttpClient =
+            OkHttpClient.Builder()
+                .cookieJar(saveCookie())
+                .apply {
+                    if (cache) {
+                        val cacheDir = AppContext.application.cacheDir
+                        cache(Cache(cacheDir, (10 * 1024 * 1024).toLong()))
+                    }
+                    okHttpClientBuilder()
+                }
+                .retryOnConnectionFailure(true)//允许重试
+                .build()
+
+        retrofitInstance = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(okHttpClient)
+            .apply {
+                retrofitBuilder()
+            }
+            .build()
+    }
+
+    @Deprecated("")
+    fun initialization(
+        baseUrl: String,
         cache: Boolean = false,
         interceptor: MutableList<Interceptor>? = null,
         interceptorNetwork: MutableList<Interceptor>? = null,
