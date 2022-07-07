@@ -9,9 +9,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.statusBarsPadding
 import com.gq.basic.common.DensityCommon
@@ -20,6 +22,7 @@ import com.gq.basic.compose.PictureAndVideoSelectorCompose
 import com.gq.basic.compose.rememberPictureVideoSelectorState
 import com.gq.composefoundation.ui.graph.ScreenRoute
 import com.gq.composefoundation.ui.theme.Shapes
+import com.gq.composefoundation.viewmodel.AppViewModel
 import kotlinx.coroutines.launch
 
 /**
@@ -27,7 +30,10 @@ import kotlinx.coroutines.launch
  */
 @OptIn(ExperimentalMaterialApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
-fun FirstPageCompose(navController: NavController) {
+fun FirstPageCompose(
+    navController: NavController,
+    appViewModel: AppViewModel = hiltViewModel()
+) {
 
     val coroutineScope = rememberCoroutineScope()
     val bottomSheetState =
@@ -35,6 +41,9 @@ fun FirstPageCompose(navController: NavController) {
     val pictureVideoSelectorState = rememberPictureVideoSelectorState(
         quantityLimit = 4,
         type = PVUris.TYPE_PV_ALL, chooseModel = PVUris.CM_VIDEO_MULTIPLE)
+    LaunchedEffect(key1 = true, block = {
+        appViewModel.getAppConfig()
+    })
 
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,

@@ -1,11 +1,11 @@
 package com.gq.composefoundation.api
 
-import com.gq.basic.data.DownloadApkResult
+import com.gq.composefoundation.data.ResultEntity
 import com.gq.composefoundation.retrofit.RetrofitCall
 import retrofit2.http.GET
 
 interface AppApi {
 
-    @GET("/a")
-    fun getAppConfig(): RetrofitCall<DownloadApkResult<String>>
+    @GET("user/query-users")
+    fun getAppConfig(): RetrofitCall<ResultEntity<String>>
 }
