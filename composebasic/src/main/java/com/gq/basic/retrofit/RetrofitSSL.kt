@@ -1,20 +1,25 @@
-package com.gq.composefoundation.retrofit
+package com.gq.basic.retrofit
 
 import com.gq.basic.AppContext
 import java.security.KeyStore
 import java.security.SecureRandom
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
+import javax.inject.Inject
+import javax.inject.Singleton
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
-object RetrofitSSLCommon {
+@Singleton
+class RetrofitSSL @Inject constructor() {
 
-    const val RetrofitSSLCerName = "retrofit_ssl.cer"
+    companion object {
+        const val RetrofitSSLCerName = "retrofit_ssl.cer"
+    }
 
-    fun sslContext(assetsCerName: String = RetrofitSSLCerName): Pair<SSLContext, X509TrustManager> {
+    fun sslFactoryTrust(assetsCerName: String = RetrofitSSLCerName): Pair<SSLContext, X509TrustManager> {
         val sslContext = SSLContext.getInstance("TLS")
         val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
         trustManagerFactory.init(getKeyStore(assetsCerName))
