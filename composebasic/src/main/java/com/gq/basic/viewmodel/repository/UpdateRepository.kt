@@ -71,7 +71,7 @@ class UpdateRepository @Inject constructor(
      */
     suspend fun queryQueryExternalNetworkIpv6() = withContext(Dispatchers.IO) {
         return@withContext try {
-            updateApi.queryQueryExternalNetworkIpv4("http://pv.sohu.com/cityjson?ie=utf-8").execute().body()?.string()?.let { str ->
+            updateApi.queryQueryExternalNetworkIpv4("https://ipv6.ipw.cn/").execute().body()?.string()?.let { str ->
                 Timber.d(str)
             }
         } catch (e: Exception) {
