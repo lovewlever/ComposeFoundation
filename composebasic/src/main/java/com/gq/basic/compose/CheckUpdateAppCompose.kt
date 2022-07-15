@@ -29,6 +29,7 @@ import java.io.File
 class CheckUpdateState {
     var isShowDialog by mutableStateOf(false)
     var showVersionName by mutableStateOf("")
+    var updateIllustrate by mutableStateOf("")
     var downloadUrl by mutableStateOf("")
     var isItMandatory by mutableStateOf(false)
 }
@@ -105,10 +106,9 @@ private fun UpdateRemindDialogCompose(
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-                        fontSize = 14.sp,
+                        modifier = Modifier.padding(horizontal = 24.dp).fillMaxWidth(),
+                        fontSize = 15.sp,
                         lineHeight = 20.sp,
-                        textAlign = TextAlign.Center,
                         text = buildAnnotatedString {
                             append(stringResource(id = R.string.cb_discovery_new_version))
                             withStyle(
@@ -116,7 +116,10 @@ private fun UpdateRemindDialogCompose(
                                     color = MaterialTheme.colors.secondary
                                 )
                             ) {
-                                append("${checkUpdateState.showVersionName}\n")
+                                append("${checkUpdateState.showVersionName}\n\n")
+                            }
+                            if (checkUpdateState.updateIllustrate.isNotBlank()) {
+                                append(checkUpdateState.updateIllustrate)
                             }
                             // append(stringResource(id = R.string.cb_whether_to_update))
                         }

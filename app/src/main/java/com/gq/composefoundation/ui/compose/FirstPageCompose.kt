@@ -17,9 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.statusBarsPadding
 import com.gq.basic.common.DensityCommon
-import com.gq.basic.compose.PVUris
-import com.gq.basic.compose.PictureAndVideoSelectorCompose
-import com.gq.basic.compose.rememberPictureVideoSelectorState
+import com.gq.basic.compose.*
 import com.gq.composefoundation.ui.graph.ScreenRoute
 import com.gq.composefoundation.ui.theme.Shapes
 import com.gq.composefoundation.viewmodel.AppViewModel
@@ -90,6 +88,12 @@ fun FirstPageCompose(
                         }
                     }
                 })
+            val checkUpdateState = rememberCheckUpdateState()
+            checkUpdateState.updateIllustrate = "1.更新说明，\n2.更新说明更新说明更\n3.新说明更新说明更新说明"
+            checkUpdateState.downloadUrl = "https"
+            checkUpdateState.showVersionName = "v1.1.0"
+            checkUpdateState.isShowDialog = true
+            CheckUpdateAppCompose(checkUpdateState = checkUpdateState)
         }
     }
 
