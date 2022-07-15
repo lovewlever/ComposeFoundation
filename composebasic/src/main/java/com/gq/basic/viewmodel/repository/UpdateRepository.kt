@@ -8,6 +8,7 @@ import com.gq.basic.data.DownloadApkResult
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.io.*
 import javax.inject.Inject
 
@@ -48,5 +49,34 @@ class UpdateRepository @Inject constructor(
 
     private fun getPath(): String {
         return DirCommon.getCacheDirFile("apks").absolutePath
+    }
+
+    /**
+     * 查询Ipv4
+     */
+    suspend fun queryQueryExternalNetworkIpv4() = withContext(Dispatchers.IO) {
+        return@withContext try {
+            updateApi.queryQueryExternalNetworkIpv4("http://pv.sohu.com/cityjson?ie=utf-8").execute().body()?.string()?.let { str ->
+                Timber.d(str)
+            }
+            ""
+        } catch (e: Exception) {
+            Timber.e(e)
+            ""
+        }
+    }
+
+    /**
+     * 查询Ipv4
+     */
+    suspend fun queryQueryExternalNetworkIpv6() = withContext(Dispatchers.IO) {
+        return@withContext try {
+            updateApi.queryQueryExternalNetworkIpv4("http://pv.sohu.com/cityjson?ie=utf-8").execute().body()?.string()?.let { str ->
+                Timber.d(str)
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
+            ""
+        }
     }
 }
