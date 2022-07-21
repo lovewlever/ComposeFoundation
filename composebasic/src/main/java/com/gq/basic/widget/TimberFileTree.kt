@@ -62,11 +62,13 @@ class TimberFileTree : Timber.DebugTree() {
             Log.ERROR -> "ERROR"
             else -> "Fail"
         }
-        printWriter
-            ?.append("${logTimeFormat.format(System.currentTimeMillis())}:${tag}<%>$priorityStr::${message};${
-                t?.stackTraceToString() ?: ""
-            }")
-            ?.append("\n")
-        printWriter?.flush()
+        if (priority == Log.ERROR) {
+            printWriter
+                ?.append("${logTimeFormat.format(System.currentTimeMillis())}:${tag}<%>$priorityStr::${message};${
+                    t?.stackTraceToString() ?: ""
+                }")
+                ?.append("\n")
+            printWriter?.flush()
+        }
     }
 }
