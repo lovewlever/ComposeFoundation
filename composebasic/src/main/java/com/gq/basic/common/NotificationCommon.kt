@@ -23,7 +23,7 @@ object NotificationCommon {
         NotificationManagerCompat.from(AppContext.application)
     }
 
-    fun sendNotification(build: NotificationCompat.Builder.() -> NotificationCompat.Builder): Pair<Int, Notification> {
+    fun createNotification(build: NotificationCompat.Builder.() -> NotificationCompat.Builder): Pair<Int, Notification> {
         notifyId++
         return notifyId to NotificationCompat.Builder(AppContext.application, CHANNEL_ID)
             .also { build(it) }
