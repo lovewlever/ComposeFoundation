@@ -11,14 +11,16 @@ object AppContext {
 
     lateinit var application: Application
 
-    fun initialization(application: Application) {
+    fun initialization(application: Application, timberFileTree: Boolean = false) {
         this.application = application
         // 日志
         if (application.applicationInfo.isApkInDebug()) {
             Timber.plant(Timber.DebugTree())
-            Timber.plant(TimberFileTree())
         } else {
             Timber.plant(TimberCloseTree())
+        }
+        if (timberFileTree) {
+            Timber.plant(TimberFileTree())
         }
     }
 
