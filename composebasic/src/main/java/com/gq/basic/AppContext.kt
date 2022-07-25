@@ -3,6 +3,7 @@ package com.gq.basic
 import android.app.Application
 import com.gq.basic.common.TimberCloseTree
 import com.gq.basic.extension.isApkInDebug
+import com.gq.basic.widget.AppCrashHandler
 import com.gq.basic.widget.TimberFileTree
 import timber.log.Timber
 
@@ -19,6 +20,10 @@ object AppContext {
         } else {
             Timber.plant(TimberCloseTree())
         }
+    }
+
+    fun setDefaultUncaughtExceptionHandler(uncaughtException: (t: Thread, e: Throwable) -> Unit = { _,_ -> }) {
+        Thread.setDefaultUncaughtExceptionHandler(AppCrashHandler(callback = { t, e -> uncaughtException(t, e) }))
     }
 
     fun isApkInDebug() =

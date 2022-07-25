@@ -9,7 +9,5 @@ open class BasicApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         AppContext.initialization(this)
-        Thread.setDefaultUncaughtExceptionHandler(AppCrashHandler(callback = { t, e -> uncaughtException(t, e) }))
     }
-    open fun uncaughtException(t: Thread, e: Throwable) { }
 }
