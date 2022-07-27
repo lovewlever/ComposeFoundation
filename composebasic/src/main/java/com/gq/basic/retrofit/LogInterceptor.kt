@@ -1,4 +1,4 @@
-package com.lk.reading.english.retrofit
+package com.gq.basic.retrofit
 
 import com.gq.basic.common.GsonCommon
 import okhttp3.*

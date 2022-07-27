@@ -8,7 +8,9 @@ import java.io.UnsupportedEncodingException
 
 /**
  * Okhttp日志打印
+ * @see com.gq.basic.retrofit.LogInterceptor
  */
+@Deprecated("use LogInterceptor")
 class CustomHttpLoggingInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response =
