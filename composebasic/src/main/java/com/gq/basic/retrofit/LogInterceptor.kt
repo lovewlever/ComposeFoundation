@@ -9,7 +9,7 @@ import java.nio.charset.Charset
 import kotlin.text.Charsets.UTF_8
 
 /**
- * 日志蓝机器
+ * 日志拦截器
  */
 class LogInterceptor : Interceptor {
 
