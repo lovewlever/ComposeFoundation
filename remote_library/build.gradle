@@ -36,7 +36,7 @@ dependencies {
 
     api 'androidx.browser:browser:1.4.0'
     // AndroidX
-    api 'androidx.core:core-ktx:1.7.0'
+    api 'androidx.core:core-ktx:1.8.0'
     // Compose
     api 'androidx.activity:activity-compose:1.4.0'
     api "androidx.compose.ui:ui-tooling-preview:$compose_version"
@@ -75,7 +75,7 @@ dependencies {
 
     // Paging3
     api "androidx.paging:paging-runtime-ktx:3.1.1"
-    api "androidx.paging:paging-compose:1.0.0-alpha14"
+    api "androidx.paging:paging-compose:1.0.0-alpha15"
 
     // lifecycle
     api "androidx.lifecycle:lifecycle-service:$lifecycle_version"
@@ -116,6 +116,7 @@ dependencies {
     api "com.google.accompanist:accompanist-permissions:$accompanist"
     api "com.google.accompanist:accompanist-placeholder-material:$accompanist"
     api "com.google.accompanist:accompanist-placeholder:$accompanist"
+    api "com.google.accompanist:accompanist-webview:$accompanist"
     // Coil
     api "io.coil-kt:coil-compose:$coil_version"
     api "io.coil-kt:coil-video:$coil_version"
