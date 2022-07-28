@@ -1,5 +1,6 @@
 package com.gq.basic.retrofit
 
+import com.google.gson.JsonObject
 import com.gq.basic.common.GsonCommon
 import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -40,8 +41,10 @@ class LogInterceptor : Interceptor {
         sb.clear()
         val requestBody: RequestBody? = request.body
         val headers = request.headers
-        Timber.e("--> URL: ${request.url.toUrl()}")
-        Timber.e("--> Method: ${request.method} (${requestBody?.contentLength()}-byte body)")
+        val url = request.url.toUrl()
+        val method = request.method
+        Timber.e("--> URL: $url")
+        Timber.e("--> Method: $method (${requestBody?.contentLength()}-byte body)")
         headers.toList().forEach { h -> sb.append("\n").append(h.first).append(": ").append(h.second) }
         Timber.e("--> Headers: $sb")
         requestBody?.contentType()?.let {
@@ -56,11 +59,27 @@ class LogInterceptor : Interceptor {
         }
 
         try {
-            val bufferedSink = okio.Buffer()
-            requestBody?.writeTo(bufferedSink)
-            var charset: Charset? = requestBody?.contentType()?.charset()
-            charset = charset ?: Charset.forName("utf-8")
-            Timber.e("--> Params: " + charset?.let { bufferedSink.readString(it) })
+            val params = if (method == "GET") {
+                url.query
+            } else {
+                val bufferedSink = okio.Buffer()
+                requestBody?.writeTo(bufferedSink)
+                var charset: Charset? = requestBody?.contentType()?.charset()
+                charset = charset ?: Charset.forName("utf-8")
+                charset?.let { bufferedSink.readString(it) }
+            }
+            Timber.e("--> Params: ?$params")
+            params?.split("&")?.let { list ->
+                val joStr = JsonObject().also { jo ->
+                    list.forEachIndexed { index, s ->
+                        val sp = s.split("=")
+                        if (sp.size > 1) {
+                            jo.addProperty(sp[0], sp[1])
+                        }
+                    }
+                }.toString()
+                Timber.e("--> Params-Json: $joStr")
+            }
         } catch (e: IOException) {
             Timber.e("--> Exception: ${e.message}")
             Timber.e(e)
