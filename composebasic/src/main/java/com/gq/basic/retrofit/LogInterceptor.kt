@@ -44,6 +44,10 @@ class LogInterceptor : Interceptor {
         val url = request.url.toUrl()
         val method = request.method
         Timber.e("--> URL: $url")
+        Timber.e("--> URL-HOST: ${url.host}")
+        Timber.e("--> URL-PORT: ${url.port}")
+        Timber.e("--> URL-PATH: ${url.path}")
+        Timber.e("--> URL-PROTOCOL: ${url.protocol}")
         Timber.e("--> Method: $method (${requestBody?.contentLength()}-byte body)")
         headers.toList().forEach { h -> sb.append("\n").append(h.first).append(": ").append(h.second) }
         Timber.e("--> Headers: $sb")
@@ -106,7 +110,8 @@ class LogInterceptor : Interceptor {
         Timber.e("<-- Content-Type: $contentType")
 
         val result: String? = buffer?.clone()?.readString(charset)
-        Timber.e("<-- Result: ${GsonCommon.gson.toJson(result)}")
+        //Timber.e("<-- Result: ${GsonCommon.gson.toJson(result)?.replace("\\\"", "\"")}")
+        Timber.e("<-- Result: $result")
         Timber.e("<-- HTTP: ${response.code}")
         Timber.e("<-- END: (${buffer?.size}-byte body)\n")
     }

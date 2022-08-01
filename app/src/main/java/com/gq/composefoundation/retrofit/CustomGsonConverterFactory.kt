@@ -47,7 +47,6 @@ class CustomGsonConverterFactory(val gson: Gson): Converter.Factory() {
 class CustomResponseBodyConverter<T>(val gson: Gson, val adapter: TypeAdapter<T>): Converter<ResponseBody,T> {
     override fun convert(value: ResponseBody): T? {
         val string = value.string()
-        Timber.i(string)
         var parseString = JsonParser.parseString(string)
         if (parseString is JsonObject) {
             val data = parseString.get("data")
