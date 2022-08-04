@@ -10,22 +10,8 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.fade
 import com.google.accompanist.placeholder.material.placeholder
+import com.gq.basic.extension.placeholderKt
 import com.gq.basic.theme.BasicShapes
-
-
-@Composable
-fun Modifier.placeholderKt(visible: Boolean): Modifier {
-    return placeholder(
-        visible = visible,
-        color = Color(0xFFE9E8E8),
-        shape = BasicShapes.large,
-        /*highlight = PlaceholderHighlight.shimmer(
-            highlightColor = MaterialTheme.colors.background,
-        )*/
-        highlight = PlaceholderHighlight.fade()
-    )
-
-}
 
 /**
  * 列表
