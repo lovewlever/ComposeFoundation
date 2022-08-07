@@ -52,6 +52,7 @@ fun PagingLoadStateTopCompose(
 fun PagingLoadStateCompose(
     modifier: Modifier = Modifier,
     combinedLoadStates: CombinedLoadStates,
+    title: String = stringResource(id = R.string.cb_no_more_data),
     onRetryClick: () -> Unit = {},
 ) {
     Box(
@@ -69,7 +70,8 @@ fun PagingLoadStateCompose(
             }
             is LoadState.NotLoading -> {
                 PLSNotLoading(
-                    modifier = modifier
+                    modifier = modifier,
+                    title = title
                 )
             }
             is LoadState.Loading -> {
@@ -119,8 +121,9 @@ private fun PLSLoading(
 @Composable
 private fun PLSNotLoading(
     modifier: Modifier = Modifier,
+    title: String = stringResource(id = R.string.cb_no_more_data)
 ) {
     Row {
-        Text(text = stringResource(id = R.string.cb_no_more_data))
+        Text(text = title)
     }
 }
