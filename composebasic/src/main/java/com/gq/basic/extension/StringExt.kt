@@ -1,5 +1,8 @@
 package com.gq.basic.extension
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.gq.basic.common.GsonCommon
 import java.util.regex.Pattern
 
 /**
@@ -53,4 +56,11 @@ inline fun String.phoneHideMiddleFour(separator: String = "****"): String {
     } else {
         return this
     }
+}
+
+/**
+ * String 转Json实体
+ */
+inline fun <reified T> String.toEntityDataByGson(gson: Gson = GsonCommon.gson): T {
+    return gson.fromJson(this, object : TypeToken<T>(){}.type)
 }
