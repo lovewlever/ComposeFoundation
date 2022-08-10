@@ -1,10 +1,8 @@
 package com.gq.basic.compose
 
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -20,43 +18,20 @@ import com.gq.basic.R
 /**
  * 弹窗下面的双按钮
  */
+@Deprecated("DialogBottomDoubleButton2")
 @Composable
 fun DialogBottomDoubleButton(
     refuseText: String = stringResource(id = R.string.cb_do_not_use),
     doneText: String = stringResource(id = R.string.cb_agree),
-    refuseTextColor: Color = MaterialTheme.colors.onPrimary,
-    doneTextColor: Color = MaterialTheme.colors.surface,
-    refuseTextSize: TextUnit = 14.sp,
-    doneTextSize: TextUnit = 14.sp,
     doneClick: () -> Unit = {},
     refuseClick: () -> Unit = {},
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(45.dp)
-    ) {
-        TextButton(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            onClick = {
-                refuseClick()
-            }
-        ) {
-            Text(text = refuseText, color = refuseTextColor, fontSize = refuseTextSize)
-        }
-        TextButton(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            onClick = {
-                doneClick()
-            }
-        ) {
-            Text(text = doneText, color = doneTextColor, fontSize = doneTextSize)
-        }
-    }
+    DialogBottomDoubleButton2(
+        cancelText = refuseText,
+        confirmText = doneText,
+        onCancelClick = doneClick,
+        onConfirmClick = refuseClick,
+    )
 }
 
 
@@ -67,37 +42,47 @@ fun DialogBottomDoubleButton(
 fun DialogBottomDoubleButton2(
     cancelText: String = stringResource(id = R.string.cb_do_not_use),
     confirmText: String = stringResource(id = R.string.cb_agree),
-    cancelTextColor: Color = MaterialTheme.colors.onPrimary,
-    confirmTextColor: Color = MaterialTheme.colors.surface,
+    cancelTextColor: Color = Color.Black.copy(0.5F),
+    confirmTextColor: Color = MaterialTheme.colors.primary,
     cancelTextSize: TextUnit = 14.sp,
     confirmTextSize: TextUnit = 14.sp,
     onCancelClick: () -> Unit = {},
     onConfirmClick: () -> Unit = {},
 ) {
-    Row(
-        modifier = Modifier
+    Column {
+        Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(45.dp)
-    ) {
-        TextButton(
+            .height(0.6.dp)
+            .background(color = MaterialTheme.colors.background))
+        Row(
             modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            onClick = {
-                onCancelClick()
-            }
+                .fillMaxWidth()
+                .height(48.dp)
         ) {
-            Text(text = cancelText, color = cancelTextColor, fontSize = cancelTextSize)
-        }
-        TextButton(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            onClick = {
-                onConfirmClick()
+            TextButton(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f),
+                onClick = {
+                    onCancelClick()
+                }
+            ) {
+                Text(text = cancelText, color = cancelTextColor, fontSize = cancelTextSize)
             }
-        ) {
-            Text(text = confirmText, color = confirmTextColor, fontSize = confirmTextSize)
+            Spacer(modifier = Modifier
+                .fillMaxHeight()
+                .width(0.6.dp)
+                .background(color = MaterialTheme.colors.background))
+            TextButton(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f),
+                onClick = {
+                    onConfirmClick()
+                }
+            ) {
+                Text(text = confirmText, color = confirmTextColor, fontSize = confirmTextSize)
+            }
         }
     }
 }
