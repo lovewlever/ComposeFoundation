@@ -61,6 +61,6 @@ inline fun String.phoneHideMiddleFour(separator: String = "****"): String {
 /**
  * String 转Json实体
  */
-inline fun <reified T> String.toEntityDataByGson(gson: Gson = GsonCommon.gson): T {
+inline fun <reified T> String.toEntityDataByGson(gson: Gson = GsonCommon.gson): T? {
     return gson.fromJson(this, object : TypeToken<T>(){}.type)
 }

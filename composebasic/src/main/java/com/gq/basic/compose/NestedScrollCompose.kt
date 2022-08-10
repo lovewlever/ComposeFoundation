@@ -1,6 +1,7 @@
 package com.gq.basic.compose
 
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
@@ -15,12 +16,14 @@ import kotlin.math.roundToInt
 fun VerticalNestedScrollView(
     modifier: Modifier = Modifier,
     state: NestedScrollViewState,
+    scrollState: ScrollableState = rememberScrollableState { state.drag(it) },
     header: @Composable () -> Unit = {},
     content: @Composable () -> Unit = {}
 ) {
     NestedScrollView(
         modifier = modifier,
         state = state,
+        scrollState = scrollState,
         orientation = Orientation.Vertical,
         header = header,
         content = content,
@@ -31,6 +34,7 @@ fun VerticalNestedScrollView(
 fun NestedScrollView(
     modifier: Modifier = Modifier,
     state: NestedScrollViewState,
+    scrollState: ScrollableState = rememberScrollableState { state.drag(it) },
     orientation: Orientation,
     header: @Composable () -> Unit = {},
     content: @Composable () -> Unit = {}
@@ -39,9 +43,7 @@ fun NestedScrollView(
         modifier = modifier
             .scrollable(
                 orientation = orientation,
-                state = rememberScrollableState {
-                    state.drag(it)
-                }
+                state = scrollState
             )
             .nestedScroll(state.nestedScrollConnectionHolder),
         content = {
