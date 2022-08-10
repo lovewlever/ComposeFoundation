@@ -209,13 +209,13 @@ object DataStoreCommon {
 
     suspend inline fun <reified T> getEntity(
         key: Preferences.Key<String>,
-        crossinline callback: (T) -> Unit
+        crossinline callback: (T?) -> Unit
     ) {
         AppContext.application.dataStore.data.map { preferences: Preferences ->
             preferences[key]
         }.collect {
-            val fromJson: T =
-                GsonCommon.gson.fromJson(it, T::class.java) ?: T::class.java.newInstance()
+            val fromJson: T? =
+                GsonCommon.gson.fromJson(it, T::class.java)
             withContext(Dispatchers.Main) {
                 callback(fromJson)
             }
