@@ -12,11 +12,7 @@ object AppContext {
     lateinit var application: Application
 
     fun initialization(
-        application: Application,
-        timberFileTree: Boolean = true,
-        defaultUncaughtExceptionHandle: Boolean = true,
-        uncaughtException: (t: Thread, e: Throwable) -> Unit = { _,_ -> }
-    ) {
+        application: Application, ) {
         this.application = application
         // 日志
         if (application.applicationInfo.isApkInDebug()) {
@@ -24,16 +20,12 @@ object AppContext {
         } else {
             Timber.plant(TimberCloseTree())
         }
-        if (timberFileTree) {
-            Timber.plant(TimberFileTree())
-        }
-        if (defaultUncaughtExceptionHandle) {
-            setDefaultUncaughtExceptionHandler(uncaughtException)
-        }
+        Timber.plant(TimberFileTree())
+        setDefaultUncaughtExceptionHandler()
     }
 
-    private fun setDefaultUncaughtExceptionHandler(uncaughtException: (t: Thread, e: Throwable) -> Unit = { _,_ -> }) {
-        Thread.setDefaultUncaughtExceptionHandler(AppCrashHandler(callback = { t, e -> uncaughtException(t, e) }))
+    private fun setDefaultUncaughtExceptionHandler() {
+        Thread.setDefaultUncaughtExceptionHandler(AppCrashHandler())
     }
 
     fun isApkInDebug() =

@@ -2,6 +2,7 @@ package com.gq.basic.basis
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.core.view.WindowCompat
 import com.gq.basic.common.SystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -9,8 +10,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 open class BasicActivity: ComponentActivity() {
 
-    @Inject
-    lateinit var systemUiController: SystemUiController
+    /*@Inject
+    lateinit var systemUiController: SystemUiController*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,10 +19,13 @@ open class BasicActivity: ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        systemUiController
-            .setDecorFitsSystemWindows()
-            .setStatusBarColor()
-            .setNavigationBarColor()
+        setImmersiveMode()
+    }
+
+    private fun setImmersiveMode() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        window.navigationBarColor = android.graphics.Color.TRANSPARENT
     }
 
 }
