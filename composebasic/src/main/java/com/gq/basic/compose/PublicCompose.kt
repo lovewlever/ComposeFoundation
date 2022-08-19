@@ -1,20 +1,24 @@
 package com.gq.basic.compose
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.gq.basic.R
 
 /**
  * 弹窗下面的双按钮
  */
+@Deprecated("DialogBottomDoubleButton2")
 @Composable
 fun DialogBottomDoubleButton(
     refuseText: String = stringResource(id = R.string.cb_do_not_use),
@@ -22,30 +26,63 @@ fun DialogBottomDoubleButton(
     doneClick: () -> Unit = {},
     refuseClick: () -> Unit = {},
 ) {
-    Row(
-        modifier = Modifier
+    DialogBottomDoubleButton2(
+        cancelText = refuseText,
+        confirmText = doneText,
+        onCancelClick = doneClick,
+        onConfirmClick = refuseClick,
+    )
+}
+
+
+/**
+ * 弹窗下面的双按钮
+ */
+@Composable
+fun DialogBottomDoubleButton2(
+    cancelText: String = stringResource(id = R.string.cb_do_not_use),
+    confirmText: String = stringResource(id = R.string.cb_agree),
+    cancelTextColor: Color = Color.Black.copy(0.5F),
+    confirmTextColor: Color = MaterialTheme.colors.primary,
+    cancelTextSize: TextUnit = 14.sp,
+    confirmTextSize: TextUnit = 14.sp,
+    onCancelClick: () -> Unit = {},
+    onConfirmClick: () -> Unit = {},
+) {
+    Column {
+        Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(45.dp)
-    ) {
-        TextButton(
+            .height(0.6.dp)
+            .background(color = MaterialTheme.colors.background))
+        Row(
             modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            onClick = {
-                refuseClick()
-            }
+                .fillMaxWidth()
+                .height(48.dp)
         ) {
-            Text(text = refuseText)
-        }
-        TextButton(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            onClick = {
-                doneClick()
+            TextButton(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f),
+                onClick = {
+                    onCancelClick()
+                }
+            ) {
+                Text(text = cancelText, color = cancelTextColor, fontSize = cancelTextSize)
             }
-        ) {
-            Text(text = doneText)
+            Spacer(modifier = Modifier
+                .fillMaxHeight()
+                .width(0.6.dp)
+                .background(color = MaterialTheme.colors.background))
+            TextButton(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f),
+                onClick = {
+                    onConfirmClick()
+                }
+            ) {
+                Text(text = confirmText, color = confirmTextColor, fontSize = confirmTextSize)
+            }
         }
     }
 }

@@ -49,7 +49,8 @@ android {
             versionNameSuffix ".${versionNameSuffixTime()}_release"
             buildConfigField "long", "BuildTimestamp", "-1"
             buildConfigField "boolean", "IsRelease", "true" // 是否是发布版
-            buildConfigField "String", "HostName", "\"http://192.168.3.113:8081/\""
+            buildConfigField "String", "HostName", "\"http://crm.app12345.cn/\""
+            buildConfigField "String", "AppName", "\"\""
             manifestPlaceholders = [appName: ""]
         }
 
@@ -58,7 +59,8 @@ android {
             versionNameSuffix ".${versionNameSuffixTime()}_preview"
             buildConfigField "long", "BuildTimestamp", "${releaseTime()}"
             buildConfigField "boolean", "IsRelease", "false" // 是否是发布版
-            buildConfigField "String", "HostName", "\"http://192.168.3.113:8081/\""
+            buildConfigField "String", "HostName", "\"http://crm.app12345.cn/\""
+            buildConfigField "String", "AppName", "\"\""
             manifestPlaceholders = [appName: ""]
         }
 
@@ -68,6 +70,7 @@ android {
             buildConfigField "long", "BuildTimestamp", "${releaseTime()}"
             buildConfigField "boolean", "IsRelease", "false" // 是否是发布版
             buildConfigField "String", "HostName", "\"http://192.168.3.113:8081/\""
+            buildConfigField "String", "AppName", "\"\""
             manifestPlaceholders = [appName: ""]
         }
     }*/
