@@ -15,15 +15,40 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.gq.basic.AppContext
 import com.gq.basic.R
+import kotlinx.coroutines.*
 
 /**
  * 加载Dialog
  */
 @Composable
 fun LoadingDialogCompose(
-    loadingDialogState: LoadingDialogState
+    loadingDialogState: LoadingDialogState,
 ) {
+    val coroutineScope = rememberCoroutineScope()
     if (loadingDialogState.isShowDialog) {
+        var countDownText by remember { mutableStateOf("") }
+        DisposableEffect(key1 = loadingDialogState.isShowDialog, effect = {
+            var job: Job? = null
+            if (loadingDialogState.isShowDialog && loadingDialogState.duration > 20000L) {
+                job = coroutineScope.launch {
+                    withContext(Dispatchers.Default) {
+                        do {
+                            loadingDialogState.duration -= 1000
+                            if (loadingDialogState.duration < 20000L) {
+                                countDownText = "${loadingDialogState.duration / 1000}"
+                            }
+                            delay(1000)
+                        } while (loadingDialogState.duration > 0)
+                        loadingDialogState.isShowDialog = false
+                    }
+                }
+            }
+
+            onDispose {
+                job?.cancel()
+            }
+        })
+
         Dialog(
             onDismissRequest = { loadingDialogState.isShowDialog = false },
             properties = DialogProperties(
@@ -40,9 +65,13 @@ fun LoadingDialogCompose(
                     )
                     .padding(vertical = 9.dp, horizontal = 16.dp)
             ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(33.dp)
-                )
+                Box(contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(33.dp)
+                    )
+                    Text(text = countDownText, fontSize = 11.sp)
+                }
+
                 if (!loadingDialogState.isHideText) {
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
@@ -69,4 +98,29 @@ class LoadingDialogState {
     var isHideText: Boolean by mutableStateOf(false)
     var text: String by mutableStateOf(AppContext.application.getString(R.string.cb_loading))
     var fonSize: Int by mutableStateOf(12)
+
+    // 20秒 自动关闭
+    internal var duration by mutableStateOf(25000L)
+
+    fun showLoading(
+        charSequence: String = AppContext.application.getString(R.string.cb_loading),
+        isHideText: Boolean = false,
+        duration: Long = 25000L,
+    ) {
+        this.duration = duration
+        this.isHideText = isHideText
+        text = charSequence
+        isShowDialog = true
+    }
+
+    fun showLoading(stringResId: Int, isHideText: Boolean = false, duration: Long = 25000L) {
+        showLoading(charSequence = AppContext.application.getString(stringResId),
+            isHideText = isHideText,
+            duration = duration)
+    }
+
+    fun hideLoading() {
+        isShowDialog = false
+    }
+
 }
