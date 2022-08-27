@@ -1,10 +1,9 @@
 package com.gq.composefoundation.ui.graph
 
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NavBackStackEntry
 
 
@@ -15,37 +14,38 @@ sealed class ScreenRoute(val route: String, val title: String) {
 }
 
 
-@OptIn(ExperimentalAnimationApi::class)
-fun enterTransition(a: AnimatedContentScope<NavBackStackEntry>): EnterTransition {
-    return a.slideIntoContainer(
-        AnimatedContentScope.SlideDirection.Up, animationSpec =
-        spring(stiffness = 150F)
-    )
+/**
+ * 指定当您navigate()到达此目的地时运行的动画。
+ */
+fun enterTransition(): EnterTransition {
+    return slideIn(animationSpec = spring(stiffness = 200F), initialOffset = {
+        IntOffset(x = 0, y = 500)
+    }) + fadeIn(animationSpec = tween(800))
 }
 
-
-@OptIn(ExperimentalAnimationApi::class)
-fun popExitTransition(a: AnimatedContentScope<NavBackStackEntry>): ExitTransition {
-    return a.slideOutOfContainer(
-        AnimatedContentScope.SlideDirection.Down,
-        animationSpec = spring(stiffness = 150F)
-    )
+/**
+ * 指定此目的地在经过 . 后重新进入屏幕时运行的动画popBackStack()。这默认为enterTransition
+ */
+fun popEnterTransition(): EnterTransition {
+    return slideIn(animationSpec = spring(stiffness = 50F), initialOffset = {
+        IntOffset(x = 0, y = -200)
+    }) + fadeIn(animationSpec = tween(800))
 }
 
-
-
-@OptIn(ExperimentalAnimationApi::class)
-fun popEnterTransition(a: AnimatedContentScope<NavBackStackEntry>): EnterTransition {
-    return a.slideIntoContainer(
-        AnimatedContentScope.SlideDirection.Left,
-        animationSpec = spring(stiffness = 150F)
-    )
+/**
+ * 指定当您通过导航到另一个目的地离开此目的地时运行的动画。
+ */
+fun exitTransition(): ExitTransition {
+    return slideOut(animationSpec = spring(stiffness = 50F), targetOffset = {
+        IntOffset(x = 0, y = -200)
+    }) + fadeOut(targetAlpha = 0.5F, animationSpec = tween(800))
 }
 
-@OptIn(ExperimentalAnimationApi::class)
-fun exitTransition(a: AnimatedContentScope<NavBackStackEntry>): ExitTransition {
-    return a.slideOutOfContainer(
-        AnimatedContentScope.SlideDirection.Right, animationSpec =
-        spring(stiffness = 150F)
-    )
+/**
+ * 指定在您将其从返回堆栈中弹出后，当此目标离开屏幕时运行的动画。这默认为exitTransition.
+ */
+fun popExitTransition(): ExitTransition {
+    return slideOut(animationSpec = spring(stiffness = 200F), targetOffset = {
+        IntOffset(x = 0, y = 500)
+    }) + fadeOut(animationSpec = tween(400))
 }
