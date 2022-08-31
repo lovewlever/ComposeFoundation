@@ -29,12 +29,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
+        //useIR = true
     }
     buildFeatures {
         compose true
@@ -45,7 +45,7 @@ android {
         }
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion compose_compiler
         kotlinCompilerVersion kotlin_compiler_version
     }
 }
@@ -60,7 +60,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_plugin_version"
 
     // Kapt
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    api "com.google.dagger:hilt-android:2.38.1"
+    api "androidx.hilt:hilt-navigation-compose:1.0.0"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
 }

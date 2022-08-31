@@ -22,16 +22,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    composeOptions {
+    /*composeOptions {
         kotlinCompilerExtensionVersion compose_version
         kotlinCompilerVersion kotlin_compiler_version
-    }
+    }*/
 }
 
 dependencies {
@@ -42,9 +42,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     api 'com.google.android.gms:play-services-auth:19.2.0'
-    api "com.google.dagger:hilt-android:$hilt_plugin_version"
-    // Kapt
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
-    kapt "androidx.room:room-compiler:$room_version"
+
+    // Hilt
+    api "com.google.dagger:hilt-android:2.38.1"
+    api "androidx.hilt:hilt-navigation-compose:1.0.0"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
 }

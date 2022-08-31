@@ -27,16 +27,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion compose_compiler
         kotlinCompilerVersion kotlin_compiler_version
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
+        //useIR = true
     }
     buildFeatures {
         compose true
@@ -103,8 +103,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     api project(":remote_library")
+
     // Hilt
-    api "com.google.dagger:hilt-android:$hilt_plugin_version"
+    api "com.google.dagger:hilt-android:2.38.1"
     api "androidx.hilt:hilt-navigation-compose:1.0.0"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
+
+    //api "com.google.dagger:hilt-android:$hilt_plugin_version"
+    //api "androidx.hilt:hilt-navigation-compose:1.0.0"
+    //kapt "com.google.dagger:hilt-android-compiler:$hilt_plugin_version"
 }
