@@ -54,7 +54,7 @@ android {
             manifestPlaceholders = [appName: ""]
         }
 
-        vCustomerPreview {
+        vPreview {
             dimension 'v'
             versionNameSuffix ".${versionNameSuffixTime()}_preview"
             buildConfigField "long", "BuildTimestamp", "${releaseTime()}"

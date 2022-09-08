@@ -4,11 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -23,6 +27,9 @@ import kotlinx.coroutines.*
 @Composable
 fun LoadingDialogCompose(
     loadingDialogState: LoadingDialogState,
+    elevation: Dp = 4.dp,
+    shape: Shape = RoundedCornerShape(6.dp),
+    backgroundColor: Color = Color.White
 ) {
     val coroutineScope = rememberCoroutineScope()
     if (loadingDialogState.isShowDialog) {
@@ -56,31 +63,30 @@ fun LoadingDialogCompose(
                 dismissOnClickOutside = false
             )
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(6.dp)
-                    )
-                    .padding(vertical = 9.dp, horizontal = 16.dp)
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(33.dp)
-                    )
-                    Text(text = countDownText, fontSize = 11.sp)
-                }
+            Surface(color = backgroundColor, elevation = elevation, shape = shape) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(vertical = 9.dp, horizontal = 16.dp)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(33.dp)
+                        )
+                        Text(text = countDownText, fontSize = 11.sp)
+                    }
 
-                if (!loadingDialogState.isHideText) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = loadingDialogState.text,
-                        fontSize = loadingDialogState.fonSize.sp,
-                        color = Color.Black
-                    )
+                    if (!loadingDialogState.isHideText) {
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = loadingDialogState.text,
+                            fontSize = loadingDialogState.fonSize.sp,
+                            color = Color.Black
+                        )
+                    }
                 }
             }
+
         }
     }
 }

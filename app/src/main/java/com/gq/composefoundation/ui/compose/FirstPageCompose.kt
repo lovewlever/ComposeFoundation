@@ -95,6 +95,8 @@ fun FirstPageCompose(
             checkUpdateState.isShowDialog = true
             CheckUpdateAppCompose(checkUpdateState = checkUpdateState)
         }
+
+        LoadingDialogCompose(loadingDialogState = rememberLoadingDialogState(isShow = true))
     }
 
 }
