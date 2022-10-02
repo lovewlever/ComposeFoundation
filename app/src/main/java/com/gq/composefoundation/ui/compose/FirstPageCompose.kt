@@ -1,9 +1,6 @@
 package com.gq.composefoundation.ui.compose
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -26,7 +23,8 @@ import kotlinx.coroutines.launch
 /**
  * 首页
  */
-@OptIn(ExperimentalMaterialApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FirstPageCompose(
     navController: NavController,
@@ -79,9 +77,9 @@ fun FirstPageCompose(
                 content = {
                     items(list) { pair ->
                         Button(onClick = {
-                            /*coroutineScope.launch {
+                            coroutineScope.launch {
                                 bottomSheetState.show()
-                            }*/
+                            }
                             pair.second()
                         }) {
                             Text(text = pair.first)
