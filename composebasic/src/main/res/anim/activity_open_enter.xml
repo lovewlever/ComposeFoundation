@@ -3,7 +3,7 @@
     android:shareInterpolator="false"
     android:zAdjustment="top">
     <alpha
-        android:duration="500"
+        android:duration="800"
         android:fillAfter="true"
         android:fillBefore="false"
         android:fillEnabled="true"
@@ -15,7 +15,7 @@
         android:fillAfter="true"
         android:fillBefore="true"
         android:fillEnabled="true"
-        android:fromYDelta="25%"
+        android:fromXDelta="20%"
         android:interpolator="@anim/decelerate_quint"
-        android:toYDelta="0" />
+        android:toXDelta="0" />
 </set>

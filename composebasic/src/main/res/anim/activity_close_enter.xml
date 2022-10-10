@@ -3,9 +3,9 @@
     android:shareInterpolator="false">
     <translate
         android:duration="425"
-        android:fromYDelta="-8%"
+        android:fromXDelta="-8%"
         android:interpolator="@anim/fast_out_slow_in"
-        android:toYDelta="0" />
+        android:toXDelta="0" />
     <alpha
         android:duration="425"
         android:fromAlpha="0.9"
