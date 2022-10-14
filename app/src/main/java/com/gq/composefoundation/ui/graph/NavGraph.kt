@@ -45,7 +45,7 @@ fun exitTransition(): ExitTransition {
  * 指定在您将其从返回堆栈中弹出后，当此目标离开屏幕时运行的动画。这默认为exitTransition.
  */
 fun popExitTransition(): ExitTransition {
-    return slideOut(animationSpec = spring(stiffness = 200F), targetOffset = {
-        IntOffset(x = 300, y = 0)
-    }) + fadeOut(animationSpec = tween(400))
+    return slideOut(animationSpec = spring(stiffness = 50F), targetOffset = {
+        IntOffset(x = 200, y = 0)
+    }) + fadeOut(animationSpec = tween(300))
 }
