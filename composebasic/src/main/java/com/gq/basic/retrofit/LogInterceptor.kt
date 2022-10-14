@@ -1,11 +1,14 @@
 package com.gq.basic.retrofit
 
 import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.gq.basic.common.GsonCommon
+import com.gq.basic.extension.toEntityDataByGson
 import okhttp3.*
 import okhttp3.ResponseBody.Companion.toResponseBody
 import timber.log.Timber
 import java.io.IOException
+import java.net.URL
 import java.nio.charset.Charset
 import kotlin.text.Charsets.UTF_8
 
@@ -18,17 +21,29 @@ class LogInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
-        printRequestMessage(request)
+        val headers = request.headers
+        val url = request.url.toUrl()
+        val method = request.method
+        val urlPath = url.path
+        // 打印请求值
+        printRequestMessage(
+            url = url,
+            method = method,
+            headers = headers,
+            urlPath = urlPath,
+            request
+        )
         val response: Response = chain.proceed(request)
         if (!response.isSuccessful) {
             val code = response.code
             val requestBody = response.body
             val contentType = requestBody?.contentType()
             val str = requestBody?.string()
-            Timber.e("<-- HTTP: ${response.code} \n${str}")
+            Timber.e("$urlPath <-- HTTP: ${response.code} \n${str}")
             return response.newBuilder().body(str?.toResponseBody(contentType)).code(code).build()
         }
-        printResponseMessage(response)
+        // 打印返回值
+        printResponseMessage(urlPath = urlPath, response)
         return response
     }
 
@@ -37,28 +52,32 @@ class LogInterceptor : Interceptor {
      *
      * @param request 请求的对象
      */
-    private fun printRequestMessage(request: Request) {
+    private fun printRequestMessage(
+        url: URL,
+        method: String,
+        headers: Headers,
+        urlPath: String,
+        request: Request
+    ) {
         sb.clear()
         val requestBody: RequestBody? = request.body
-        val headers = request.headers
-        val url = request.url.toUrl()
-        val method = request.method
-        Timber.e("--> URL: $url")
-        Timber.e("--> URL-HOST: ${url.host}")
-        Timber.e("--> URL-PORT: ${url.port}")
-        Timber.e("--> URL-PATH: ${url.path}")
-        Timber.e("--> URL-PROTOCOL: ${url.protocol}")
-        Timber.e("--> Method: $method (${requestBody?.contentLength()}-byte body)")
-        headers.toList().forEach { h -> sb.append("\n").append(h.first).append(": ").append(h.second) }
-        Timber.e("--> Headers: $sb")
+        Timber.e("$urlPath --> URL: $url")
+        Timber.e("$urlPath --> URL-HOST: ${url.host}")
+        Timber.e("$urlPath --> URL-PORT: ${url.port}")
+        Timber.e("$urlPath --> URL-PATH: $urlPath")
+        Timber.e("$urlPath --> URL-PROTOCOL: ${url.protocol}")
+        Timber.e("$urlPath --> Method: $method (${requestBody?.contentLength()}-byte body)")
+        headers.toList()
+            .forEach { h -> sb.append("\n").append(h.first).append(": ").append(h.second) }
+        Timber.e("$urlPath --> Headers: $sb")
         requestBody?.contentType()?.let {
             if (headers["Content-Type"] == null) {
-                Timber.e("--> Content-Type: $it")
+                Timber.e("$urlPath --> Content-Type: $it")
             }
         }
         if (requestBody?.contentLength() != -1L) {
             if (headers["Content-Length"] == null) {
-                Timber.e("--> Content-Length: ${requestBody?.contentLength()}")
+                Timber.e("$urlPath --> Content-Length: ${requestBody?.contentLength()}")
             }
         }
 
@@ -72,20 +91,42 @@ class LogInterceptor : Interceptor {
                 charset = charset ?: Charset.forName("utf-8")
                 charset?.let { bufferedSink.readString(it) }
             }
-            Timber.e("--> Params: ?$params")
-            params?.split("&")?.let { list ->
-                val joStr = JsonObject().also { jo ->
-                    list.forEachIndexed { index, s ->
-                        val sp = s.split("=")
-                        if (sp.size > 1) {
-                            jo.addProperty(sp[0], sp[1])
-                        }
+
+            val jsonEl = JsonParser.parseString(params)
+            val isJson = jsonEl.isJsonArray || jsonEl.isJsonObject
+
+
+            if (isJson) {
+                sb.clear()
+                // 生成Query参数
+                val queryParams = params?.toEntityDataByGson<JsonObject>()?.let { jsonObj ->
+                    jsonObj.keySet().forEach { key ->
+                        sb.append(key).append("=").append(jsonObj.get(key).asString).append("&")
                     }
-                }.toString()
-                Timber.e("--> Params-Json: $joStr")
+                    if (sb.isNotBlank()) {
+                        val index = sb.lastIndexOf("&")
+                        if (index > 0) sb.deleteCharAt(index)
+                    }
+                    sb.toString()
+                }
+                Timber.e("$urlPath --> Params-Query: ?$queryParams")
+                Timber.e("$urlPath --> Params-Json: $params")
+            } else {
+                Timber.e("$urlPath --> Params-Query: ?$params")
+                params?.split("&")?.let { list ->
+                    val joStr = JsonObject().also { jo ->
+                        list.forEachIndexed { index, s ->
+                            val sp = s.split("=")
+                            if (sp.size > 1) {
+                                jo.addProperty(sp[0], sp[1])
+                            }
+                        }
+                    }.toString()
+                    Timber.e("$urlPath --> Params-Json: $joStr")
+                }
             }
         } catch (e: IOException) {
-            Timber.e("--> Exception: ${e.message}")
+            Timber.e("$urlPath --> Exception: ${e.message}")
             Timber.e(e)
         }
     }
@@ -95,24 +136,24 @@ class LogInterceptor : Interceptor {
      *
      * @param response 返回的对象
      */
-    private fun printResponseMessage(response: Response) {
+    private fun printResponseMessage(urlPath: String, response: Response) {
         val responseBody: ResponseBody? = response.body
         val source = responseBody?.source()
         try {
             source?.request(Long.MAX_VALUE) // Buffer the entire body.
         } catch (e: IOException) {
-            Timber.e("<-- Exception: ${e.message}")
+            Timber.e("$urlPath <-- Exception: ${e.message}")
             Timber.e(e)
         }
         val buffer: okio.Buffer? = source?.buffer()
         val contentType: MediaType? = responseBody?.contentType()
         val charset = contentType?.charset() ?: UTF_8
-        Timber.e("<-- Content-Type: $contentType")
+        Timber.e("$urlPath <-- Content-Type: $contentType")
 
         val result: String? = buffer?.clone()?.readString(charset)
         //Timber.e("<-- Result: ${GsonCommon.gson.toJson(result)?.replace("\\\"", "\"")}")
-        Timber.e("<-- Result: $result")
-        Timber.e("<-- HTTP: ${response.code}")
-        Timber.e("<-- END: (${buffer?.size}-byte body)\n")
+        Timber.e("$urlPath <-- Result: $result")
+        Timber.e("$urlPath <-- HTTP: ${response.code}")
+        Timber.e("$urlPath <-- END: (${buffer?.size}-byte body)\n")
     }
 }
