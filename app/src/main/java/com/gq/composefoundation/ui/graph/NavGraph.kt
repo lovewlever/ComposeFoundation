@@ -20,7 +20,7 @@ sealed class ScreenRoute(val route: String, val title: String) {
 fun enterTransition(): EnterTransition {
     return slideIn(animationSpec = spring(stiffness = 150F), initialOffset = {
         IntOffset(x = 200, y = 0)
-    }) + fadeIn(animationSpec = tween(500))
+    }) + fadeIn(animationSpec = tween(700))
 }
 
 /**
@@ -29,7 +29,7 @@ fun enterTransition(): EnterTransition {
 fun popEnterTransition(): EnterTransition {
     return slideIn(animationSpec = spring(stiffness = 150F), initialOffset = {
         IntOffset(x = -200, y = 0)
-    }) + fadeIn(animationSpec = tween(500))
+    }) + fadeIn(animationSpec = tween(700))
 }
 
 /**
