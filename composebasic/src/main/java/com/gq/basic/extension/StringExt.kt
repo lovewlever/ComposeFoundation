@@ -57,6 +57,18 @@ inline fun String.phoneHideMiddleFour(separator: String = "****"): String {
         return this
     }
 }
+inline fun String.matchPassword(between: Pair<Int, Int> = 6 to 20) =
+    Regex("^(?![0-9]+\$)(?![a-zA-Z]+\$)[0-9A-Za-z]{${between.first},${between.second}}\$").matches(this)
+
+
+/**
+ * 匹配Html里面的内容并返回内容
+ */
+inline fun String.matchBetweenHtmlLabelContent() =
+    Regex("<[a-zA-Z]+.*?>([\\s\\S]*?)</[a-zA-Z]*?>").findAll(this, 0).map { mResult ->
+        mResult.value.replace(regexHtmlLabel, "")
+    }.toList()
+
 
 /**
  * String 转Json实体
