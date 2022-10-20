@@ -18,6 +18,13 @@ import kotlinx.coroutines.withContext
 
 object DataStoreCommon {
 
+    /**
+     * 是否可以申请权限的弹窗
+     * @see com.gq.basic.compose.PermissionConfirmAgree
+     * @see com.gq.basic.compose.PermissionConfirmReject
+     * @see com.gq.basic.compose.PermissionConfirmNotSet
+     */
+    val DSK_PERMISSION_CONFIRM = intPreferencesKey("PermissionConfirm")
     // 隐私政策弹窗 1：已同意，0：未同意
     val DSK_PRIVACY_POLICY = intPreferencesKey("privacyPolicy")
     val sp by lazy {
