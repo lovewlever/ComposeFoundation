@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gq.basic.R
+import com.gq.basic.theme.DividerColor
 
 /**
  * 弹窗下面的双按钮
@@ -71,8 +72,8 @@ fun DialogBottomDoubleButton2(
             }
             Spacer(modifier = Modifier
                 .fillMaxHeight()
-                .width(0.6.dp)
-                .background(color = MaterialTheme.colors.background))
+                .width(0.5.dp)
+                .background(color = MaterialTheme.colors.DividerColor))
             TextButton(
                 modifier = Modifier
                     .fillMaxHeight()

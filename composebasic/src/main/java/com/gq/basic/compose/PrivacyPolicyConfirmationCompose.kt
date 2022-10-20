@@ -1,9 +1,8 @@
 package com.gq.basic.compose
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -23,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.gq.basic.R
 import com.gq.basic.common.DataStoreCommon
+import com.gq.basic.theme.DividerColor
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -31,9 +31,14 @@ import timber.log.Timber
  */
 @Composable
 fun PrivacyPolicyConfirmationDialogCompose(
+    cancelText: String = stringResource(id = R.string.cb_do_not_use),
+    confirmText: String = stringResource(id = R.string.cb_agree),
+    cancelTextColor: Color = Color.Black.copy(0.5F),
+    confirmTextColor: Color = MaterialTheme.colors.primary,
     doneClick: () -> Unit = {},
     refuseClick: () -> Unit = {},
-    examinePrivacyPolicyClick: () -> Unit = {}
+    onUserAgreementClick: () -> Unit,
+    onPrivacyPolicyClick: () -> Unit
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -53,27 +58,36 @@ fun PrivacyPolicyConfirmationDialogCompose(
         Dialog(onDismissRequest = {  }) {
             Box(
                 modifier = Modifier
-                    .padding(start = 20.dp, end = 20.dp)
+                    .padding(top = 12.dp)
             ) {
                 Surface(
-                    shape = RoundedCornerShape(8.dp)
+                    shape = MaterialTheme.shapes.large
                 ) {
                     Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp),
+                            .width(320.dp)
+                            .padding(top = 12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(text = stringResource(R.string.cb_privacy_policy_title))
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(14.dp))
                         ClickableText(
-                            modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+                            modifier = Modifier.padding(horizontal = 14.dp),
                             text = buildAnnotatedString {
                                 append(stringResource(R.string.cb_read_carefully_pp))
                                 val privacyPolicy = stringResource(R.string.cb_privacy_policy_num)
+                                val userAgreement = stringResource(R.string.cb_user_agreement)
                                 withStyle(
                                     style = SpanStyle(
-                                        color = MaterialTheme.colors.secondary
+                                        color = MaterialTheme.colors.primary
+                                    )
+                                ) {
+                                    append(userAgreement)
+                                }
+                                append(stringResource(R.string.cb_and))
+                                withStyle(
+                                    style = SpanStyle(
+                                        color = MaterialTheme.colors.primary
                                     )
                                 ) {
                                     append(privacyPolicy)
@@ -82,24 +96,23 @@ fun PrivacyPolicyConfirmationDialogCompose(
                             },
                             onClick = {
                                 Timber.i("$it")
-                                if (it in 5..10) {
-                                    examinePrivacyPolicyClick()
+                                if (it in 5..11) {
+                                    onUserAgreementClick()
+                                } else if (it in 13..19) {
+                                    onPrivacyPolicyClick()
                                 }
                             }
                         )
-                        Spacer(
-                            modifier = Modifier
-                                .padding(top = 8.dp, bottom = 8.dp)
-                                .height(16.7.dp)
-                                .background(
-                                    color = Color.LightGray
-                                )
-                        )
-
-                        DialogBottomDoubleButton(
-                            refuseClick = refuseClick,
-                            doneClick = {
-                                coroutineScope.launch {
+                        Spacer(modifier = Modifier.height(14.dp))
+                        Divider(color = MaterialTheme.colors.DividerColor, thickness = 0.5.dp)
+                        DialogBottomDoubleButton2(
+                            cancelText = cancelText,
+                            confirmText = confirmText,
+                            cancelTextColor = cancelTextColor,
+                            confirmTextColor = confirmTextColor,
+                            onCancelClick = refuseClick,
+                            onConfirmClick = {
+                            coroutineScope.launch {
                                     DataStoreCommon.putBasicType(DataStoreCommon.DSK_PRIVACY_POLICY, 1)
                                 }
                                 isShowPP.value = 1
