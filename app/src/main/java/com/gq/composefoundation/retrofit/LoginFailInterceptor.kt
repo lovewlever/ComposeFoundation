@@ -11,13 +11,11 @@ import java.nio.charset.Charset
 /**
  * 未登录状态拦截
  */
-class LoginFailInterceptor : Interceptor {
+object LoginFailInterceptor : Interceptor {
 
     private var curRequestUrl: String = ""
     private var requestNumber = 1
-    companion object {
-        var loginOutCallback: () -> Unit = {}
-    }
+    var loginOutCallback: () -> Unit = {}
 
     private val UTF8 = Charset.forName("UTF-8")
 
