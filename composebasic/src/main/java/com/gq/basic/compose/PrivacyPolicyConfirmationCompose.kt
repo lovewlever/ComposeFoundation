@@ -106,7 +106,6 @@ fun PrivacyPolicyConfirmationDialogCompose(
                             }
                         )
                         Spacer(modifier = Modifier.height(14.dp))
-                        Divider(color = MaterialTheme.colors.DividerColor, thickness = 0.5.dp)
                         DialogBottomDoubleButton2(
                             cancelText = cancelText,
                             confirmText = confirmText,

@@ -65,11 +65,6 @@ fun PermissionConfirmationCompose(
                     permissionContent()
                 }
                 Spacer(Modifier.height(14.dp))
-                Divider(
-                    modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colors.DividerColor,
-                    thickness = 0.5.dp
-                )
                 DialogBottomDoubleButton2(
                     cancelText = stringResource(id = R.string.cb_reject),
                     confirmText = stringResource(id = R.string.cb_agree),

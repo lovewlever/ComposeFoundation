@@ -3,6 +3,7 @@ package com.gq.basic.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -51,10 +52,7 @@ fun DialogBottomDoubleButton2(
     onConfirmClick: () -> Unit = {},
 ) {
     Column {
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(0.6.dp)
-            .background(color = MaterialTheme.colors.background))
+        Divider(color = MaterialTheme.colors.DividerColor, thickness = 0.5.dp)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
