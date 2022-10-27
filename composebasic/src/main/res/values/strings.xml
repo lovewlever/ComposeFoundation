@@ -23,4 +23,5 @@
     <string name="cb_agree">同意</string>
     <string name="cb_download_fail">下载失败</string>
     <string name="cb_url_fail">URL错误</string>
+    <string name="cb_reject">拒绝</string>
 </resources>

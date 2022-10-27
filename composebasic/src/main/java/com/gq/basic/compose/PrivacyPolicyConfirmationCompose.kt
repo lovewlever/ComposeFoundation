@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ import timber.log.Timber
 fun PrivacyPolicyConfirmationDialogCompose(
     cancelText: String = stringResource(id = R.string.cb_do_not_use),
     confirmText: String = stringResource(id = R.string.cb_agree),
-    cancelTextColor: Color = Color.Black.copy(0.5F),
+    cancelTextColor: Color = MaterialTheme.colors.onSurface,
     confirmTextColor: Color = MaterialTheme.colors.primary,
     doneClick: () -> Unit = {},
     refuseClick: () -> Unit = {},
@@ -72,6 +73,7 @@ fun PrivacyPolicyConfirmationDialogCompose(
                         Text(text = stringResource(R.string.cb_privacy_policy_title))
                         Spacer(modifier = Modifier.height(14.dp))
                         ClickableText(
+                            style = TextStyle(color = MaterialTheme.colors.onSurface),
                             modifier = Modifier.padding(horizontal = 14.dp),
                             text = buildAnnotatedString {
                                 append(stringResource(R.string.cb_read_carefully_pp))

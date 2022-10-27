@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FirstPageCompose(
     navController: NavController,
-    appViewModel: AppViewModel = hiltViewModel()
+    appViewModel: AppViewModel = hiltViewModel(),
 ) {
 
     val coroutineScope = rememberCoroutineScope()
@@ -91,7 +91,19 @@ fun FirstPageCompose(
             checkUpdateState.downloadUrl = "https"
             checkUpdateState.showVersionName = "v1.1.0"
             checkUpdateState.isShowDialog = true
-            CheckUpdateAppCompose(checkUpdateState = checkUpdateState)
+            /*CheckUpdateAppCompose(checkUpdateState = checkUpdateState)
+            // 隐私政策弹窗
+            PrivacyPolicyConfirmationDialogCompose(onUserAgreementClick = {
+
+            }) {
+
+            }*/
+            // 权限申请
+            PermissionConfirmationCompose(permissionContent = {
+                Text(text = "1. 我们将申请权限")
+            }, onDoneClick = {
+
+            })
         }
 
         LoadingDialogCompose(loadingDialogState = rememberLoadingDialogState(isShow = true))

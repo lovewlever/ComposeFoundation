@@ -43,7 +43,7 @@ fun DialogBottomDoubleButton(
 fun DialogBottomDoubleButton2(
     cancelText: String = stringResource(id = R.string.cb_do_not_use),
     confirmText: String = stringResource(id = R.string.cb_agree),
-    cancelTextColor: Color = Color.Black.copy(0.5F),
+    cancelTextColor: Color = MaterialTheme.colors.onSurface,
     confirmTextColor: Color = MaterialTheme.colors.primary,
     cancelTextSize: TextUnit = 14.sp,
     confirmTextSize: TextUnit = 14.sp,
@@ -58,7 +58,7 @@ fun DialogBottomDoubleButton2(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp)
+                .height(46.dp)
         ) {
             TextButton(
                 modifier = Modifier

@@ -20,10 +20,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gq.basic.R
+import com.gq.basic.common.DataStoreCommon
 import com.gq.basic.common.ToastCommon
 import com.gq.basic.extension.matchUrl
 import com.gq.basic.hilt.UpdateAppModule
+import com.gq.basic.theme.DividerColor
 import com.gq.basic.viewmodel.UpdateViewModel
+import kotlinx.coroutines.launch
 import java.io.File
 
 class CheckUpdateState {
@@ -124,18 +127,12 @@ private fun UpdateRemindDialogCompose(
                             // append(stringResource(id = R.string.cb_whether_to_update))
                         }
                     )
-                    Spacer(
-                        modifier = Modifier
-                            .padding(top = 8.dp, bottom = 8.dp)
-                            .height(0.7.dp)
-                            .background(
-                                color = Color.LightGray
-                            )
-                    )
+                    Spacer(modifier = Modifier.height(14.dp))
+                    Divider(color = MaterialTheme.colors.DividerColor, thickness = 0.5.dp)
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(45.dp)
+                            .height(46.dp)
                     ) {
                         // 强制更新
                         if (!checkUpdateState.isItMandatory) {
@@ -149,6 +146,10 @@ private fun UpdateRemindDialogCompose(
                             ) {
                                 Text(text = stringResource(id = R.string.cb_do_not_update))
                             }
+                            Spacer(modifier = Modifier
+                                .fillMaxHeight()
+                                .width(0.5.dp)
+                                .background(color = MaterialTheme.colors.DividerColor))
                         }
                         TextButton(
                             modifier = Modifier
