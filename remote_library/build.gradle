@@ -36,6 +36,13 @@ dependencies {
 
     api 'androidx.browser:browser:1.4.0'
     // AndroidX
+    def activity_version = "1.6.1"
+    def appcompat_version = "1.6.1"
+    def fragment_version = "1.5.5"
+    api "androidx.appcompat:appcompat:$appcompat_version"
+    api "androidx.appcompat:appcompat-resources:$appcompat_version"
+    api "androidx.activity:activity-ktx:$activity_version"
+    api "androidx.fragment:fragment-ktx:$fragment_version"
     api 'androidx.core:core-ktx:1.9.0'
     // Compose
     api 'androidx.activity:activity-compose:1.6.0'

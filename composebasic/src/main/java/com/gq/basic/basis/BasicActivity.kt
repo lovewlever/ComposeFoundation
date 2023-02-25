@@ -2,13 +2,14 @@ package com.gq.basic.basis
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.gq.basic.common.SystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-open class BasicActivity: ComponentActivity() {
+open class BasicActivity: AppCompatActivity() {
 
     /*@Inject
     lateinit var systemUiController: SystemUiController*/
