@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import com.gq.basic.common.DensityCommon
 import com.gq.basic.common.SystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -15,6 +16,7 @@ open class BasicActivity: AppCompatActivity() {
     lateinit var systemUiController: SystemUiController*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        DensityCommon.initDisplayMetrics(window)
         super.onCreate(savedInstanceState)
     }
 
