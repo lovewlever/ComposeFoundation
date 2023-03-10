@@ -8,6 +8,7 @@ import com.gq.basic.AppContext
  * @author 01218
  * @created 2019/2/21
  */
+@Deprecated("某些国产机获取到的不准确")
 object DensityCommon {
     var RATIO = 0.95f//缩放比例值
 
